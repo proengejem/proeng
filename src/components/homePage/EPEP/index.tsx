@@ -11,9 +11,9 @@ interface FeatureProps {
 
 const Feature: React.FC<FeatureProps> = ({ icon, title, description, linkText, linkUrl }) => {
   return (
-    <div className="flex items-start space-x-4">
+    <div className="flex items-start space-x-4 w-full">
       <div className="text-green-600 text-3xl">{icon}</div>
-      <div>
+      <div className="w-full">
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
         <p className="text-gray-600 text-sm mb-2">{description}</p>
         <a
@@ -66,17 +66,17 @@ const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-12">
+    <section className="relative z-50 py-12 h-[80vh] flex items-center overflow-hidden">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
         {/* Image Section */}
-        <div className="w-full md:w-1/2 order-last md:order-first">
-          <div className="rounded-lg overflow-hidden shadow-lg">
+        <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">
+          <div className="rounded-2xl shadow-2xl overflow-hidden">
             <Image
-              src="/images/proeng-image.jpg" // Substituir pelo caminho correto da imagem
+              src="/image.png" // Substituir pelo caminho correto da imagem
               alt="Sobre a Proeng"
-              width={600}
-              height={400}
-              className="w-full h-auto"
+              width={500}
+              height={300}
+              className="w-full h-auto object-cover"
             />
           </div>
         </div>
@@ -125,6 +125,4 @@ const AboutSection: React.FC = () => {
 };
 
 export default AboutSection;
-
-
 
