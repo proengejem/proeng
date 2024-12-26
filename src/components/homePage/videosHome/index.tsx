@@ -26,7 +26,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ videoUrl, title, description, lin
           href={linkUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-green-600 font-semibold hover:underline"
+          className="text-green-600 font-semibold hover:underline" style={{ color: '#027A48' }}
         >
           {linkText} →
         </a>
@@ -66,7 +66,7 @@ const SolutionsSection: React.FC = () => {
   return (
     <div className="py-12 ">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold text-center text-green-700 mb-4">
+        <h2 className="text-2xl font-bold text-center text-green-700 mb-4" style={{ color: '#027A48' }}>
           Algumas de nossas soluções entregues
         </h2>
         <p className="text-center text-gray-600 mb-8">
@@ -78,9 +78,11 @@ const SolutionsSection: React.FC = () => {
           ))}
         </div>
         <div className="text-center mt-8">
-          <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700">
+        <a href="/servicos">
+          <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700"   style={{ backgroundColor: '#027A48' }}>
             Ver mais
           </button>
+        </a>
         </div>
       </div>
     </div>

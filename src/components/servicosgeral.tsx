@@ -1,9 +1,11 @@
+"use client";
 import Image from 'next/image';
 
 export default function Servicos() {
     const services = [
       { title: 'Solo Grampeado', description: "descrição do serviço", image: '/SoloGrampeado.png', link: '/servicos/solo-grampeado' },
-      { title: 'Concreto Projetado', description: "descrição do serviço", image: '/ConcretoProj.png', link: '#' },
+      //{ title: 'Concreto Projetado', description: "descrição do serviço", image: '/ConcretoProj.png', link: "/servicoindiv" },
+      { title: 'Concreto Projetado', description: "descrição do serviço", image: '/ConcretoProj.png', link: "#" },
       { title: 'Hélice Contínua Monitorada', description: "descrição do serviço", image: '/HéliceContM.png', link: '#' },
       { title: 'Estaca Tipo Raiz', description: "descrição do serviço", image: '/EstacasTpRaiz.png', link: '#' },
       { title: 'Micro Estacas Injetadas', description: "descrição do serviço", image: '/MicroEstacasInj.png', link: '#' },
@@ -69,4 +71,5 @@ export default function Servicos() {
       `}</style>
     </div>
   );
+
 }

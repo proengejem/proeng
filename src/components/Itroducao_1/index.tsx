@@ -24,7 +24,7 @@ const HeroSectionWithVideo: React.FC = () => {
           {/* Título */}
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Construindo qualidade e confiança desde{" "}
-            <span className="text-green-500">2006</span>
+            <span  style={{ color: '#027A48' }} >2006</span>
           </h1>
           {/* Descrição */}
           <p className="mt-2 text-base md:text-lg">
@@ -34,12 +34,16 @@ const HeroSectionWithVideo: React.FC = () => {
           </p>
           {/* Botões */}
           <div className="mt-6 flex space-x-4 justify-center">
-            <button className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">
+          <a href="/sobrenos">
+            <button  className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-500 transition"   style={{ backgroundColor: '#027A48' }} >
               Sobre nós
             </button>
-            <button className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition">
+          </a>
+          <a href="/contato">
+            <button className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
               Contato
             </button>
+          </a>
           </div>
         </div>
       </div>

@@ -3,6 +3,8 @@ import SolutionsSection from "~/components/homePage/videosHome";
 import AboutSection from "~/components/homePage/EPEP";
 import Introducao_1 from "~/components/Itroducao_1";
 import Rodape from "~/components/homePage/rodape";
+import { Footer1 }  from "~/components/ui/footer";
+
 
 const HomePage: React.FC = () => {
   return (
@@ -16,6 +18,8 @@ const HomePage: React.FC = () => {
       <SolutionsSection />
       
       <Rodape />
+      <Footer1 />
+      
     </div>
   );
 };

@@ -5,7 +5,7 @@ const Rodape: React.FC = () => {
   return (
     <section className="relative h-[70vh]">
       {/* Faixa verde */}
-      <div className="bg-green-700 h-12 w-full"></div>
+      <div className="bg-green-700 h-12 w-full" style={{ backgroundColor: '#027A48' }}></div>
 
       {/* Conteúdo com imagem e texto */}
       <div className="relative h-full">

@@ -16,10 +16,10 @@ return(
       className="mb-6"
     />
     <div className="hidden items-center gap-6 text-sm md:flex">
-      <a href="/" className="text-gray-600 hover:text-[#006837]">
+      <a href="/home" className="text-gray-600 hover:text-[#006837]">
         Home
       </a>
-      <a href="/empresa" className="text-gray-600 hover:text-[#006837]">
+      <a href="/sobrenos" className="text-gray-600 hover:text-[#006837]">
         Empresa
       </a>
       <a href="/servicos" className="text-gray-600 hover:text-[#006837]" >

@@ -85,8 +85,9 @@ export const Footer1 = (props: Footer1Props) => {
   return (
     <footer>
       <div className="relative h-16 w-full bg-white">
-        <div className="clip-path-diagonal absolute bottom-0 h-16 w-full bg-green-800" />
+        <div className="clip-path-diagonal absolute bottom-0 h-16 w-full bg-green-800" style={{ backgroundColor: '#027A48' }} />
       </div>
+      {/* Faixa verde */}
       <div className="h-px w-full bg-black" />
       <div className="px-[5%] py-12 md:py-18 lg:py-20">
         <div className="container">
