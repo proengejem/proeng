@@ -17,6 +17,9 @@ import BandeiraAR from "~/public/bandeira argentina.webp";
 import BandehriaPT from "~/public/bandeira de portugal.webp";
 import BandeiraEG from "~/public/cairo.webp";
 import CNG from "~/public/18CNG.png";
+import GEOMEAST from "~/public/GEOMEAST.jpg";
+import GEOSUL from "~/public/geosul.png";
+import PANAM from "~/public/Panam.png";
 
 interface ConferenceCard {
   name: string;
@@ -36,25 +39,25 @@ const conferences: ConferenceCard[] = [
     name: "PANAM",
     location: "Buenos Aires",
     flag: "/bandeira argentina.webp",
-    logo: "/logos/panam.svg",
+    logo: "/Panam.png",
   },
   {
     name: "18 CNG",
     location: "Portugal",
     flag: "/bandeira de portugal.webp",
-    logo: "/logos/cng.svg",
+    logo: "/18CNG.png",
   },
   {
     name: "GEOMEAST",
     location: "Cairo",
     flag: "/cairo.webp",
-    logo: "/logos/geomeast.svg",
+    logo: "/GEOMEAST.jpg",
   },
   {
     name: "GEOSUL",
     location: "Brasil",
     flag: "/brasil.jpg",
-    logo: "/logos/geomeast.svg",
+    logo: "/geosul.png",
   },
 ];
 
