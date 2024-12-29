@@ -14,7 +14,7 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */} */
+      {/* Navigation */} 
        <nav className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex h-16 items-center justify-between">
