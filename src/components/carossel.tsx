@@ -62,7 +62,7 @@ export default function ConferenceCarousel() {
   const plugin = useRef(Autoplay({ delay: 1750, stopOnInteraction: false }));
 
   return (
-    <section className="w-full bg-gray-200 py-8">
+    <section className="w-full  py-8">
       <Carousel
         plugins={[plugin.current]}
         className="mx-auto w-full max-w-6xl"

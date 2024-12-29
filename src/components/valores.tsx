@@ -31,7 +31,11 @@ const Feature: React.FC<FeatureProps> = ({ icon, title, description, linkText })
   );
 };
 
-const AboutSection: React.FC = () => {
+const Valores: React.FC = () => {
+    const texto = {
+        title: "Valores",
+        description: " Nossa equipe também conta com a expertise de profissionais capacitados e bem treinados, procurando sempre atualizar seus padrões de excelência, com qualidade e seriedade nos trabalhos executados, oferecendo atendimento personalizado, competitividade e transparência nos negociações, mantendo-nos tecnicamente e eticamente constantes fazem da Proeng uma empresa diferenciada no mercado.",
+    }
   const features = [
     {
       icon: <span>📦</span>,
@@ -68,20 +72,22 @@ const AboutSection: React.FC = () => {
   ];
 
   return (
+    
     <section className="relative z-50 py-12 h-[80vh] flex items-center overflow-hidden">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
         {/* Image Section */}
-        <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">
-          <div className="rounded-2xl shadow-2xl overflow-hidden">
-            <Image
-              src="/image.png" // Substituir pelo caminho correto da imagem
-              alt="Sobre a Proeng"
-              width={500}
-              height={300}
-              className="w-full h-auto object-cover"
+        <div className="w-full md:w-1/2 space-y-8">
+          {/* Grupo de Empresa e Processos na mesma linha */}
+          <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
+            <Valores
+            //   icon={features[0].icon}
+              title={Valores}
+              description={Valores}
+            //   linkText={features[0].linkText}
+              // linkUrl={features[0].linkUrl}
             />
-          </div>
-        </div>
+                      </div>              
+                      </div>              
 
         {/* Features Section */}
         <div className="w-full md:w-1/2 space-y-8">
@@ -126,5 +132,5 @@ const AboutSection: React.FC = () => {
   );
 };
 
-export default AboutSection;
+export default Valores;
 
