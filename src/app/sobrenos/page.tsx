@@ -149,7 +149,7 @@ export default function Sobrenos() {
       <footer className="w-full">
         {/* Additional content omitted for brevity */}
         {/* Values Section */}
-        <div className="w-full bg-white px-4 py-12">
+        {/* <div className="w-full bg-white px-4 py-12">
           <div className="container mx-auto">
             <h2 className="mb-6 text-2xl font-bold">Valores</h2>
             <p className="mb-12 max-w-3xl text-gray-600">
@@ -224,7 +224,7 @@ export default function Sobrenos() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <Valores/>
 

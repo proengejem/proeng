@@ -36,25 +36,25 @@ const conferences: ConferenceCard[] = [
     name: "PANAM",
     location: "Buenos Aires",
     flag: "/bandeira argentina.webp",
-    logo: "/logos/panam.svg",
+    logo: "/panam.png",
   },
   {
     name: "18 CNG",
     location: "Portugal",
     flag: "/bandeira de portugal.webp",
-    logo: "/logos/cng.svg",
+    logo: "/18CNG.png",
   },
   {
     name: "GEOMEAST",
     location: "Cairo",
     flag: "/cairo.webp",
-    logo: "/logos/geomeast.svg",
+    logo: "/geomeast.png",
   },
   {
     name: "GEOSUL",
     location: "Brasil",
     flag: "/brasil.jpg",
-    logo: "/logos/geomeast.svg",
+    logo: "/geosul.jpg",
   },
 ];
 
