@@ -40,28 +40,28 @@ const conferences: ConferenceCard[] = [
     location: "Buenos Aires",
     flag: "/bandeira argentina.webp",
     logo: "/panam.png",
-    logo: "/Panam.png",
+    // logo: "/Panam.png",
   },
   {
     name: "18 CNG",
     location: "Portugal",
     flag: "/bandeira de portugal.webp",
     logo: "/18CNG.png",
-    logo: "/18CNG.png",
+    // logo: "/18CNG.png",
   },
   {
     name: "GEOMEAST",
     location: "Cairo",
     flag: "/cairo.webp",
     logo: "/geomeast.png",
-    logo: "/GEOMEAST.jpg",
+    // logo: "/GEOMEAST.jpg",
   },
   {
     name: "GEOSUL",
     location: "Brasil",
     flag: "/brasil.jpg",
     logo: "/geosul.jpg",
-    logo: "/geosul.png",
+    // logo: "/geosul.png",
   },
 ];
 

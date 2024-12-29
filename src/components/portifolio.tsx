@@ -14,8 +14,8 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="border-b bg-white">
+      {/* Navigation */} */
+       <nav className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex-shrink-0">
@@ -69,22 +69,22 @@ export default function Portfolio() {
       {/* Hero Section */}
       <div className="relative h-[200px] w-full overflow-hidden">
         <Image
-          src="/placeholder.svg?height=200&width=1920"
+          src="/headerportifolio.jpg?height=200&width=1920"
           alt="Portfolio header"
           width={1920}
           height={200}
           className="w-full object-cover"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+        {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
           <h1 className="mb-2 text-4xl font-bold">.</h1>
           <p className="text-lg"></p>
-        </div>
+        </div> */}
       </div>
 
       {/* Decorative diagonal line */}
-      <div className="absolute right-0 h-12 w-1/3 -skew-y-6 transform bg-white">
+      {/* <div className="absolute right-0 h-12 w-1/3 -skew-y-6 transform bg-white">
         .
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-12">

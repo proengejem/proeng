@@ -26,7 +26,7 @@ return(
       <a href="/servicos" className="text-gray-600 hover:text-[#006837]" >
         Serviços
       </a>
-      <a href="/obras" className="text-gray-600 hover:text-[#006837]">
+      <a href="/portifolio" className="text-gray-600 hover:text-[#006837]">
         Obras realizadas
       </a>
       <a href="/contato" className="text-gray-600 hover:text-[#006837]">

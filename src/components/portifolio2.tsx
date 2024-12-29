@@ -57,15 +57,15 @@ export default function Portfolio2() {
               </p>
             </div>
 
-            <div className="grid gap-6">
-              <div>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="rounded-lg bg-gray-50 p-6">
                 <h3 className="mb-2 font-bold">Qualidade Garantida</h3>
                 <p className="text-sm text-gray-600">
                   Entregamos resultados excepcionais em todos os projetos que
                   realizamos.
                 </p>
               </div>
-              <div>
+              <div className="rounded-lg bg-gray-50 p-6">
                 <h3 className="mb-2 font-bold">Soluções Personalizadas</h3>
                 <p className="text-sm text-gray-600">
                   Adaptamos nossos serviços para se adequar às sua projeto
