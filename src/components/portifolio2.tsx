@@ -28,7 +28,7 @@ export default function Portfolio2() {
             ) : (
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl">
                 <Image
-                  src="/placeholder.svg"
+                  src="/Estaca Helice.jpeg"
                   alt="Estaca Raíz Project Video"
                   fill
                   className="object-cover"

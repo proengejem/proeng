@@ -12,19 +12,8 @@ export default function PortfolioPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-        <h1 className="mb-2 text-4xl font-bold">Portifólio</h1>
-        <p className="text-lg">
-          Explore nossa variedade de projetos inovadores.
-        </p>
-      </div>
-
-      {/* Decorative diagonal line */}
-      <div className="absolute right-0 h-12 w-1/3 -skew-y-6 transform bg-white"></div>
-
       {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-12">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="grid items-start gap-12 md:grid-cols-2">
           {/* Left Column */}
           <div className="space-y-8">
@@ -81,7 +70,7 @@ export default function PortfolioPage() {
           {/* Right Column - Image/Video Section */}
           <div className="relative">
             {mediaType === "photo" ? (
-              <div className="relative aspect-square overflow-hidden rounded-lg">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl">
                 <Image
                   src="/Estaca Raiz.jpeg"
                   alt="Solo Grampeado Project Photo"
@@ -103,6 +92,16 @@ export default function PortfolioPage() {
               </div>
             )}
           </div>
+        </div>
+        {/* Hero Section */}
+        <div className="relative h-[200px] w-full overflow-hidden">
+          <Image
+            src="/rodapé verde.jpeg?height=200&width=1920"
+            alt="Portfolio header"
+            width={1920}
+            height={200}
+            className="w-full object-cover"
+          />
         </div>
       </div>
     </>
