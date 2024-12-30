@@ -35,18 +35,21 @@ const HeroSectionWithVideo: React.FC = () => {
           {/* Botões */}
           <div className="mt-6 flex space-x-4 justify-center">
           <a href="/sobrenos">
-            <button  className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-500 transition"   style={{ backgroundColor: '#027A48' }} >
+          <button  className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition" >
+          
               Sobre nós
             </button>
           </a>
-          <a href="/contato">
+          <a href="/servicos">
             <button className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
               Contato
             </button>
-          </a>
+            </a>
           </div>
         </div>
       </div>
+      {/* Adiciona espaçamento extra abaixo */}
+  <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
     </section>
   );
 };

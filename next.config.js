@@ -5,6 +5,17 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+// const config = {};
 
-export default config;
+// module.exports = {
+//     images: {
+//       domains: ['proeng-5r0c5koj2-proengs-projects.vercel.app'],
+//     },
+//   };
+//   module.exports = config;
+
+  export default {
+    images: {
+      domains: ['proeng-5r0c5koj2-proengs-projects.vercel.app'],
+    },
+  };

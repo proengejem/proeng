@@ -3,20 +3,22 @@ import Image from "next/image";
 
 interface FeatureProps {
   icon: React.ReactNode;
-  title: string;
-  description: string;
-  linkText: string;
+  title: string | undefined;
+  description: string | undefined;
+  linkText: string | undefined;
   //linkUrl: string;
 }
 
-const Feature: React.FC<FeatureProps> = ({ icon, title, description, linkText }) => {
+const Feature: React.FC<FeatureProps> = ({ icon, title, description }) => {
   return (
     <div className="flex items-start space-x-4 w-full">
       <div className="text-green-600 text-3xl">{icon}</div>
       <div className="w-full">
-        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        <h3 className="text-lg font-semibold text-green-800" style={{ color: '#027A48' }}>{title}</h3>
+        <p className="text-black text-sm mb-2">{description}</p>
+        {/*<h3 className="text-lg font-semibold text-gray-800">{title}</h3>
         <p className="text-gray-600 text-sm mb-2">{description}</p>
-        {/* <a
+         <a
           href={linkUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -66,11 +68,11 @@ const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section className="relative z-50 py-12 h-[80vh] flex items-center overflow-hidden">
+    <section className="relative z-50 py-12 flex items-center overflow-hidden">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
         {/* Image Section */}
         <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">
-          <div className="rounded-2xl shadow-2xl overflow-hidden">
+<div className="rounded-xl md:rounded-2xl shadow-lg md:shadow-2xl overflow-hidden">
             <Image
               src="/image.png" // Substituir pelo caminho correto da imagem
               alt="Sobre a Proeng"
@@ -86,36 +88,36 @@ const AboutSection: React.FC = () => {
           {/* Grupo de Empresa e Processos na mesma linha */}
           <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
             <Feature
-              icon={features[0].icon}
-              title={features[0].title}
-              description={features[0].description}
-              linkText={features[0].linkText}
-              // linkUrl={features[0].linkUrl}
+              icon={features[0]?.icon}
+              title={features[0]?.title ?? ''}
+              description={features[0]?.description}
+              linkText={features[0]?.linkText}
+              // linkUrl={features[0]?.linkUrl}
             />
             <Feature
-              icon={features[1].icon}
-              title={features[1].title}
-              description={features[1].description}
-              linkText={features[1].linkText}
-              // linkUrl={features[1].linkUrl}
+              icon={features[1]?.icon}
+              title={features[1]?.title ?? ''}
+              description={features[1]?.description}
+              linkText={features[1]?.linkText}
+              // linkUrl={features[1]?.linkUrl}
             />
           </div>
 
           {/* Equipamentos e Equipe abaixo */}
           <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
             <Feature
-              icon={features[2].icon}
-              title={features[2].title}
-              description={features[2].description}
-              linkText={features[2].linkText}
-              // linkUrl={features[2].linkUrl}
+              icon={features[2]?.icon}
+              title={features[2]?.title ?? ''}
+              description={features[2]?.description}
+              linkText={features[2]?.linkText}
+              // linkUrl={features[2]?.linkUrl}
             />
             <Feature
-              icon={features[3].icon}
-              title={features[3].title}
-              description={features[3].description}
-              linkText={features[3].linkText}
-              // linkUrl={features[3].linkUrl}
+              icon={features[3]?.icon}
+              title={features[3]?.title ?? ''}
+              description={features[3]?.description}
+              linkText={features[3]?.linkText}
+              // linkUrl={features[3]?.linkUrl}
             />
           </div>
         </div>
@@ -125,4 +127,3 @@ const AboutSection: React.FC = () => {
 };
 
 export default AboutSection;
-

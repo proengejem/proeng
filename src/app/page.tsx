@@ -1,10 +1,10 @@
 import Link from "next/link";
-import Sobrenos from "~/app/sobrenos/page";
+import Home from "~/app/home/page";
 
 export default function Homepage() {
   return (
     <>
-      <Sobrenos />
+      <Home />
     </>
   );
 }
