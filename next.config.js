@@ -13,4 +13,4 @@ module.exports = {
     },
   };
 
-export default config;
+  module.exports = config;
