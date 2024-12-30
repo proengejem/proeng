@@ -4,6 +4,46 @@ import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { useState } from "react";
 
+type ImageProps = {
+  url?: string;
+  src: string;
+  alt?: string;
+};
+
+type Links = {
+  title: string;
+  url: string;
+  icon?: React.ReactNode;
+};
+
+type ColumnLinks = {
+  title: string;
+  links: Links[];
+};
+type Column = {
+  title: string;
+  text: string[];
+};
+
+type FooterLink = {
+  title: string;
+  url: string;
+};
+
+type Props = {
+  logo: ImageProps;
+  newsletterDescription: string;
+  inputPlaceholder?: string;
+  button: ButtonProps;
+  termsAndConditions: string;
+  columnLinks: ColumnLinks[];
+  column: Column[];
+  footerText: string;
+  footerLinks: FooterLink[];
+};
+
+export type Footer1Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
+
 export const Footer1 = (props: Footer1Props) => {
   const {
     logo,
@@ -179,4 +219,3 @@ export const Footer1Defaults: Props = {
   ],
   footerText: "© 2024 Proeng. Todos os direitos reservados.",
 };
-
