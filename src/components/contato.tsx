@@ -63,7 +63,7 @@ export const Contato = (props: Footer1Props) => {
   } = { ...ContatoDefaults, ...props };
 
   return (
-     <section className="relative z-50 py-12 h-[80vh] flex items-center overflow-hidden">
+     <section className="relative z-50 py-12  flex items-center overflow-hidden">
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
             {/* Image Section */}
             <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">

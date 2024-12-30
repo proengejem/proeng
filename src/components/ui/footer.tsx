@@ -3,6 +3,13 @@
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { useState } from "react";
+import {
+  BiLogoFacebookCircle,
+  BiLogoInstagram,
+  BiLogoLinkedinSquare,
+  BiLogoYoutube,
+  BiLogoWhatsapp,
+} from "react-icons/bi";
 
 type ImageProps = {
   url?: string;
@@ -208,7 +215,11 @@ export const Footer1Defaults: Props = {
     {
       title: "Siga-nos",
       links: [
-        //{ title: "Whatsapp", url: "#", icon: <BiLogoWhatsapp className="size-6" /> },
+        { title: "Facebook", url: "https://www.facebook.com/proengg/?locale=pt_BR", icon: <BiLogoFacebookCircle className="size-6" /> },
+        { title: "Instagram", url: "https://www.instagram.com/proeng_geotecnia/", icon: <BiLogoInstagram className="size-6" /> },
+        { title: "LinkedIn", url: "https://www.linkedin.com/company/proeng-geotecnia/?originalSubdomain=br", icon: <BiLogoLinkedinSquare className="size-6" /> },
+        { title: "Youtube", url: "https://www.youtube.com/channel/UCe4V9_T872AFbg4PVWtrJfw", icon: <BiLogoYoutube className="size-6" /> },
+        { title: "Whatsapp", url: "#", icon: <BiLogoWhatsapp className="size-6" /> },
       ],
     },
   ],

@@ -7,4 +7,13 @@
   }
 }
 
-
+/* Para telas menores que 768px */
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+      padding: 10px;
+  }
+  .menu {
+      display: none;
+  }
+}
