@@ -1,9 +1,6 @@
-//import { Metadata } from 'next';
-//import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 
 export default async function ServicoIndivPage() {
-  //console.log('Slug recebido:', params.slug);
 
   const service = {
     title: 'Carregando...',
