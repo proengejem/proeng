@@ -189,11 +189,11 @@ export const Footer1Defaults: Props = {
     {
       title: "Páginas",
       links: [
-        { title: "Home", url: "#" },
-        { title: "Empresa", url: "#" },
-        { title: "Serviços", url: "#" },
-        { title: "Obras realizadas", url: "#" },
-        { title: "Contato", url: "#" },
+        { title: "Home", url: "/home" },
+        { title: "Empresa", url: "/sobrenos" },
+        { title: "Serviços", url: "/servicos" },
+        { title: "Obras realizadas", url: "/portifolio" },
+        { title: "Contato", url: "/contato" },
       ],
     },
     {
