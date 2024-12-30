@@ -2,68 +2,16 @@
 
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
-import { Textarea } from "@/components/ui/textarea"
-
-import { FaXTwitter } from "react-icons/fa6";
-import {
-  BiLogoFacebookCircle,
-  BiLogoInstagram,
-  BiLogoLinkedinSquare,
-  BiLogoYoutube,
-  BiLogoWhatsapp,
-} from "react-icons/bi";
 import { useState } from "react";
-
-type ImageProps = {
-  url?: string;
-  src: string;
-  alt?: string;
-};
-
-type Links = {
-  title: string;
-  url: string;
-  icon?: React.ReactNode;
-};
-
-type ColumnLinks = {
-  title: string;
-  links: Links[];
-};
-type Column = {
-  title: string;
-  text: string[];
-};
-
-type FooterLink = {
-  title: string;
-  url: string;
-};
-
-type Props = {
-  logo: ImageProps;
-  newsletterDescription: string;
-  inputPlaceholder?: string;
-  button: ButtonProps;
-  termsAndConditions: string;
-  columnLinks: ColumnLinks[];
-  column: Column[];
-  footerText: string;
-  footerLinks: FooterLink[];
-};
-
-export type Footer1Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
 export const Footer1 = (props: Footer1Props) => {
   const {
     logo,
     newsletterDescription,
-    inputPlaceholder,
     button,
     termsAndConditions,
     columnLinks,
     footerText,
-    footerLinks,
   } = {
     ...Footer1Defaults,
     ...props,
@@ -80,7 +28,6 @@ export const Footer1 = (props: Footer1Props) => {
       mensagemInput,
     });
   };
-
 
   return (
     <footer>
@@ -180,15 +127,24 @@ export const Footer1Defaults: Props = {
     variant: "secondary",
     size: "sm",
   },
-  // termsAndConditions: `
-  // <p class='text-xs'>
-  //   By subscribing you agree to with our
-  //   <a href='#' class='underline'>Privacy Policy</a>
-  //   and provide consent to receive updates from our company.
-  // </p>
-  // `,
+  termsAndConditions: `
+  <p class='text-xs'>
+    By subscribing you agree to with our
+    <a href='#' class='underline'>Privacy Policy</a>
+    and provide consent to receive updates from our company.
+  </p>
+  `,
 
-
+  column: [
+    {
+      title: "Column 1",
+      text: ["Text 1", "Text 2"],
+    },
+    {
+      title: "Column 2",
+      text: ["Text 3", "Text 4"],
+    },
+  ],
   columnLinks: [
     {
       title: "Páginas",
@@ -212,18 +168,15 @@ export const Footer1Defaults: Props = {
     {
       title: "Siga-nos",
       links: [
-        { title: "Facebook", url: "https://www.facebook.com/proengg/?locale=pt_BR", icon: <BiLogoFacebookCircle className="size-6" /> },
-        { title: "Instagram", url: "https://www.instagram.com/proeng_geotecnia/", icon: <BiLogoInstagram className="size-6" /> },
-        { title: "LinkedIn", url: "https://www.linkedin.com/company/proeng-geotecnia/?originalSubdomain=br", icon: <BiLogoLinkedinSquare className="size-6" /> },
-        { title: "Youtube", url: "https://www.youtube.com/channel/UCe4V9_T872AFbg4PVWtrJfw", icon: <BiLogoYoutube className="size-6" /> },
         //{ title: "Whatsapp", url: "#", icon: <BiLogoWhatsapp className="size-6" /> },
       ],
     },
   ],
+  footerLinks: [
+    { title: "Política de Privacidade", url: "#" },
+    { title: "Termos de Serviço", url: "#" },
+    { title: "Configurações de Cookies", url: "#" },
+  ],
   footerText: "© 2024 Proeng. Todos os direitos reservados.",
-  // footerLinks: [
-  //   { title: "Política de Privacidade", url: "#" },
-  //   { title: "Termos de Serviço", url: "#" },
-  //   { title: "Configurações de Cookies", url: "#" },
-  // ],
 };
+
