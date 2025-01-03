@@ -3,15 +3,15 @@ import Image from 'next/image';
 
 export default function Servicos() {
     const services = [
-        { title: 'Solo Grampeado', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/SoloGrampeado.png', link: '/servicos/solo-grampeado' },
-        { title: 'Concreto Projetado', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/ConcretoProj.png', link: '#' },
-        { title: 'Hélice Contínua Monitorada', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/HéliceContM.png', link: '#' },
-        { title: 'Estaca Tipo Raiz', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/EstacasTpRaiz.png', link: '#' },
-        { title: 'Micro Estacas Injetadas', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/MicroEstacasInj.png', link: '#' },
-        { title: 'Injeções de Consolidação', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/InjeçõesConsolid.png', link: '#' },
-        { title: 'Dreno Sub-Horizontal Profundo', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/DHP.png', link: '#' },
-        { title: 'Tirantes', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: '/Tirante.png', link: '#' },
-    ];
+        { title: 'Solo Grampeado', description: "Lorem ipsum dolor sit amet...", image: '/SoloGrampeado.png', link: '/servicos/solo-grampeado' },
+        { title: 'Concreto Projetado', description: "Lorem ipsum dolor sit amet...", image: '/ConcretoProj.png', link: '/servicos/concreto-projetado' },
+        { title: 'Hélice Contínua Monitorada', description: "Lorem ipsum dolor sit amet...", image: '/HéliceContM.png', link: '/servicos/helice-continua-monitorada' },
+        { title: 'Estaca Tipo Raiz', description: "Lorem ipsum dolor sit amet...", image: '/EstacasTpRaiz.png', link: '/servicos/estaca-tipo-raiz' },
+        { title: 'Micro Estacas Injetadas', description: "Lorem ipsum dolor sit amet...", image: '/MicroEstacasInj.png', link: '/servicos/micro-estacas-injetadas' },
+        { title: 'Injeções de Consolidação', description: "Lorem ipsum dolor sit amet...", image: '/InjeçõesConsolid.png', link: '/servicos/injecoes-de-consolidacao' },
+        { title: 'Dreno Sub-Horizontal Profundo', description: "Lorem ipsum dolor sit amet...", image: '/DHP.png', link: '/servicos/d-h-p' },
+        { title: 'Tirantes', description: "Lorem ipsum dolor sit amet...", image: '/Tirante.png', link: '/servicos/tirante' },
+    ];    
 
     return (
         <div>

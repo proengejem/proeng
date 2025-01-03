@@ -56,28 +56,32 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <div className="flex space-x-4">
-              <button
-                onClick={() => setMediaType("photo")}
-                className={`rounded border px-6 py-2 transition-colors ${
-                  mediaType === "photo"
-                    ? "border-emerald-800 bg-emerald-800 text-white"
-                    : "border-gray-300 hover:bg-gray-50"
-                }`}
-              >
-                Fotos
-              </button>
-              <button
-                onClick={() => setMediaType("video")}
-                className={`rounded border px-6 py-2 transition-colors ${
-                  mediaType === "video"
-                    ? "border-emerald-800 bg-emerald-800 text-white"
-                    : "border-gray-300 hover:bg-gray-50"
-                }`}
-              >
-                Vídeos
-              </button>
-            </div>
+<div className="flex space-x-4">
+  <Link
+    href={{
+      pathname: "/portifolioindiv", // Nome da página do segundo código
+      query: { title: "Solo Grampeado" }, // Passa o título como parâmetro
+    }}
+    className={`rounded border px-6 py-2 transition-colors ${
+      mediaType === "photo"
+        ? "border-emerald-800 bg-emerald-800 text-white"
+        : "border-gray-300 hover:bg-gray-50"
+    }`}
+  >
+    Fotos
+  </Link>
+  <button
+    onClick={() => setMediaType("video")}
+    className={`rounded border px-6 py-2 transition-colors ${
+      mediaType === "video"
+        ? "border-emerald-800 bg-emerald-800 text-white"
+        : "border-gray-300 hover:bg-gray-50"
+    }`}
+  >
+    Vídeos
+  </button>
+</div>
+
           </div>
 
           {/* Right Column - Image/Video Section */}

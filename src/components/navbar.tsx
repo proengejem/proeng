@@ -30,7 +30,7 @@ return(
       <a href="/sobrenos" className="text-gray-600 hover:text-[#006837]">
         Empresa
       </a>
-      <a href="#" className="text-gray-600 hover:text-[#006837]" >
+      <a href="/servicos" className="text-gray-600 hover:text-[#006837]" >
         Serviços
       </a>
       <a href="#" className="text-gray-600 hover:text-[#006837]">

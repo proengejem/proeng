@@ -2,13 +2,13 @@
 
 import { Footer1 }  from "~/components/ui/footer";
 import Navbar  from "~/components/navbar";
-import Servicos  from "~/components/servicosgeral";
+import Servicosindv  from "~/components/servicosindv";
 
-const  ServicoPage: React.FC = () => {
+const  ServicoindvPage: React.FC = () => {
   return (
     <div>
     <Navbar />
-    <Servicos />
+   
     
     <Footer1 />
 
@@ -16,4 +16,4 @@ const  ServicoPage: React.FC = () => {
   );
 };
 
-export default ServicoPage;
+export default ServicoindvPage;
