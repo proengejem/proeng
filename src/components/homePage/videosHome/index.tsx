@@ -67,10 +67,10 @@ const SolutionsSection: React.FC = () => {
     <div className="py-12 ">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl font-bold text-center text-green-700 mb-4" style={{ color: '#027A48' }}>
-          Algumas de nossas soluções entregues
+          Serviços
         </h2>
         <p className="text-center text-gray-600 mb-8">
-          Explore nossos projetos e serviços realizados.
+          Explore os serviços  de excelência realizados pela Proeng Geotécnica
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {videos.map((video, index) => (

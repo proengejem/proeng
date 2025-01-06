@@ -17,8 +17,8 @@ return(
     <Image
       src="/ProengLogo.png"
       alt="Proeng Engenharia"
-      width={300}
-      height={250}
+      width={400}
+      height={350}
       className="mb-6"
     />
             {/* Links de navegação - visíveis em telas maiores */}

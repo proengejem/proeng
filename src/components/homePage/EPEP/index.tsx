@@ -76,8 +76,8 @@ const AboutSection: React.FC = () => {
             <Image
               src="/image.png" // Substituir pelo caminho correto da imagem
               alt="Sobre a Proeng"
-              width={500}
-              height={300}
+              width={700}
+              height={500}
               className="w-full h-auto object-cover"
             />
           </div>
