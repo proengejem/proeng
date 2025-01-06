@@ -116,6 +116,12 @@ export const Contato = (props: Footer1Props) => {
 
 // Default props for the component
 export const ContatoDefaults: Props = {
+  column: [
+    {
+      title: "Column Title",
+      text: ["Column text line 1", "Column text line 2"],
+    },
+  ],
   logo: {
     url: "#",
     src: "https://d22po4pjz3o32e.cloudfront.net/logo-image.svg",

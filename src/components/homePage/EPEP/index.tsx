@@ -3,13 +3,13 @@ import Image from "next/image";
 
 interface FeatureProps {
   icon: React.ReactNode;
-  title: string;
-  description: string;
-  linkText: string;
+  title: string | undefined;
+  description: string | undefined;
+  linkText: string | undefined;
   //linkUrl: string;
 }
 
-const Feature: React.FC<FeatureProps> = ({ icon, title, description, linkText }) => {
+const Feature: React.FC<FeatureProps> = ({ icon, title, description }) => {
   return (
     <div className="flex items-start space-x-4 w-full">
       <div className="text-green-600 text-3xl">{icon}</div>
@@ -88,36 +88,36 @@ const AboutSection: React.FC = () => {
           {/* Grupo de Empresa e Processos na mesma linha */}
           <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
             <Feature
-              icon={features[0].icon}
-              title={features[0].title}
-              description={features[0].description}
-              linkText={features[0].linkText}
-              // linkUrl={features[0].linkUrl}
+              icon={features[0]?.icon}
+              title={features[0]?.title ?? ''}
+              description={features[0]?.description}
+              linkText={features[0]?.linkText}
+              // linkUrl={features[0]?.linkUrl}
             />
             <Feature
-              icon={features[1].icon}
-              title={features[1].title}
-              description={features[1].description}
-              linkText={features[1].linkText}
-              // linkUrl={features[1].linkUrl}
+              icon={features[1]?.icon}
+              title={features[1]?.title ?? ''}
+              description={features[1]?.description}
+              linkText={features[1]?.linkText}
+              // linkUrl={features[1]?.linkUrl}
             />
           </div>
 
           {/* Equipamentos e Equipe abaixo */}
           <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
             <Feature
-              icon={features[2].icon}
-              title={features[2].title}
-              description={features[2].description}
-              linkText={features[2].linkText}
-              // linkUrl={features[2].linkUrl}
+              icon={features[2]?.icon}
+              title={features[2]?.title ?? ''}
+              description={features[2]?.description}
+              linkText={features[2]?.linkText}
+              // linkUrl={features[2]?.linkUrl}
             />
             <Feature
-              icon={features[3].icon}
-              title={features[3].title}
-              description={features[3].description}
-              linkText={features[3].linkText}
-              // linkUrl={features[3].linkUrl}
+              icon={features[3]?.icon}
+              title={features[3]?.title ?? ''}
+              description={features[3]?.description}
+              linkText={features[3]?.linkText}
+              // linkUrl={features[3]?.linkUrl}
             />
           </div>
         </div>
