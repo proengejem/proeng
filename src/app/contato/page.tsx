@@ -5,6 +5,19 @@ import StyledBar from "~/components/homePage/divisorAssimetrico";
 import Introducao_1 from "~/components/Itroducao_1";
 import Rodapecontato from "~/components/rodapecontato";
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contato - ProEng',
+  description: 'Entre em contato conosco para saber mais sobre nossos serviços e tirar suas dúvidas.',
+  keywords: ['contato', 'engenharia', 'ProEng', 'atendimento'],
+  // openGraph: {
+  //   title: 'Contato - ProEng',
+  //   description: 'Entre em contato conosco para saber mais sobre nossos serviços e tirar suas dúvidas.',
+  //   url: 'https://www.proeng.com/contato',
+  //   images: [{ url: '/images/contato-og-image.png', alt: 'Imagem de Contato' }],
+  // },
+};
 
 const contato: React.FC = () => {
     return (

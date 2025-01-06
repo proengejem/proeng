@@ -44,7 +44,7 @@ export default function PortfolioPage() {
             </div>
 
             <div className="flex space-x-4">
-              <button
+              {/* <button
                 onClick={() => setMediaType("photo")}
                 className={`rounded border px-6 py-2 transition-colors ${
                   mediaType === "photo"
@@ -53,8 +53,13 @@ export default function PortfolioPage() {
                 }`}
               >
                 Fotos
-              </button>
-              <button
+              </button> */}
+               <a href="/portifolio.obras">
+            <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
+              Fotos
+            </button>
+            </a>
+              {/* <button
                 onClick={() => setMediaType("video")}
                 className={`rounded border px-6 py-2 transition-colors ${
                   mediaType === "video"
@@ -63,7 +68,12 @@ export default function PortfolioPage() {
                 }`}
               >
                 Vídeos
-              </button>
+              </button> */}
+                  <a href="https://www.youtube.com/playlist?list=PLnLPCcEY60IA3AZL_Cj5l_MQTsoxdIXUF">
+            <button className="rounded border px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
+              Vídeos
+            </button>
+            </a>
             </div>
           </div>
 
@@ -94,14 +104,14 @@ export default function PortfolioPage() {
           </div>
         </div>
         {/* Hero Section */}
-        <div className="relative h-[200px] w-full overflow-hidden">
-          <Image
+        <div className="relative h-[100px] w-full overflow-hidden">
+          {/* <Image
             src="/rodapé verde.jpeg?height=200&width=1920"
             alt="Portfolio header"
             width={1920}
             height={200}
             className="w-full object-cover"
-          />
+          /> */}
         </div>
       </div>
     </>

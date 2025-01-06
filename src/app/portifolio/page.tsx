@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import Numero from "~/components/numeros";
@@ -10,6 +9,19 @@ import Portifolio3 from "~/components/portifolio3";
 import Contatos from "~/components/contatos";
 import { Footer1 }  from "~/components/ui/footer";
 import Navbar  from "~/components/navbar";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Portfólio de Obras - ProEng',
+  description: 'Veja nosso portfólio de projetos e obras concluídas com excelência.',
+  keywords: ['portfólio', 'obras', 'projetos', 'engenharia', 'solo grampeado'],
+  // openGraph: {
+  //   title: 'Portfólio de Obras - ProEng',
+  //   description: 'Veja nosso portfólio de projetos e obras concluídas com excelência.',
+  //   url: 'https://www.proeng.com/portifolio',
+  //   images: [{ url: '/images/portfolio-og-image.png', alt: 'Imagem do Portfólio' }],
+  // },
+};
 
 export default function Sobrenos() {
   return (

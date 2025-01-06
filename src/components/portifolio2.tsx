@@ -75,7 +75,7 @@ export default function Portfolio2() {
             </div>
 
             <div className="flex space-x-4">
-              <button
+              {/* <button
                 onClick={() => setMediaType("photo")}
                 className={`rounded-lg border px-6 py-2 transition-colors ${
                   mediaType === "photo"
@@ -84,8 +84,13 @@ export default function Portfolio2() {
                 }`}
               >
                 Fotos
-              </button>
-              <button
+              </button> */}
+               <a href="/portifolio.obras">
+            <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
+              Fotos
+            </button>
+            </a>
+              {/* <button
                 onClick={() => setMediaType("video")}
                 className={`rounded-lg border px-6 py-2 transition-colors ${
                   mediaType === "video"
@@ -94,7 +99,13 @@ export default function Portfolio2() {
                 }`}
               >
                 Vídeos
-              </button>
+              </button> */}
+                     
+          <a href="https://www.youtube.com/playlist?list=PLnLPCcEY60IDsYO4a8NxMUaiRoNdUxbdG">
+            <button className="rounded border px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
+              Vídeos
+            </button>
+            </a>
             </div>
           </div>
         </div>
