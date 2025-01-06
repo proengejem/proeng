@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const HeroSectionWithVideo: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const HeroSectionWithVideo: React.FC = () => {
           {/* Título */}
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Construindo qualidade e confiança desde{" "}
-            <span  style={{ color: '#027A48' }} >2006</span>
+            <span style={{ color: "#027A48" }}>2006</span>
           </h1>
           {/* Descrição */}
           <p className="mt-2 text-base md:text-lg">
@@ -34,26 +35,36 @@ const HeroSectionWithVideo: React.FC = () => {
           </p>
           {/* Botões */}
           <div className="mt-6 flex space-x-4 justify-center">
-          <a href="/sobrenos">
-          <button  className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition" >
-          
-              Sobre nós
-            </button>
-          </a>
-          <a href="/servicos">
-            <button className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
-              Contato
-            </button>
+            <a href="/sobrenos">
+              <button className="flex items-center px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
+                {/* Logo dentro do botão */}
+                <Image
+                  src="/ProengLogo.png"
+                  alt="Logo da Proeng"
+                  width={50}
+                  height={50}
+                  className="mr-2"
+                />
+              </button>
+            </a>
+            <a href="/servicos">
+              <button
+                className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition"
+                style={{ color: "#027A48" }}
+              >
+                Contato
+              </button>
             </a>
           </div>
         </div>
       </div>
       {/* Adiciona espaçamento extra abaixo */}
-  <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
+      <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
     </section>
   );
 };
 
 export default HeroSectionWithVideo;
+
 
 
