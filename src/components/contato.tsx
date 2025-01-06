@@ -63,7 +63,7 @@ export const Contato = (props: Footer1Props) => {
   } = { ...ContatoDefaults, ...props };
 
   return (
-     <section className="relative z-50 py-12 h-[80vh] flex items-center overflow-hidden">
+     <section className="relative z-50 py-12  flex items-center overflow-hidden">
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
             {/* Image Section */}
             <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">
@@ -157,7 +157,7 @@ export const ContatoDefaults: Props = {
         { title: "Instagram", url: "https://www.instagram.com/proeng_geotecnia/", icon: <BiLogoInstagram className="size-6" /> },
         { title: "LinkedIn", url: "https://www.linkedin.com/company/proeng-geotecnia/?originalSubdomain=br", icon: <BiLogoLinkedinSquare className="size-6" /> },
         { title: "Youtube", url: "https://www.youtube.com/channel/UCe4V9_T872AFbg4PVWtrJfw", icon: <BiLogoYoutube className="size-6" /> },
-        { title: "Whatsapp", url: "#", icon: <BiLogoWhatsapp className="size-6" /> },
+        { title: "Whatsapp", url: "https://wa.me/551143197888?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços!", icon: <BiLogoWhatsapp className="size-6" /> },
       ],
     },
   ],

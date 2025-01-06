@@ -6,6 +6,7 @@ import { Play } from "lucide-react";
 import { useState } from "react";
 import ProengLogo from "public/ProengLogo.png";
 import SoloGrampeado from "public/Solo Grampeado.jpeg";
+import PortifolioHeader from "public/portifolio header.png";
 
 type MediaType = "photo" | "video";
 
@@ -14,78 +15,16 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */} */
-       <nav className="border-b bg-white">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex-shrink-0">
-              <Image
-                src="/ProengLogo.png"
-                alt="Proeng Geotecnia"
-                width={120}
-                height={40}
-                className="h-10 w-auto"
-              />
-            </div>
-            <div className="hidden space-x-8 md:flex">
-              <Link href="/" className="text-gray-700 hover:text-gray-900">
-                Home
-              </Link>
-              <Link
-                href="/empresa"
-                className="text-gray-700 hover:text-gray-900"
-              >
-                Empresa
-              </Link>
-              <Link
-                href="/servicos"
-                className="text-gray-700 hover:text-gray-900"
-              >
-                Serviços
-              </Link>
-              <Link
-                href="/obras-executadas"
-                className="text-gray-700 hover:text-gray-900"
-              >
-                Obras Executadas
-              </Link>
-              <Link
-                href="/videos"
-                className="text-gray-700 hover:text-gray-900"
-              >
-                Vídeos
-              </Link>
-              <Link
-                href="/contato"
-                className="text-gray-700 hover:text-gray-900"
-              >
-                Contato
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <div className="relative h-[200px] w-full overflow-hidden">
         <Image
-          src="/headerportifolio.jpg?height=200&width=1920"
+          src="/portifolio header.png?height=200&width=1920"
           alt="Portfolio header"
           width={1920}
           height={200}
           className="w-full object-cover"
         />
-        {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-          <h1 className="mb-2 text-4xl font-bold">.</h1>
-          <p className="text-lg"></p>
-        </div> */}
       </div>
-
-      {/* Decorative diagonal line */}
-      {/* <div className="absolute right-0 h-12 w-1/3 -skew-y-6 transform bg-white">
-        .
-      </div> */}
-
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid items-start gap-12 md:grid-cols-2">
@@ -118,7 +57,7 @@ export default function Portfolio() {
             </div>
 
             <div className="flex space-x-4">
-              <button
+              {/* <button
                 onClick={() => setMediaType("photo")}
                 className={`rounded border px-6 py-2 transition-colors ${
                   mediaType === "photo"
@@ -127,8 +66,17 @@ export default function Portfolio() {
                 }`}
               >
                 Fotos
-              </button>
-              <button
+              </button> */}
+
+                <Link href={{
+      pathname: "/portifolioindiv", // Nome da página do segundo código
+      query: { title: "Solo Grampeado" }, // Passa o título como parâmetro
+    }}>
+            <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
+              Fotos
+            </button>
+            </Link>
+              {/* <button
                 onClick={() => setMediaType("video")}
                 className={`rounded border px-6 py-2 transition-colors ${
                   mediaType === "video"
@@ -137,16 +85,24 @@ export default function Portfolio() {
                 }`}
               >
                 Vídeos
-              </button>
+              </button> */}
+              
+          <a href="https://www.youtube.com/playlist?list=PLnLPCcEY60IAok3QEttHV3Mkxj87koWqk">
+            <button className="rounded border px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
+              Vídeos
+            </button>
+            </a>
+
+              
             </div>
           </div>
 
           {/* Right Column - Image/Video Section */}
           <div className="relative">
             {mediaType === "photo" ? (
-              <div className="relative aspect-square overflow-hidden rounded-lg">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl">
                 <Image
-                  src="/Solo Grampeado.jpeg"
+                  src="/Estaca Raiz.jpeg"
                   alt="Solo Grampeado Project Photo"
                   fill
                   className="object-cover"

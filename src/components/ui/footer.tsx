@@ -3,6 +3,13 @@
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { useState } from "react";
+import {
+  BiLogoFacebookCircle,
+  BiLogoInstagram,
+  BiLogoLinkedinSquare,
+  BiLogoYoutube,
+  BiLogoWhatsapp,
+} from "react-icons/bi";
 
 type ImageProps = {
   url?: string;
@@ -51,7 +58,7 @@ export const Footer1 = (props: Footer1Props) => {
     button,
     termsAndConditions,
     columnLinks,
-    footerText, 
+    footerText,
   } = {
     ...Footer1Defaults,
     ...props,
@@ -68,7 +75,6 @@ export const Footer1 = (props: Footer1Props) => {
       mensagemInput,
     });
   };
-
 
   return (
     <footer>
@@ -176,7 +182,6 @@ export const Footer1Defaults: Props = {
   </p>
   `,
 
-
   column: [
     {
       title: "Column 1",
@@ -191,11 +196,11 @@ export const Footer1Defaults: Props = {
     {
       title: "Páginas",
       links: [
-        { title: "Home", url: "#" },
-        { title: "Empresa", url: "#" },
-        { title: "Serviços", url: "#" },
-        { title: "Obras realizadas", url: "#" },
-        { title: "Contato", url: "#" },
+        { title: "Home", url: "/home" },
+        { title: "Empresa", url: "/sobrenos" },
+        { title: "Serviços", url: "/servicos" },
+        { title: "Obras realizadas", url: "/portifolio" },
+        { title: "Contato", url: "/contato" },
       ],
     },
     {
@@ -210,7 +215,11 @@ export const Footer1Defaults: Props = {
     {
       title: "Siga-nos",
       links: [
-        //{ title: "Whatsapp", url: "#", icon: <BiLogoWhatsapp className="size-6" /> },
+        { title: "Facebook", url: "https://www.facebook.com/proengg/?locale=pt_BR", icon: <BiLogoFacebookCircle className="size-6" /> },
+        { title: "Instagram", url: "https://www.instagram.com/proeng_geotecnia/", icon: <BiLogoInstagram className="size-6" /> },
+        { title: "LinkedIn", url: "https://www.linkedin.com/company/proeng-geotecnia/?originalSubdomain=br", icon: <BiLogoLinkedinSquare className="size-6" /> },
+        { title: "Youtube", url: "https://www.youtube.com/channel/UCe4V9_T872AFbg4PVWtrJfw", icon: <BiLogoYoutube className="size-6" /> },
+        { title: "Whatsapp", url: "https://wa.me/551143197888?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços!", icon: <BiLogoWhatsapp className="size-6" /> },
       ],
     },
   ],

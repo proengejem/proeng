@@ -48,6 +48,8 @@ const HeroSectionWithVideo: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Adiciona espaçamento extra abaixo */}
+  <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
     </section>
   );
 };
