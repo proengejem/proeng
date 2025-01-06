@@ -8,18 +8,6 @@ import {
 } from "~/components/ui/carousel"; // Corrigido para caminho relativo
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
-import LOGOBR from "~/public/cobramseg.png";
-import LOGOEG from "~/public/fundosobrenos.png";
-import LOGOAR from "~/public/fundosobrenos.png";
-import LOGOPT from "~/public/fundosobrenos.png";
-import BandeiraBR from "~/public/brasil.jpg";
-import BandeiraAR from "~/public/bandeira argentina.webp";
-import BandehriaPT from "~/public/bandeira de portugal.webp";
-import BandeiraEG from "~/public/cairo.webp";
-import CNG from "~/public/18CNG.png";
-import GEOMEAST from "~/public/GEOMEAST.jpg";
-import GEOSUL from "~/public/geosul.png";
-import PANAM from "~/public/Panam.png";
 
 interface ConferenceCard {
   name: string;

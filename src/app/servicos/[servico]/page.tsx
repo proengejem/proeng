@@ -44,7 +44,7 @@ const projects: Project[] = [
     description: "O solo grampeado é uma técnica de estabilização de taludes e encostas que consiste na instalação de grampos de aço ou fibra de vidro, ancorados no terreno e conectados a uma tela de aço ou fibra de vidro.",
     link: "#",
     image:["/images/obra1.jpg" , "/images/obra1.jpg" ] 
-  }
+  },
   {
     servico: "estaca-raiz",
     name: "Solo Grampeado",
@@ -95,7 +95,7 @@ const projects: Project[] = [
       {projects.length > 0 ? (
                     projects.map((project) => (          <div key={project.servico} className="border rounded shadow-sm p-4">
             <img
-              src={project.image}
+              src={project.image[0]}
               alt={project.name}
               className="w-full h-48 object-cover rounded"
             />
