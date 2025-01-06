@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Play } from "lucide-react";
 import { useState } from "react";
 import EstacaRaiz from "public/Estaca Raiz.jpeg";
@@ -18,7 +19,7 @@ export default function PortfolioPage() {
           {/* Left Column */}
           <div className="space-y-8">
             <div>
-              <h2 className="mb-4 text-3xl font-bold">Solo Grampeado</h2>
+              <h2 className="mb-4 text-3xl font-bold">Estaca Hélice Contínua Monitorada</h2>
               <p className="mb-6 text-gray-600">
                 Nossos serviços são projetados para atender às suas necessidades
                 específicas. Experimente a eficiência e a qualidade que
@@ -54,11 +55,14 @@ export default function PortfolioPage() {
               >
                 Fotos
               </button> */}
-               <a href="/portifolio.obras">
+                <Link href={{
+      pathname: "/portifolioindiv", // Nome da página do segundo código
+      query: { title: "Estaca Hélice Contínua Monitorada" }, // Passa o título como parâmetro
+    }}>
             <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
               Fotos
             </button>
-            </a>
+            </Link>
               {/* <button
                 onClick={() => setMediaType("video")}
                 className={`rounded border px-6 py-2 transition-colors ${

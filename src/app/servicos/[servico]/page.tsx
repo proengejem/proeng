@@ -1,17 +1,21 @@
 "use client";
 import { useRouter } from "next/navigation"; // Certifique-se de usar o "next/navigation" na nova arquitetura
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation"; // Import correto para acessar os parâmetros
 
-interface Project {
-  id: string;
-  name: string;
-  description: string;
-  link: string;
-  image: string;
-}
 
-const projects: { [key: string]: Project[] } = {
-  "Solo Grampeado": [
+// interface Project {
+//   id: string;
+//   name: string;
+//   description: string;
+//   link: string;
+//   image: string;
+// }
+
+// const projects: { [key: string]: Project[] } = {
+const projects = {
+
+  "solo-grampeado": [
     {
       id: "1",
       name: "Obra 1",
@@ -27,7 +31,7 @@ const projects: { [key: string]: Project[] } = {
       image: "/images/obra2.jpg",
     },
   ],
-  "Estaca Raíz": [
+  "estaca-raiz": [
     {
       id: "1",
       name: "Obra A",
@@ -38,28 +42,24 @@ const projects: { [key: string]: Project[] } = {
   ],
 };
 
-export default function PortfolioPage() {
-  const router = useRouter();
-  const [currentProjects, setCurrentProjects] = useState<Project[] | undefined>(
-    undefined
-  );
-  const [title, setTitle] = useState<string | undefined>(undefined);
+export default function ServicoPage() {
+  const params = useParams(); // Acessa os parâmetros de forma síncrona
+  const [currentProjects, setCurrentProjects] = useState([]);
 
   useEffect(() => {
-    // Simulação de um "query" caso esteja na nova estrutura do app
-    const queryTitle = window.location.pathname.split("/").pop();
-    if (queryTitle) {
-      setTitle(queryTitle);
-      setCurrentProjects(projects[queryTitle]);
-    }
-  }, []);
+      if (params.servico) {
+          const serviceProjects = projects[params.servico];
+          setCurrentProjects(serviceProjects || []);
+      }
+  }, [params.servico]);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-center mb-6">{title}</h1>
+      <h1 className="text-2xl font-bold text-center mb-6">
+        {params.servico ? params.servico.replace("-", " ") : "Serviço"}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {currentProjects?.map((project: Project) => (
-          <div key={project.id} className="border rounded shadow-sm p-4">
+      {currentProjects.length > 0 ? (
+                    currentProjects.map((project) => (          <div key={project.id} className="border rounded shadow-sm p-4">
             <img
               src={project.image}
               alt={project.name}
@@ -74,13 +74,15 @@ export default function PortfolioPage() {
               Ver projeto
             </a>
           </div>
-        ))}
-        {!currentProjects && (
-          <p className="text-center text-gray-500">
-            Nenhum projeto disponível para este título.
-          </p>
-        )}
+        ))
+      ) : (
+        <p className="text-center text-gray-500">
+            Nenhum projeto disponível para este serviço.
+        </p>
+    )}
+    
       </div>
     </div>
   );
 }
+

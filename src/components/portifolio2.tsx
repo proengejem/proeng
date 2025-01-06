@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Play } from "lucide-react";
 import { useState } from "react";
 import EstacaHelice from "public/Estaca Helice.jpeg";
@@ -85,11 +86,14 @@ export default function Portfolio2() {
               >
                 Fotos
               </button> */}
-               <a href="/portifolio.obras">
+                <Link href={{
+      pathname: "/portifolioindiv", // Nome da página do segundo código
+      query: { title: "Estaca Raíz" }, // Passa o título como parâmetro
+    }}>
             <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
               Fotos
             </button>
-            </a>
+            </Link>
               {/* <button
                 onClick={() => setMediaType("video")}
                 className={`rounded-lg border px-6 py-2 transition-colors ${

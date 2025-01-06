@@ -1,7 +1,7 @@
 
 import { Footer1 }  from "~/components/ui/footer";
-import Servicos  from "~/components/servicosgeral";
 import Navbar  from "~/components/navbar";
+import Servicos  from "~/components/servicosgeral";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ const  ServicoPage: React.FC = () => {
     <div>
     <Navbar />
     <Servicos />
-
+    
     <Footer1 />
 
 </div>
