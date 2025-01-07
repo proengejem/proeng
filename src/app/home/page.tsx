@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import StyledBar from "~/components/homePage/divisorAssimetrico";
+import StyledBar from "~/components/homePage/divisorServico";
 import SolutionsSection from "~/components/homePage/videosHome";
 import AboutSection from "~/components/homePage/EPEP";
 import Introducao_1 from "~/components/Itroducao_1";

@@ -14,29 +14,33 @@ return(
   // <header className="fixed left-0 right-0 top-0 z-50 bg-white shadow-sm">
   <header className="bg-white shadow-sm">
   <nav className="container mx-auto flex items-center justify-between px-2 py-1">
+  {/* <nav className="container mx-auto flex flex-col items-center px-4 py-2 md:flex-row"> */}
+
     <Image
       src="/ProengLogo.png"
       alt="Proeng Engenharia"
-      width={300}
-      height={250}
+      width={400}
+      height={350}
       className="mb-6"
     />
             {/* Links de navegação - visíveis em telas maiores */}
-
     <div className="hidden items-center gap-6 text-lg md:flex">
-      <a href="/home" className="text-gray-600 hover:text-[#006837]">
+    {/* text-4xl md:text-6xl font-bold leading-tight text-white */}
+    {/* <div className="hidden justify-center items-center space-x-10 text-lg md:flex"> */}
+      <a href="/home" className="  text-[#006837] font-bold leading-tight hover:text-green-500">
         Home
       </a>
-      <a href="/sobrenos" className="text-gray-600 hover:text-[#006837]">
+      <a href="/sobrenos" className="text-[#006837] font-bold leading-tight hover:text-green-500">
         Empresa
       </a>
-      <a href="/servicos" className="text-gray-600 hover:text-[#006837]" >
+      <a href="/servicos" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
         Serviços
       </a>
-      <a href="/portifolio" className="text-gray-600 hover:text-[#006837]">
+      <a href="/portifolio" className="text-[#006837] font-bold leading-tight hover:text-green-500">
         Obras realizadas
       </a>
-      <a href="/contato" className="text-gray-600 hover:text-[#006837]">
+      {/* <a href="/contato" className="text-gray-600 hover:text-[#006837]"> */}
+      <a href="/contato" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
         Contato
       </a>
     </div>
@@ -67,13 +71,13 @@ return(
         <div className="md:hidden bg-white shadow-md px-4 py-2">
           <a
             href="/home"
-            className="block text-gray-600 hover:text-[#006837] py-1"
+            className="block text-[#006837] hover:text-green-500 py-1"
           >
             Home
           </a>
           <a
             href="/sobrenos"
-            className="block text-gray-600 hover:text-[#006837] py-1"
+            className="block text-[#006837] hover:text-green-500 py-1"
           >
             Empresa
           </a>
@@ -81,7 +85,7 @@ return(
             // href="/servicos"
             href="#"
 
-            className="block text-gray-600 hover:text-[#006837] py-1"
+            className="block text-[#006837] hover:text-green-500 py-1"
           >
             Serviços
           </a>
@@ -89,13 +93,13 @@ return(
             // href="/portifolio"
             href="#"
 
-            className="block text-gray-600 hover:text-[#006837] py-1"
+            className="block text-[#006837] hover:text-green-500 py-1"
           >
             Obras realizadas
           </a>
           <a
             href="/contato"
-            className="block text-gray-600 hover:text-[#006837] py-1"
+            className="block text-[#006837] hover:text-green-500 py-1"
           >
             Contato
           </a>

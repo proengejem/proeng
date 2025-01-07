@@ -2,6 +2,7 @@
 
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
+import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import {
   BiLogoFacebookCircle,
@@ -10,6 +11,7 @@ import {
   BiLogoYoutube,
   BiLogoWhatsapp,
 } from "react-icons/bi";
+import { db } from "pages/api/firebase/firebase";
 
 type ImageProps = {
   url?: string;
@@ -67,13 +69,34 @@ export const Footer1 = (props: Footer1Props) => {
   const [nomeInput, setNomeInput] = useState<string>("");
   const [emailInput, setEmailInput] = useState<string>("");
   const [mensagemInput, setMensagemInput] = useState<string>("");
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({
-      nomeInput,
-      emailInput,
-      mensagemInput,
-    });
+    const form = event.target as HTMLFormElement;
+    const formData = {
+      name: form.nome.value,
+      email: form.email.value,
+      message: form.mensagem.value,
+    };
+  
+    try {
+      // Salva no Firebase
+      await addDoc(collection(db, "contato"), formData);
+  
+      // Envia o email
+      const response = await fetch("api/send-email", 
+        {method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+        alert("Informações salvas e email enviado com sucesso!");
+      } else {
+        alert("Erro ao enviar email");
+      }
+    } catch (error) {
+      console.error("Erro ao processar o formulário: ", error);
+    }
   };
 
   return (
@@ -98,7 +121,8 @@ export const Footer1 = (props: Footer1Props) => {
                   <div className="flex flex-col">
                   <Input
                     id="nome"
-                    type="text"
+                    type="text" 
+                    name = "nome"
                     placeholder={"Digite seu nome"}
                     value={nomeInput}
                     onChange={(e) => setNomeInput(e.target.value)}
@@ -106,6 +130,7 @@ export const Footer1 = (props: Footer1Props) => {
                   <Input
                     id="email"
                     type="email"
+                    name = "email"
                     placeholder={"Digite seu email"}
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
@@ -113,13 +138,16 @@ export const Footer1 = (props: Footer1Props) => {
                   <Input
                     id="mensagem"
                     type="text"
+                    name = "mensagem"
                     placeholder={"Digite sua mensagem"}
                     value={mensagemInput}
                     onChange={(e) => setMensagemInput(e.target.value)}
                   />
                   </div>
                   <div className="space-y-12">
-                  <Button  style={{ backgroundColor: "#027A48", color: "white" }}{...button}>{button.title}</Button>
+                    
+                  <Button  className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition"
+ style={{ backgroundColor: "#027A48", color: "white" }}{...button}>{button.title}</Button>
                   </div>
 
                 </form>
@@ -228,5 +256,5 @@ export const Footer1Defaults: Props = {
     { title: "Termos de Serviço", url: "#" },
     { title: "Configurações de Cookies", url: "#" },
   ],
-  footerText: "© 2024 Proeng. Todos os direitos reservados.",
+  footerText: "© 2025 Proeng. Todos os direitos reservados.",
 };
