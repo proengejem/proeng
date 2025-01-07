@@ -40,7 +40,7 @@ return(
         Obras realizadas
       </a>
       {/* <a href="/contato" className="text-gray-600 hover:text-[#006837]"> */}
-      <a href="/servicos" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
+      <a href="/contato" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
         Contato
       </a>
     </div>

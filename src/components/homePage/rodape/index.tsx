@@ -9,9 +9,10 @@ const Rodape: React.FC = () => {
 
       {/* Conteúdo com imagem e texto */}
       <div className="relative h-full">
+
         {/* Imagem */}
         <Image
-          src="/image_02.png" // Substitua pelo caminho correto da imagem
+          src="/IntroServiços.png" // Substitua pelo caminho correto da imagem
           alt="Projetos de Engenharia"
           width={1920}
           height={486}

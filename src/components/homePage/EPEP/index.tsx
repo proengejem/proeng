@@ -68,62 +68,55 @@ const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section className="relative z-50 py-12 flex items-center overflow-hidden">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
-        {/* Image Section */}
-        <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">
-<div className="rounded-xl md:rounded-2xl shadow-lg md:shadow-2xl overflow-hidden">
-            <Image
-              src="/image.png" // Substituir pelo caminho correto da imagem
-              alt="Sobre a Proeng"
-              width={1000}
-              height={700}
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Features Section */}
-        <div className="w-full md:w-1/2 space-y-8">
-          {/* Grupo de Empresa e Processos na mesma linha */}
-          <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
-            <Feature
-              icon={features[0]?.icon}
-              title={features[0]?.title ?? ''}
-              description={features[0]?.description}
-              linkText={features[0]?.linkText}
-              // linkUrl={features[0]?.linkUrl}
-            />
-            <Feature
-              icon={features[1]?.icon}
-              title={features[1]?.title ?? ''}
-              description={features[1]?.description}
-              linkText={features[1]?.linkText}
-              // linkUrl={features[1]?.linkUrl}
-            />
-          </div>
-
-          {/* Equipamentos e Equipe abaixo */}
-          <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
-            <Feature
-              icon={features[2]?.icon}
-              title={features[2]?.title ?? ''}
-              description={features[2]?.description}
-              linkText={features[2]?.linkText}
-              // linkUrl={features[2]?.linkUrl}
-            />
-            <Feature
-              icon={features[3]?.icon}
-              title={features[3]?.title ?? ''}
-              description={features[3]?.description}
-              linkText={features[3]?.linkText}
-              // linkUrl={features[3]?.linkUrl}
-            />
-          </div>
-        </div>
+    <section className="relative z-50 py-5 flex items-center overflow-hidden">
+  <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+    {/* Image Section */}
+    <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">
+      <div className="rounded-xl md:rounded-2xl shadow-lg md:shadow-2xl overflow-hidden">
+        <Image
+          src="/image.png"
+          alt="Sobre a Proeng"
+          width={1300}
+          height={900}
+          className="w-full h-auto object-cover"
+        />
       </div>
-    </section>
-  );
-};
+    </div>
 
+    {/* Features Section */}
+    <div className="w-full md:w-1/2 space-y-4">
+      {/* Grupo de Empresa e Processos na mesma linha */}
+      <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-4">
+        <Feature
+          icon={features[0]?.icon}
+          title={features[0]?.title ?? ''}
+          description={features[0]?.description}
+          linkText={features[0]?.linkText}
+        />
+        <Feature
+          icon={features[1]?.icon}
+          title={features[1]?.title ?? ''}
+          description={features[1]?.description}
+          linkText={features[1]?.linkText}
+        />
+      </div>
+
+      {/* Equipamentos e Equipe abaixo */}
+      <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-4">
+        <Feature
+          icon={features[2]?.icon}
+          title={features[2]?.title ?? ''}
+          description={features[2]?.description}
+          linkText={features[2]?.linkText}
+        />
+        <Feature
+          icon={features[3]?.icon}
+          title={features[3]?.title ?? ''}
+          description={features[3]?.description}
+          linkText={features[3]?.linkText}
+        />
+      </div>
+    </div>
+  </div>
+</section>);};
 export default AboutSection;

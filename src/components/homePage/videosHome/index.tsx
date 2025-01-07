@@ -10,34 +10,39 @@ interface VideoCardProps {
   linkUrl: string;
 }
 
-const VideoCard: React.FC<VideoCardProps> = ({ image, title, description, linkText, linkUrl }) => {
-  return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden border">
-      <div className="aspect-w-16 aspect-h-9">
-        <Image 
-          src={image}
-          title={title}
-          // allowFullScreen
-          layout="responsive" width={100} height={10}
-          className="w-full h-full"
-          />
-        {/* </iframe> */}
-      </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 text-sm mb-4">{description}</p>
-        <a
-          href={linkUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-green-600 font-semibold hover:underline" style={{ color: '#027A48' }}
+
+    const VideoCard: React.FC<VideoCardProps> = ({ image, title, description, linkText, linkUrl }) => {
+      return (
+        <div
+          className="bg-white shadow-lg rounded-lg overflow-hidden border transform transition-transform duration-300 hover:scale-105"
         >
-          {linkText} →
-        </a>
-      </div>
-    </div>
-  );
-};
+          <div className="aspect-w-16 aspect-h-9">
+            <Image 
+              src={image}
+              title={title}
+              layout="responsive"
+              width={100}
+              height={10}
+              className="w-full h-full"
+            />
+          </div>
+          <div className="p-4">
+            <h3 className="text-lg font-semibold mb-2">{title}</h3>
+            <p className="text-gray-600 text-sm mb-4">{description}</p>
+            <a
+              href={linkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-green-600 font-semibold hover:underline"
+              style={{ color: '#027A48' }}
+            >
+              {linkText} →
+            </a>
+          </div>
+        </div>
+      );
+    };
+    
 
 const SolutionsSection: React.FC = () => {
   const videos = [
