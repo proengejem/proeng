@@ -1,15 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Servicos() {
   const services = [
-    { title: "Solo Grampeado", description: "Lorem ipsum dolor sit amet...", image: "/SoloGrampeado.png", link: "/servicosindiv/solo-grampeado" },
-    { title: "Concreto Projetado", description: "Lorem ipsum dolor sit amet...", image: "/ConcretoProj.png", link: "/servicos/concreto-projetado" },
-    { title: "Hélice Contínua Monitorada", description: "Lorem ipsum dolor sit amet...", image: "/HéliceContM.png", link: "/servicos/helice-continua-monitorada" },
-    { title: "Estaca Tipo Raiz", description: "Lorem ipsum dolor sit amet...", image: "/EstacasTpRaiz.png", link: "/servicos/estaca-tipo-raiz" },
-    { title: "Micro Estacas Injetadas", description: "Lorem ipsum dolor sit amet...", image: "/MicroEstacasInj.png", link: "/servicos/micro-estacas-injetadas" },
-    { title: "Injeções de Consolidação", description: "Lorem ipsum dolor sit amet...", image: "/InjeçõesConsolid.png", link: "/servicos/injecoes-de-consolidacao" },
-    { title: "Dreno Sub-Horizontal Profundo", description: "Lorem ipsum dolor sit amet...", image: "/DHP.png", link: "/servicos/d-h-p" },
-    { title: "Tirantes", description: "Lorem ipsum dolor sit amet...", image: "/Tirante.png", link: "/servicos/tirante" },
+    { title: "Solo Grampeado", description: "Lorem ipsum dolor sit amet...", image: "/SoloGrampeado.png" },
+    { title: "Concreto Projetado", description: "Lorem ipsum dolor sit amet...", image: "/ConcretoProj.png" },
+    { title: "Hélice Contínua Monitorada", description: "Lorem ipsum dolor sit amet...", image: "/HéliceContM.png" },
+    { title: "Estaca Tipo Raiz", description: "Lorem ipsum dolor sit amet...", image: "/EstacasTpRaiz.png" },
+    { title: "Micro Estacas Injetadas", description: "Lorem ipsum dolor sit amet...", image: "/MicroEstacasInj.png" },
+    { title: "Injeções de Consolidação", description: "Lorem ipsum dolor sit amet...", image: "/InjeçõesConsolid.png" },
+    { title: "Dreno Sub-Horizontal Profundo", description: "Lorem ipsum dolor sit amet...", image: "/DHP.png" },
+    { title: "Tirantes", description: "Lorem ipsum dolor sit amet...", image: "/Tirante.png" },
   ];
 
   return (
@@ -30,9 +33,9 @@ export default function Servicos() {
               <div className="card-content">
                 <h2>{service.title}</h2>
                 <p>{service.description}</p>
-                <a href={service.link} className="link">
-                  Ver projeto
-                </a>
+                <Link href={"/servicos/${service.service}"} style={{ color: "#055634;" }}>
+                  Ver projeto 
+                </Link>
               </div>
             </div>
           ))}
@@ -154,4 +157,5 @@ export default function Servicos() {
     </div>
   );
 }
+
 

@@ -2,7 +2,7 @@
 
 import { Footer1 }  from "~/components/ui/footer";
 import Navbar  from "~/components/navbar";
-import Portifolioindv  from "~/components/portifolioindv";
+import Portifolioindv  from "~/components/portifolioindiv";
 
 const  PortifolioindivPage: React.FC = () => {
   return (

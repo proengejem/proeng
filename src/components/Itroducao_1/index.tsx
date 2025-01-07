@@ -37,14 +37,7 @@ const HeroSectionWithVideo: React.FC = () => {
           <div className="mt-6 flex space-x-4 justify-center">
             <a href="/sobrenos">
               <button className="flex items-center px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
-                {/* Logo dentro do botão */}
-                <Image
-                  src="/ProengLogo.png"
-                  alt="Logo da Proeng"
-                  width={50}
-                  height={50}
-                  className="mr-2"
-                />
+                Sobre nós
               </button>
             </a>
             <a href="/servicos">

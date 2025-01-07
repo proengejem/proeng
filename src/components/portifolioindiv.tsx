@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation"; // Usar a nova API do Next.js para obter parâmetros.
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -29,7 +30,7 @@ const projects: { [key: string]: Project[] } = {
       image: "/images/obra2.jpg",
     },
   ],
-  "Concreto Projetado": [
+  "Estaca Raíz": [
     {
       id: "1",
       name: "Obra A",
@@ -38,24 +39,44 @@ const projects: { [key: string]: Project[] } = {
       image: "/images/obraA.jpg",
     },
   ],
+  "Estaca Hélice Contínua Monitorada": [
+    {
+      id: "1",
+      name: "Obra A",
+      description: "Descrição da obra A",
+      link: "#",
+      image: "/images/obraA.jpg",
+    },
+    {
+      id: "2",
+      name: "Obra 2",
+      description: "Descrição da obra 2",
+      link: "#",
+      image: "/images/obra2.jpg",
+    },    {
+      id: "3",
+      name: "Obra 3",
+      description: "Descrição da obra 3",
+      link: "#",
+      image: "/images/obra3.jpg",
+    },
+  ],
 };
 
 export default function PortfolioPage() {
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const [title, setTitle] = useState<string | undefined>();
   const [currentProjects, setCurrentProjects] = useState<Project[] | undefined>(
     []
   );
 
   useEffect(() => {
-    if (router.isReady) {
-      const { title } = router.query;
-      if (typeof title === "string") {
-        setTitle(title);
-        setCurrentProjects(projects[title]);
-      }
+    const titleParam = searchParams.get("title");
+    if (titleParam) {
+      setTitle(titleParam);
+      setCurrentProjects(projects[titleParam]);
     }
-  }, [router.isReady, router.query]);
+  }, [searchParams]);
 
   return (
     <div className="container mx-auto px-4 py-8">
