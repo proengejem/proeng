@@ -47,7 +47,14 @@ const projects: Project[] = [
   },
   {
     servico: "estaca-raiz",
-    name: "Solo Grampeado",
+    name: "estaca-raiz",
+    description: "O solo grampeado é uma técnica de estabilização de taludes e encostas que consiste na instalação de grampos de aço ou fibra de vidro, ancorados no terreno e conectados a uma tela de aço ou fibra de vidro.",
+    link: "#",
+    image: ["/images/obra1.jpg", "/images/obra1.jpg" ]
+  },
+  {
+    servico: "concreto-projetado",
+    name: "concreto-projetado",
     description: "O solo grampeado é uma técnica de estabilização de taludes e encostas que consiste na instalação de grampos de aço ou fibra de vidro, ancorados no terreno e conectados a uma tela de aço ou fibra de vidro.",
     link: "#",
     image: ["/images/obra1.jpg", "/images/obra1.jpg" ]

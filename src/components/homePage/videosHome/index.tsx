@@ -1,23 +1,27 @@
 import React from "react";
+import Image from 'next/image';
+
 
 interface VideoCardProps {
-  videoUrl: string;
+  image: string;
   title: string;
   description: string;
   linkText: string;
   linkUrl: string;
 }
 
-const VideoCard: React.FC<VideoCardProps> = ({ videoUrl, title, description, linkText, linkUrl }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ image, title, description, linkText, linkUrl }) => {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden border">
       <div className="aspect-w-16 aspect-h-9">
-        <iframe
-          src={videoUrl}
+        <Image 
+          src={image}
           title={title}
-          allowFullScreen
+          // allowFullScreen
+          layout="responsive" width={100} height={10}
           className="w-full h-full"
-        ></iframe>
+          />
+        {/* </iframe> */}
       </div>
       <div className="p-4">
         <h3 className="text-lg font-semibold mb-2">{title}</h3>
@@ -38,26 +42,48 @@ const VideoCard: React.FC<VideoCardProps> = ({ videoUrl, title, description, lin
 const SolutionsSection: React.FC = () => {
   const videos = [
     {
-      videoUrl: "https://youtu.be/Dm6TIenXuOs?feature=shared",
+      image: "/EstacasTpRaiz.png",
       title: "Estaca Raiz",
       description:
-        "A Fundações Estaque é especializada em Estaca Raiz, soluções técnicas ...",
+        "Considerada de pequeno diâmetro e de elevada capacidade ...",
       linkText: "Ver projeto",
       linkUrl: "/projetos/estaca-raiz",
     },
     {
-      videoUrl: "https://youtu.be/ouioLUJWd0Q?feature=shared",
+      image: "/SoloGrampeado.png",
       title: "Solo Grampeado",
       description:
-        "O Solo Grampeado é uma opção para estabilizar encostas ...",
+        "O solo grampeado é uma técnica de reforço dos solos amplamente utilizada ...",
       linkText: "Ver projeto",
       linkUrl: "/projetos/solo-grampeado",
     },
     {
-      videoUrl: "https://youtu.be/Z6oR9i-blgw?feature=shared",
+      image: "/HéliceContM.png",
       title: "Estaca Hélice",
       description:
-        "A Fundações Estaque é especializada em execução de Estaca Hélice...",
+        "A estaca tipo hélice segmentada monitorada está presente ...",
+      linkText: "Ver projeto",
+      linkUrl: "/projetos/estaca-helice",
+    },
+    {
+      image: "/MicroEstacasInj.png",
+      title: "Micro Estacas Injetadas",
+      description:
+        "As micro estacas geralmente possuem diâmetros inferiores ...",
+      linkText: "Ver projeto",
+      linkUrl: "/projetos/estaca-helice",
+    },    {
+      image: "/InjeçõesConsolid.png",
+      title: "Injeções de Consolidação",
+      description:
+        "Os principais objetivos da injeção de consolidação é promover ...",
+      linkText: "Ver projeto",
+      linkUrl: "/projetos/estaca-helice",
+    },    {
+      image: "/DHP.png",
+      title: "Dreno Sub-Horizontal Profundo",
+      description:
+        "O dreno sub-horizontal profundo, mais conhecido por DHP  são elementos ...",
       linkText: "Ver projeto",
       linkUrl: "/projetos/estaca-helice",
     },
@@ -66,12 +92,12 @@ const SolutionsSection: React.FC = () => {
   return (
     <div className="py-12 ">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold text-center text-green-700 mb-4" style={{ color: '#027A48' }}>
+        {/* <h2 className="text-2xl font-bold text-center text-green-700 mb-4" style={{ color: '#027A48' }}>
           Serviços
         </h2>
         <p className="text-center text-gray-600 mb-8">
-          Explore os serviços  de excelência realizados pela Proeng Geotécnica
-        </p>
+          Explore os serviços  de excelência realizados pela PROENG Geotécnica
+        </p> */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {videos.map((video, index) => (
             <VideoCard key={index} {...video} />

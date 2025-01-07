@@ -26,7 +26,7 @@ const contato: React.FC = () => {
         
       <Contato />  
       <StyledBar />
-      {/* <Introducao_1  /> */}
+       <Introducao_1  /> 
       <Rodapecontato />
 
         <Footer1 />
