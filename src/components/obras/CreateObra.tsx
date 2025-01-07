@@ -1,0 +1,92 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
+import { Textarea } from '~/components/ui/textarea'
+
+export default function CreateObra() {
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [service, setService] = useState('')
+  const [images, setImages] = useState<{ file: File; preview: string }[]>([])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Here you would typically send this data to your backend
+    console.log('Criando uma obra:', { name, description, service, images: images.map(img => img.file) })
+    // Reset form
+    setName('')
+    setDescription('')
+    setService('')
+    setImages([])
+  }
+
+  useEffect(() => {
+    return () => images.forEach(image => URL.revokeObjectURL(image.preview))
+  }, [images])
+
+  return (
+    <div className="border p-4 rounded-md">
+      <h3 className="text-xl font-semibold mb-4 text-[#027A48]">Criar uma Nova Obra</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input
+          type="text"
+          placeholder="Nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <Textarea
+          placeholder="Descrição"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+        <Input
+          type="text"
+          placeholder="Serviço/Categoria"
+          value={service}
+          onChange={(e) => setService(e.target.value)}
+          required
+        />
+        <div className="space-y-2">
+          <Input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              const files = Array.from(e.target.files || [])
+              setImages(prevImages => [
+                ...prevImages,
+                ...files.map(file => ({
+                  file,
+                  preview: URL.createObjectURL(file)
+                }))
+              ])
+            }}
+          />
+          {images.length > 0 && (
+            <div className="grid grid-cols-3 gap-2">
+              {images.map((image, index) => (
+                <div key={index} className="relative">
+                  <img src={image.preview} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded" />
+                  <button
+                    type="button"
+                    onClick={() => setImages(images.filter((_, i) => i !== index))}
+                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs"
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <Button type="submit" className="bg-[#027A48] hover:bg-green-500 text-white">
+          Criar Obra
+        </Button>
+      </form>
+    </div>
+  )
+}
