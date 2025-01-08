@@ -59,7 +59,7 @@ const HeroSectionWithVideo: React.FC = () => {
               Contato
             </button>
             </a>
-            <a href="/admin/forms">
+            <a href="/admin">
             <button className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
               Forms
             </button>
