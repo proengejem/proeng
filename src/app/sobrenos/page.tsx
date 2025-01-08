@@ -7,7 +7,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import Navbar  from "~/components/navbar";
 import Valores  from "~/components/valores";
 import { Footer1 }  from "~/components/ui/footer";
-import StyledBar from "~/components/homePage/divisorAssimetrico";
+import StyledBar from "~/components/homePage/divisorServico";
 import Sobrenoscompo from "~/components/sobrenos1";
 import Sobrenoscompo2 from "~/components/sobrenos2";
 import Sobrenoscompo3 from "~/components/sobrenos3";

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import Carossel from "~/components/carossel";
-import StyledBar from "~/components/homePage/divisorAssimetrico";
+import StyledBarAssimetrica from "~/components/homePage/divisorAssimetrico";
 
 
 export default function Sobrenoscompo2() {
@@ -59,11 +59,11 @@ export default function Sobrenoscompo2() {
           </div>
         </div>
         {/* Partners Section */}
-        <StyledBar />
+        <StyledBarAssimetrica />
         <div className="w-full  p-4">
-        <h2 className="text-2xl font-bold text-center text-green-700 mb-4" style={{ color: '#027A48' }}>
+        {/* <h2 className="text-2xl font-bold text-center text-green-700 mb-4" style={{ color: '#027A48' }}>
           CONGRESSOS
-        </h2>
+        </h2> */}
           <Carossel />
         </div>
       </div>

@@ -119,7 +119,9 @@ export const Footer1 = (props: Footer1Props) => {
                   />
                   </div>
                   <div className="space-y-12">
-                  <Button  style={{ backgroundColor: "#027A48", color: "white" }}{...button}>{button.title}</Button>
+                    
+                  <Button  className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition"
+ style={{ backgroundColor: "#027A48", color: "white" }}{...button}>{button.title}</Button>
                   </div>
 
                 </form>
@@ -228,5 +230,5 @@ export const Footer1Defaults: Props = {
     { title: "Termos de Serviço", url: "#" },
     { title: "Configurações de Cookies", url: "#" },
   ],
-  footerText: "© 2024 Proeng. Todos os direitos reservados.",
+  footerText: "© 2025 Proeng. Todos os direitos reservados.",
 };
