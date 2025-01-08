@@ -30,7 +30,7 @@ const HeroSectionWithVideo: React.FC = () => {
           </h1>
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Construindo qualidade e confiança desde{" "}
-            <span  style={{ color: '#027A48' }} >2006</span>
+            <span style={{ color: "#027A48" }}>2006</span>
           </h1>
           {/* Descrição */}
           <p className="mt-2 text-base md:text-lg">
@@ -60,19 +60,21 @@ const HeroSectionWithVideo: React.FC = () => {
             </button>
             </a>
             <a href="/admin">
-            <button className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
+            {/* <button className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition" style={{ color: '#027A48' }}>
               Forms
-            </button>
+            </button> */}
             </a>
           </div>
         </div>
       </div>
       {/* Adiciona espaçamento extra abaixo */}
-  <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
+      <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
     </section>
   );
 };
 
 export default HeroSectionWithVideo;
+
+
 
 

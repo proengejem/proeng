@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import StyledBar from "~/components/homePage/divisorServico";
 import SolutionsSection from "~/components/homePage/videosHome";
 import AboutSection from "~/components/homePage/EPEP";
-import Introducao_1 from "~/components/Itroducao_1";
+import Introducao_1 from "~/components/Introducao_1";
 import Rodape from "~/components/homePage/rodape";
 import { Footer1 } from "~/components/ui/footer";
 import Navbar from "~/components/navbar";

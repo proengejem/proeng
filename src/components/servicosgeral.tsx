@@ -1,59 +1,53 @@
 "use client";
-import Image from 'next/image';
+
+import Image from "next/image";
 import Link from "next/link";
 import HeroCarousel from "~/components/carosselServicos";
 
 export default function Servicos() {
-    const services = [
-        { servico: "solo-grampeado", title: 'Solo Grampeado', description: "O solo grampeado é uma técnica de reforço dos solos amplamente utilizada ...", image: '/SoloGrampeado.png', link: '/servicos/solo-grampeado' },
-        { servico:"concreto-projetado",title: 'Concreto Projetado', description: "É um processo de aplicação de concreto sem a necessidade de utilização de formas ...", image: '/ConcretoProj.png', link: '/servicos/concreto-projetado' },
-        { servico:"hélice-contínua-monitorada",title: 'Hélice Contínua Monitorada', description: "A estaca tipo hélice segmentada monitorada está presente no mercado brasileiro desde 2001 ...", image: '/HéliceContM.png', link: '/servicos/helice-continua-monitorada' },
-        { servico:"estaca-raiz",title: 'Estaca Tipo Raiz', description: "Considerada de pequeno diâmetro e de elevada capacidade de carga, a estaca raiz é ...", image: '/EstacasTpRaiz.png', link: '/servicos/estaca-tipo-raiz' },
-        { servico:"micro-estacas-injetadas", title: 'Micro Estacas Injetadas', description: "As micro estacas geralmente possuem diâmetros inferiores a 160 mm, e são injetadas ...", image: '/MicroEstacasInj.png', link: '/servicos/micro-estacas-injetadas' },
-        { servico:"injeções-consolidação", title: 'Injeções de Consolidação', description: "Os principais objetivos da injeção de consolidação é promover a melhoria das condições ...", image: '/InjeçõesConsolid.png', link: '/servicos/injecoes-de-consolidacao' },
-        { servico:"dreno-sub-horizontal-profundo", title: 'Dreno Sub-Horizontal Profundo', description: "O dreno sub-horizontal profundo, mais conhecido por DHP  são elementos ...", image: '/DHP.png', link: '/servicos/d-h-p' },
-        { servico:"tirantes", title: 'Tirantes', description: "Os tirantes são basicamente constituídos por um ou mais elementos de aço ...", image: '/Tirante.png', link: '/servicos/tirante' },
-    ];    
+  const services = [
+    { slug: "solo-grampeado", title: "Solo Grampeado", description: "O solo grampeado é uma técnica de reforço dos solos amplamente utilizada no Brasil. Pode-se definí-la como o resultado da introdução de reforços, geralmente barras de aço, em um maciço de solo. Este processo é aliado, normalmente, a um revestimento da face (concreto projetado, tela ou grama) e a um sistema de drenagem. O grande interesse dos profissionais pela utilização da técnica do solo grampeado justifica-se pela sua praticidade, rapidez de execução, versatilidade e economia quando comparada a outras soluções técnicas utilizadas para estabilização de cortes e taludes naturais.", image: "/SoloGrampeado.png" },
+    { slug: "concreto-projetado", title: "Concreto Projetado", description: "É um processo de aplicação de concreto sem a necessidade de utilização de formas, bastando apenas uma superfície para o seu lançamento. O não emprego de formas pode ser por opção, ou quando, pelas características da concretagem, seu emprego torna-se difícil ou impossível. Esse sistema é muito utilizado em concretagens de túneis, paredes de contenção, piscinas e em recuperação e reforço estrutural de lajes, vigas, pilares e paredes de concreto armado.", image: "/ConcretoProj.png" },
+    { slug: "helice-continua-monitorada", title: "Hélice Contínua Monitorada", description: "A estaca tipo hélice segmentada monitorada está presente no mercado brasileiro desde 2001. Trata-se de uma perfuratriz de dimensões e peso reduzidos (mini – hélice contínua) podendo executar estacas com diâmetros de 25, 30, 35, 40 e 50 cm e atingir profundidades de até 16 m. Sua principal característica é a possibilidade de execução em locais de espaço reduzido, com destaque ao afastamento de 40 cm do eixo da estaca até a divisa. As perfuratrizes da Proeng Geotecnia são dotadas de monitoramento eletrônico, igual aos das perfuratrizes hélice contínua convencionais.", image: "/HéliceContM.png" },
+    { slug: "estaca-tipo-raiz", title: "Estaca Tipo Raiz", description: "Considerada de pequeno diâmetro e de elevada capacidade de carga, a estaca raiz é uma estaca moldada in loco com diâmetros que variam de 100 a 500 mm, executada com equipamentos de pequeno e médio porte, que permite sua execução em locais com limitação de pé direito e em áreas de trabalho de espaço limitado. O processo executivo desta estaca não causa vibrações, o que permite empregá-la em qualquer situação de obra industrial. Caracteriza-se principalmente por ser uma estaca executada com emprego de revestimentos metálicos recuperáveis, que permite atingir grande profundidade, podendo-se atravessar matacões, blocos de concreto ou embuti-las em rocha, neste caso a perfuração é completada com o uso de martelo hidráulico, até atingir a profundidade desejada.", image: "/EstacasTpRaiz.png" },
+    { slug: "micro-estacas-injetadas", title: "Micro Estacas Injetadas", description: "As micro estacas geralmente possuem diâmetros inferiores a 160 mm, e são injetadas com calda de cimento, através de tubo manchete (tubo preparado com válvulas espaçadas ao longo de seu comprimento, que permitem apenas a passagem da calda de cimento em uma única direção). As injeções têm como ﬁnalidade aumentar a resistência do atrito lateral. Este tipo de estaca comporta duas variantes em relação à armadura: na primeira delas introduz-se um tubo metálico com função estrutural, dotado de manchetes para a injeção e na segunda, a armadura é constituída por barras (ou gaiola) e a injeção é feita através de tubos de polietileno em fases setorizadas de injeção.", image: "/MicroEstacasInj.png" },
+    { slug: "injecoes-de-consolidacao", title: "Injeções de Consolidação", description: "Os principais objetivos da injeção de consolidação é promover a melhoria das condições de estabilidade, capacidade de carga e redução de permeabilidade dos diversos tipos de solo. O tratamento é feito pela injeção de um determinado volume de material a uma determinada pressão, podendo ser calda de cimento, argamassa, solo-cimento ou compostos químicos.", image: "/InjeçõesConsolid.png" },
+    { slug: "d-h-p", title: "Dreno Sub-Horizontal Profundo", description: "O dreno sub-horizontal profundo, mais conhecido por DHP, são elementos que captam as águas distantes da face do talude antes que nela aﬂorem, conduzindo a água para fora do maciço no sentido de rebaixar o nível do lençol freático, reduzindo as pressões neutras. É construído por meio de uma perfuração sub-horizontal, geralmente com diâmetro de 50 a 100 mm, executada com uma inclinação de 5° a 10º para cima, de forma a propiciar a saída da água por gravidade. Nessa perfuração, é introduzida uma tubulação de PVC, geralmente de 38 a 50 mm de diâmetro, constituída por um trecho ﬁltrante através de furos ou ranhuras no tubo. O trecho ﬁltrante pode ser ou não envolvido por geotêxtil ou tela de nylon.", image: "/DHP.png" },
+    { slug: "tirantes", title: "Tirantes", description: "Os tirantes são basicamente constituídos por um ou mais elementos de aço protegidos contra a corrosão (barras, ﬁos ou cordoalhas) capaz de suportar esforços de tração e transmiti-los ao solo através de interação com o bulbo de ancoragem. Os tirantes são utilizados para sustentação de paredes para escavações profundas, contenção de taludes e ancoragem de lajes para combater supressões de água. Podem suportar elevadas cargas de tração, possuem simplicidade construtiva, são funcionais pois trabalham ativamente devido a protensão, isto signiﬁca que podem suportar esforços com um mínimo de deslocamentos da estrutura, em oposição a outras soluções convencionais que necessitam de uma movimentação para a contenção começar a funcionar, além de todos os tirantes serem ensaiados individualmente (ensaios de recebimento), o que representa uma garantia de qualidade 100% dos elementos construídos em relação à capacidade de carga.", image: "/Tirante.png" },
+  ];
 
-    return (
-        <div>
-            {/* <div className="hero">
-                <div className="green-detail"></div>
-                <Image src="/IntroServiços.png" alt="Hero" width={1520} height={500} />
-            </div> */}
-
-            <div className="relative">
-            <HeroCarousel />
-            <div className="green-detail"></div>
+  return (
+    <div>
+      <div className="hero">
+        <div className="green-detail"></div>
+        <Image src="/IntroServiços.png" alt="Hero" width={1520} height={500} />
+      </div>
+      <div className="container">
+      <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]">Nossos Serviços</h1>
+            <p>Explore nossa variedade de serviços</p>
+        <div className="grid">
+          {services.map((service, index) => (
+            <div className="card" key={index}>
+              <div className="image-container">
+                <Image src={service.image} alt={service.title} layout="responsive" width={300} height={200} />
+              </div>
+              <div className="card-content">
+                <h2>{service.title}</h2>
+                <p>{service.description}</p>
+                <Link key={service.slug} style={{ color: '#027A48' }} className="text-green-600 font-semibold hover:underline"
+href={`/servicos/${service.slug}`}>
+                  Ver projeto →
+                </Link>
+              </div>
             </div>
-
-            <div className="container">
-                <h1 className="mb-4 text-3xl font-bold"  style={{ color: '#027A48' }}>Nossos Serviços</h1>
-                <p>Explore nossa variedade de serviços</p>
-                <div className="grid">
-                    {services.map((service, index) => (
-                        <div className="card" key={index}>
-                            <div className="image-container">
-                                <Image src={service.image} alt={service.title} layout="responsive" width={300} height={20} />
-                            </div>
-                            <div className="card-content">
-                                <h2>{service.title}</h2>
-                                <p>{service.description}</p>
-                                <Link href={`/servicos/${service.servico}`} style={{ color: '#027A48' }} className="link">
-                                Ver projeto →
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <style jsx>{`
-         .hero {
+          ))}
+        </div>
+      </div>
+      <style jsx>{`
+        .hero {
           position: relative;
           overflow: hidden;
-          margin-bottom: 0.5rem;
-        }
+margin-bottom: 0.2rem;        }
         .hero img {
           position: relative;
           z-index: 0;
@@ -69,8 +63,9 @@ export default function Servicos() {
           z-index: 1;
         }
         .container {
-          padding: 4rem 10rem 10rem;
-        }
+padding: 4rem 10rem 5rem;  
+  margin-top: 0;
+  padding-top: 0;      }
         h1 {
           text-align: center;
           font-size: 3rem;
@@ -160,24 +155,9 @@ export default function Servicos() {
             grid-template-columns: 1fr;
           }
         }
-          .hero {
-  position: relative; /* Garante que os dots respeitem o espaço do carrossel */
-}
-
-.slick-dots {
-  position: absolute;
-  bottom: 10px; /* Ajuste para posicionar acima da faixa */
-  z-index: 10; /* Garante que os dots fiquem acima da faixa */
-}
-
-.green-detail {
-  width: 100%;
-  height: 10px; /* Ajuste a altura da faixa verde */
-  background-color: #027A48; /* Cor verde */
-  position: relative; /* Fica abaixo do carrossel */
-  z-index: 5; /* Está abaixo dos dots */
-}
       `}</style>
     </div>
   );
 }
+
+
