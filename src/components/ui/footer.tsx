@@ -12,6 +12,8 @@ import {
   BiLogoWhatsapp,
 } from "react-icons/bi";
 import { db } from "pages/api/firebase/firebase";
+import Link from "next/link";
+
 
 type ImageProps = {
   url?: string;
@@ -110,9 +112,9 @@ export const Footer1 = (props: Footer1Props) => {
         <div className="container">
           <div className="grid grid-cols-1 gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[0.75fr_1fr] lg:gap-y-4 lg:pb-20">
             <div className="flex flex-col">
-              <a href={logo.url} className="mb-3 md:mb-3">
+              {logo.url && <Link href={logo.url} className="mb-3 md:mb-3">
                 <img src= "/ProengLogo.png" alt="Proeng Engenharia" className="inline-block" />
-              </a>
+              </Link>}
               <p className="mb-5 md:mb-6" style={{color:"#027A48"} }>{newsletterDescription}</p>
               <div className="w-full max-w-md">
               <form
@@ -161,10 +163,10 @@ export const Footer1 = (props: Footer1Props) => {
                   <ul>
                     {column.links.map((link, linkIndex) => (
                       <li key={linkIndex} className="py-2 text-sm">
-                        <a href={link.url} className="flex items-center gap-3">
+                        <Link href={link.url} className="flex items-center gap-3">
                           {link.icon && <span>{link.icon}</span>}
                           <span>{link.title}</span>
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>

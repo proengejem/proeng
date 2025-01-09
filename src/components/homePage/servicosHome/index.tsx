@@ -54,11 +54,11 @@ const SolutionsSection: React.FC = () => (
         ))}
       </div>
       <div className="text-center mt-8">
-        <a href="/servicos">
+      <Link  href="/servicos">
           <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700" style={{ backgroundColor: '#027A48' }}>
             Ver mais
           </button>
-        </a>
+        </Link >
       </div>
     </div>
   </div>

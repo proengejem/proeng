@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
 
 export default function Navbar() {
     // Estado para controlar o menu
@@ -27,22 +29,22 @@ return(
     <div className="hidden items-center gap-6 text-lg md:flex">
     {/* text-4xl md:text-6xl font-bold leading-tight text-white */}
     {/* <div className="hidden justify-center items-center space-x-10 text-lg md:flex"> */}
-      <a href="/home" className="  text-[#006837] font-bold leading-tight hover:text-green-500">
+    <Link href="/home" className="  text-[#006837] font-bold leading-tight hover:text-green-500">
         Home
-      </a>
-      <a href="/sobrenos" className="text-[#006837] font-bold leading-tight hover:text-green-500">
+      </Link >
+      <Link  href="/sobrenos" className="text-[#006837] font-bold leading-tight hover:text-green-500">
         Empresa
-      </a>
-      <a href="/servicos" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
+      </Link >
+      <Link  href="/servicos" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
         Serviços
-      </a>
-      <a href="/portifolio" className="text-[#006837] font-bold leading-tight hover:text-green-500">
+      </Link >
+      <Link  href="/portifolio" className="text-[#006837] font-bold leading-tight hover:text-green-500">
         Obras realizadas
-      </a>
+      </Link >
       {/* <a href="/contato" className="text-gray-600 hover:text-[#006837]"> */}
-      <a href="/contato" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
+      <Link  href="/contato" className="text-[#006837] font-bold leading-tight hover:text-green-500" >
         Contato
-      </a>
+      </Link >
     </div>
             {/* Ícone do menu - visível em telas menores */}
 
@@ -69,40 +71,40 @@ return(
         {/* Menu Mobile - visível quando `menuOpen` estiver true */}
         {menuOpen && (
         <div className="md:hidden bg-white shadow-md px-4 py-2">
-          <a
+          <Link 
             href="/home"
             className="block text-[#006837] hover:text-green-500 py-1"
           >
             Home
-          </a>
-          <a
+          </Link >
+          <Link 
             href="/sobrenos"
             className="block text-[#006837] hover:text-green-500 py-1"
           >
             Empresa
-          </a>
-          <a
+          </Link >
+          <Link 
             // href="/servicos"
             href="#"
 
             className="block text-[#006837] hover:text-green-500 py-1"
           >
             Serviços
-          </a>
-          <a
+          </Link >
+          <Link 
             // href="/portifolio"
             href="#"
 
             className="block text-[#006837] hover:text-green-500 py-1"
           >
             Obras realizadas
-          </a>
-          <a
+          </Link >
+          <Link 
             href="/contato"
             className="block text-[#006837] hover:text-green-500 py-1"
           >
             Contato
-          </a>
+          </Link >
         </div>
       )}
   </header>
