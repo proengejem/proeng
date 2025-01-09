@@ -46,6 +46,7 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "utils": "^0.2.2",
+    "uuid": "^11.0.4",
     "zod": "^3.23.3"
   },
   "devDependencies": {
