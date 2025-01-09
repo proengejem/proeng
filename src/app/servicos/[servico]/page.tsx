@@ -2,15 +2,17 @@ import { Gallery7 } from "~/components/Gallery7"; // Certifique-se de ajustar o 
 import Navbar  from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 
-interface PageProps {
+interface ServicoPageProps {
   params: {
     servico: string;
   };
 } 
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ params: { servico: string } }[]> {
   return services.map((service) => ({
-    servico: service.slug,
+    params: {
+      servico: service.slug,
+    },
   }));
 }
 
@@ -114,7 +116,7 @@ const services = [
   // Adicione os outros serviços aqui
 ];
 
-export default function ServicoPage({ params }: PageProps) {
+export default function ServicoPage({ params }: ServicoPageProps) {
   const servico = services.find((service) => service.slug === params.servico);
 
   if (!servico) {
