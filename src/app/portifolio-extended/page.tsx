@@ -8,7 +8,34 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 export default function Page() {
   return (
     <main className="min-h-screen bg-gray-100">
+      <section className="relative w-full bg-gray-100">
+        {/* Container for the banner */}
+        <div className="relative h-[500px] w-full overflow-hidden">
+          <Image
+            src="/Solo Grampeado.jpeg" // Replace with your actual image path
+            alt="Imagem inicial"
+            layout="fill"
+            objectFit="cover"
+            priority
+            className="absolute inset-0"
+          />
+        </div>
+        {/* Text section */}
+        <div className="container mx-auto px-4 py-6">
+          <h1 className="text-3xl font-bold text-green-800">Nome obra 01</h1>
+          <p className="mt-4 text-gray-700">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            varius enim in eros elementum tristique. Duis cursus, mi quis
+            viverra ornare, eros dolor interdum nulla, ut commodo diam libero
+            vitae erat.
+          </p>
+        </div>
+      </section>
+
+      {/* Project Hero */}
       <ProjectHero />
+
+      {/* Outras Obras */}
       <section className="container mx-auto px-4 py-8">
         <h2 className="mb-6 text-2xl font-bold text-gray-800">Outras obras</h2>
         <ProjectGrid />
