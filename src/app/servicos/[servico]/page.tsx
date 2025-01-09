@@ -1,86 +1,52 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { Gallery7 } from "~/components/Gallery7"; // Certifique-se de ajustar o caminho se necessário
+import Navbar  from "~/components/navbar";
+import { Footer1 } from "~/components/ui/footer";
+import { obras } from "~/lib/obras";
 
-type Project = {
-  servico: string;
-  name: string;
-  description: string;
-  link: string;
-  image: string[];
-};
+export default function ServicoPage({ params }: any) {
+  const { servico } = params;
+  const obra = obras.find((obra) => obra.slug === servico);
 
-const projects: Project[] = [
-  {
-    servico: "solo-grampeado",
-    name: "Solo Grampeado",
-    description:
-      "O solo grampeado é uma técnica de estabilização de taludes e encostas...",
-    link: "#",
-    image: ["/images/obra1.jpg", "/images/obra2.jpg"],
-  },
-  {
-    servico: "estaca-raiz",
-    name: "Estaca Raiz",
-    description:
-      "A estaca raiz é uma técnica de fundação utilizada em solos instáveis...",
-    link: "#",
-    image: ["/images/obra3.jpg", "/images/obra4.jpg"],
-  },
-  {
-    servico: "concreto-projetado",
-    name: "Concreto Projetado",
-    description:
-      "O concreto projetado é uma técnica usada em túneis e contenção de taludes...",
-    link: "#",
-    image: ["/images/obra5.jpg", "/images/obra6.jpg"],
-  },
-];
-
-export default function SingleServicePage() {
-  const params = useParams(); // Acessa os parâmetros da URL
-  const [project, setProject] = useState<Project | null>(null);
-
-  useEffect(() => {
-    if (params?.servico) {
-      const filteredProject = projects.find(
-        (project) => project.servico === params.servico
-      );
-      setProject(filteredProject || null);
-    }
-  }, [params]);
-
+  if (!servico) {
+    return <div>Serviço não encontrado.</div>;
+  }
   return (
-    <div className="container mx-auto px-4 py-8">
-      {project ? (
-        <>
-          <h1 className="text-2xl font-bold text-center mb-6">
-            {project.name}
-          </h1>
-          <p className="text-center text-gray-600 mb-8">{project.description}</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {project.image.map((imgSrc, index) => (
-              <div key={index} className="border rounded shadow-sm p-4">
-                <img
-                  src={imgSrc}
-                  alt={project.name}
-                  className="w-full h-48 object-cover rounded"
-                />
-              </div>
-            ))}
-          </div>
-          <a
-            href={project.link}
-            className="block mt-6 text-center text-blue-500 hover:underline"
-          >
-            Saiba mais sobre este serviço
-          </a>
-        </>
-      ) : (
-        <p className="text-center text-gray-500">
-          Nenhum projeto encontrado para este serviço.
-        </p>
-      )}
+    <div className="flex flex-col min-h-screen">
+      {/* Navbar */}
+      <Navbar />
+  
+      {/* Conteúdo principal */}
+      <main className="container mx-auto px-80 py-10 mb-0"> {/* Reduzindo o espaçamento inferior */}
+        <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]">{servico.title}</h1>
+        <p className="mb-20 text-lg text-justify">{servico.description}</p>
+        {obra ? (
+          <>
+            <img
+              src={obra.image}
+              // width={90}
+              // height={90}
+              alt={obra.title}
+              className="mb-3 w-full h-auto rounded-md shadow-md"
+            />
+            <p className="text-lg font-bold text-left">
+              | Publicado por Proeng Geotécnia
+            </p>
+          </>
+        ) : (
+          <div>Obra não encontrada.</div>
+        )}
+  
+        {/* Galeria */}
+        <Gallery7
+          heading="Galeria de Obras"
+          description=""
+          images={servico.gallery}
+          headingClassName="text-lg font-semibold mb-4 text-center" // Tamanho menor e centralizado
+        />
+      </main>
+  
+      {/* Footer */}
+      <Footer1 />
     </div>
   );
-}
+};

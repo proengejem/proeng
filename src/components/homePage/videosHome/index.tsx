@@ -5,13 +5,14 @@ import Image from 'next/image';
 interface VideoCardProps {
   image: string;
   title: string;
+  alt: string;
   description: string;
   linkText: string;
   linkUrl: string;
 }
 
 
-    const VideoCard: React.FC<VideoCardProps> = ({ image, title, description, linkText, linkUrl }) => {
+    const VideoCard: React.FC<VideoCardProps> = ({ image, title, alt, description, linkText, linkUrl }) => {
       return (
         <div
           className="bg-white shadow-lg rounded-lg overflow-hidden border transform transition-transform duration-300 hover:scale-105"
@@ -19,6 +20,7 @@ interface VideoCardProps {
           <div className="aspect-w-16 aspect-h-9">
             <Image 
               src={image}
+              alt={alt}
               title={title}
               layout="responsive"
               width={100}
@@ -48,6 +50,7 @@ const SolutionsSection: React.FC = () => {
   const videos = [
     {
       image: "/EstacasTpRaiz.png",
+      alt:"Estaca Tipo Raíz",
       title: "Estaca Raiz",
       description:
         "Considerada de pequeno diâmetro e de elevada capacidade ...",
@@ -56,6 +59,7 @@ const SolutionsSection: React.FC = () => {
     },
     {
       image: "/SoloGrampeado.png",
+      alt:"Solo Grampeado",
       title: "Solo Grampeado",
       description:
         "O solo grampeado é uma técnica de reforço dos solos amplamente utilizada ...",
@@ -64,6 +68,7 @@ const SolutionsSection: React.FC = () => {
     },
     {
       image: "/HéliceContM.png",
+      alt:"Estaca Hélice",
       title: "Estaca Hélice",
       description:
         "A estaca tipo hélice segmentada monitorada está presente ...",
@@ -72,13 +77,15 @@ const SolutionsSection: React.FC = () => {
     },
     {
       image: "/MicroEstacasInj.png",
+      alt:"Micro Estacas Injetadas",
       title: "Micro Estacas Injetadas",
       description:
         "As micro estacas geralmente possuem diâmetros inferiores ...",
       linkText: "Ver projeto",
       linkUrl: "/projetos/estaca-helice",
     },    {
-      image: "/InjeçõesConsolid.png",
+      image: "/InjeçõesConsolid.png",      
+      alt:"Injeções de Consolidação",
       title: "Injeções de Consolidação",
       description:
         "Os principais objetivos da injeção de consolidação é promover ...",
@@ -86,6 +93,7 @@ const SolutionsSection: React.FC = () => {
       linkUrl: "/projetos/estaca-helice",
     },    {
       image: "/DHP.png",
+      alt:"Dreno Sub-Horizontal Profundo",
       title: "Dreno Sub-Horizontal Profundo",
       description:
         "O dreno sub-horizontal profundo, mais conhecido por DHP  são elementos ...",
