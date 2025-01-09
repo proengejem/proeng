@@ -2,6 +2,18 @@ import { Gallery7 } from "~/components/Gallery7"; // Certifique-se de ajustar o 
 import Navbar  from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 
+interface PageProps {
+  params: {
+    servico: string;
+  };
+} 
+
+export async function generateStaticParams() {
+  return services.map((service) => ({
+    servico: service.slug,
+  }));
+}
+
 const services = [
   {
     slug: "solo-grampeado",
@@ -102,12 +114,13 @@ const services = [
   // Adicione os outros serviços aqui
 ];
 
-export default function ServicoPage({ params }: { params: { servico: string } }) {
+export default function ServicoPage({ params }: PageProps) {
   const servico = services.find((service) => service.slug === params.servico);
 
   if (!servico) {
     return <div>Serviço não encontrado.</div>;
   }
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
