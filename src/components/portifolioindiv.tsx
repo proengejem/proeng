@@ -1,8 +1,7 @@
 "use client";
 
-import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation"; // Usar a nova API do Next.js para obter parâmetros.
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 
 interface Project {
@@ -63,18 +62,18 @@ const projects: { [key: string]: Project[] } = {
   ],
 };
 
-export default function PortfolioPage() {
+const PortfolioPageContent = () => {
   const searchParams = useSearchParams();
   const [title, setTitle] = useState<string | undefined>();
-  const [currentProjects, setCurrentProjects] = useState<Project[] | undefined>(
-    []
-  );
+  const [currentProjects, setCurrentProjects] = useState<Project[] | undefined>([]);
 
   useEffect(() => {
-    const titleParam = searchParams.get("title");
-    if (titleParam) {
-      setTitle(titleParam);
-      setCurrentProjects(projects[titleParam]);
+    if (searchParams) {
+      const titleParam = searchParams.get("title");
+      if (titleParam) {
+        setTitle(titleParam);
+        setCurrentProjects(projects[titleParam]);
+      }
     }
   }, [searchParams]);
 
@@ -94,9 +93,7 @@ export default function PortfolioPage() {
                     height={200}
                     className="w-full h-48 object-cover rounded"
                   />
-                  <h3 className="text-lg font-semibold mt-2">
-                    {project.name}
-                  </h3>
+                  <h3 className="text-lg font-semibold mt-2">{project.name}</h3>
                   <p className="text-gray-600">{project.description}</p>
                   <a
                     href={"/portifolio-extended2"}
@@ -118,8 +115,12 @@ export default function PortfolioPage() {
       )}
     </div>
   );
+};
+
+export default function PortfolioPage() {
+  return (
+    <Suspense fallback={<p>Carregando...</p>}>
+      <PortfolioPageContent />
+    </Suspense>
+  );
 }
-
-
-
-

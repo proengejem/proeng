@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from "next/link"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { motion } from "framer-motion"
@@ -11,8 +10,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "~/components/ui/card"
-import { Label } from "~/components/ui/label"
-import { FaGoogle } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'; // Importe o useRouter
 import { useToast } from '../../hooks/use-toast'
 import {

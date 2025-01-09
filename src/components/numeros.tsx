@@ -12,7 +12,7 @@ export default function Numero({ n }: NumeroProps) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry && entry.isIntersecting) {
           setStartAnimation(true);
         }
       },
