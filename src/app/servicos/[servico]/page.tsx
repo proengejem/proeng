@@ -8,13 +8,6 @@ interface ServicoPageProps {
   };
 } 
 
-export async function generateStaticParams(): Promise<{ params: { servico: string } }[]> {
-  return services.map((service) => ({
-    params: {
-      servico: service.slug,
-    },
-  }));
-}
 
 const services = [
   {
@@ -115,6 +108,12 @@ const services = [
   },
   // Adicione os outros serviços aqui
 ];
+
+export async function generateStaticParams(): Promise<{ params: { servico: string } }[]> {
+  return services.map((service) => ({
+    params: { servico: service.slug },
+  }));
+}
 
 export default function ServicoPage({ params }: ServicoPageProps) {
   const servico = services.find((service) => service.slug === params.servico);
