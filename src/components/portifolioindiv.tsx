@@ -99,10 +99,10 @@ export default function PortfolioPage() {
                   </h3>
                   <p className="text-gray-600">{project.description}</p>
                   <a
-                    href={project.link}
-                    className="text-blue-500 hover:underline mt-2 block"
+                    href={"/portifolio-extended2"}
+                   style={{ color: '#027A48' }} className="text-green-600 font-semibold hover:underline"
                   >
-                    Ver projeto
+                    Ver obra →
                   </a>
                 </div>
               ))

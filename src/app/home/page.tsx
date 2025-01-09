@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import StyledBar from "~/components/homePage/divisorServico";
-import SolutionsSection from "~/components/homePage/videosHome";
+import SolutionsSection from "~/components/homePage/servicosHome";
 import AboutSection from "~/components/homePage/EPEP";
 import Introducao_1 from "~/components/Introducao_1";
 import Rodape from "~/components/homePage/rodape";
 import { Footer1 } from "~/components/ui/footer";
 import Navbar from "~/components/navbar";
+import SolutionsSectionVideos from '~/components/homePage/videosCards/page';
 
 export const metadata: Metadata = {
   title: 'ProEng - Sua Solução em Engenharia',
@@ -28,6 +29,7 @@ const HomePage: React.FC = () => {
       <AboutSection />
       <StyledBar />
       <SolutionsSection />
+      <SolutionsSectionVideos />
       <Rodape />
       <Footer1 />
     </div>

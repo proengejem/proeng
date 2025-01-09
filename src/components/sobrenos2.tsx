@@ -44,10 +44,12 @@ export default function Sobrenoscompo2() {
           {/* Image */}
           <div className="max-w-md flex-1">
             <Image
-              src="/figurinha.png"
+              // src= "/figurinha.png"
+              src= "/Estaca Helice.jpeg"
+
               alt="Engineering equipment"
-              width={500}
-              height={500}
+              width={900}
+              height={700}
               className="rounded-lg shadow-xl"
             />
           </div>

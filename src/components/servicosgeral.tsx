@@ -36,7 +36,7 @@ export default function Servicos() {
                 <p>{service.description}</p>
                 <Link key={service.slug} style={{ color: '#027A48' }} className="text-green-600 font-semibold hover:underline"
 href={`/servicos/${service.slug}`}>
-                  Ver projeto →
+                  Ver mais →
                 </Link>
               </div>
             </div>

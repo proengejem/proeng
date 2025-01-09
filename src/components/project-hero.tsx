@@ -7,7 +7,7 @@ const projectImages = [
   "/Estaca Raiz.jpeg?height=600&width=1200",
   "/Estaca Helice.jpeg?height=600&width=1200",
   "/Solo Grampeado.jpeg?height=600&width=1200",
-  "/placeholder.svg?height=600&width=1200",
+  // "/placeholder.svg?height=600&width=1200",
 ];
 
 export function ProjectHero() {
