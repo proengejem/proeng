@@ -55,7 +55,7 @@ export default function Sobrenoscompo2() {
       </div>
 
       {/* Partners Section */}
-      <StyledBarCongresso className="mt-[-10px]" />
+      <StyledBarCongresso  />
 
       <div className="w-full p-4">
         <Carossel />

@@ -159,5 +159,3 @@ padding: 4rem 10rem 5rem;
     </div>
   );
 }
-
-

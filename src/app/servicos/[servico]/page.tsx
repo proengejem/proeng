@@ -114,7 +114,7 @@ export default function ServicoPage({ params }: { params: { servico: string } })
       <Navbar />
   
       {/* Conteúdo principal */}
-      <main className="container mx-auto px-30 py-10 mb-0"> {/* Reduzindo o espaçamento inferior */}
+      <main className="container mx-auto px-80 py-10 mb-0"> {/* Reduzindo o espaçamento inferior */}
         <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]">{servico.title}</h1>
         <p className="mb-20 text-lg text-justify">{servico.description}</p>
         <img
