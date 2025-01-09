@@ -16,18 +16,18 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "@hookform/resolvers": "^3.10.0",
+    "@mui/material": "^6.3.1",
+    "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",
+    "@radix-ui/react-visually-hidden": "^1.1.1",
     "@relume_io/relume-tailwind": "^1.0.0",
     "@relume_io/relume-ui": "^1.0.1",
     "@t3-oss/env-nextjs": "^0.10.1",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/material": "^6.3.1",
-    "@radix-ui/react-dialog": "^1.1.4",
-    "@radix-ui/react-visually-hidden": "^1.1.1",
     "card": "^2.5.4",
     "carousel": "^0.0.3",
     "class-variance-authority": "^0.7.1",
@@ -57,6 +57,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "utils": "^0.2.2",
+    "uuid": "^11.0.4",
     "zod": "^3.24.1"
   },
   "devDependencies": {

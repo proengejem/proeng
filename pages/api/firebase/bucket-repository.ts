@@ -2,6 +2,7 @@ import { deleteObject, getDownloadURL, list, listAll, ref, uploadBytes } from "f
 import { v4 as uuidv4 } from "uuid";
 import { bucket } from "./firebase";
 
+
 class FirebaseStorageRepository {
     async uploadFile(path: string, file: Blob): Promise<string> {
         try {
