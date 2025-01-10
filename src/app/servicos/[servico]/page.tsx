@@ -2,25 +2,22 @@ import { Gallery7 } from "~/components/Gallery7"; // Certifique-se de ajustar o 
 import Navbar  from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
+import Image from "next/image";
+
 
 // Define os tipos para `params` e `servico`
-interface ServicoParams {
-  params: {
-    servico: string;
-  };
-}
 
 interface Servico {
   title: string;
   description: string;
-  gallery: { url: string; alt: string }[]; // Ajuste conforme o formato da galeria
+  gallery: { url: string; alt: string }[];
+  image: string;  // Ajuste conforme o formato da galeria
 }
 
-export default function ServicoPage({ params }: any) {
-  const { servico } = params;
-  const obra = obras.find((obra) => obra.slug === servico);
+export default function ServicoPage({ params }: { params: { servico: string } }) {
+  const obra = obras.find((obra) => obra.slug === params.servico) as Servico | undefined;
 
-  if (!servico) {
+  if (!obra) {
     return <div>Serviço não encontrado.</div>;
   }
 
@@ -30,36 +27,26 @@ export default function ServicoPage({ params }: any) {
   
       {/* Conteúdo principal */}
       <main className="container mx-auto px-40 py-10 mb-0"> {/* Reduzindo o espaçamento inferior */}
-        <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]">{servico.title}</h1>
-        <p className="mb-20 text-lg text-justify">{servico.description}</p>
-        {obra ? (
-          <>
-            <img
-              src={obra.image}
-              // width={90}
-              // height={90}
-              alt={obra.title}
-              className="mb-3 w-full h-auto rounded-md shadow-md"
-            />
-            <p className="text-lg font-bold text-left">
-              | Publicado por Proeng Geotécnia
-            </p>
-          </>
-        ) : (
-          <div>Obra não encontrada.</div>
-        )}
-  
-        {/* Galeria */}
+        <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]">{obra.title}</h1>
+        <p className="mb-20 text-lg text-justify">{obra.description}</p>
+        <Image
+          src={obra.image}
+          alt={obra.title}
+          width={800}
+          height={600}
+          className="mb-3 w-full h-auto rounded-md shadow-md"
+        />
+        <p className="text-lg font-bold text-left">| Publicado por Proeng Geotécnia</p>
+
         <Gallery7
           heading="Galeria de Obras"
           description=""
-          images={servico.gallery}
-          headingClassName="text-lg font-semibold mb-4 text-center" // Tamanho menor e centralizado
+          images={obra.gallery}
+          headingClassName="text-lg font-semibold mb-4 text-center"
         />
       </main>
-  
-      {/* Footer */}
+
       <Footer1 />
     </div>
   );
-};
+}
