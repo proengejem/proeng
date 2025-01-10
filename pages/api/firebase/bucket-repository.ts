@@ -1,4 +1,4 @@
-import { deleteObject, getDownloadURL, list, listAll, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, StorageReference, list, listAll, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { bucket } from "./firebase";
 
@@ -32,7 +32,7 @@ class FirebaseStorageRepository {
      * @param path caminho do diretório de arquivos
      * @returns
      */
-    async listAllFiles(path: string): Promise<any[]> { // Modifiquei para retornar qualquer tipo
+    async listAllFiles(path: string): Promise<StorageReference[]> { // Modifiquei para retornar qualquer tipo
         try {
             const listRef = ref(bucket, path);
             const result = await listAll(listRef);
@@ -52,9 +52,9 @@ class FirebaseStorageRepository {
      */
     async listFiles(
         path: string,
-        maxResults: number = 20,
-        currentPageToken: string | undefined = undefined
-    ): Promise<any[]> { // Modifiquei para retornar qualquer tipo
+        maxResults = 20,
+        currentPageToken?: string
+    ): Promise<StorageReference[]> {
         try {
             const listRef = ref(bucket, path);
             const result = await list(listRef, {

@@ -3,6 +3,19 @@ import Navbar  from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
 
+// Define os tipos para `params` e `servico`
+interface ServicoParams {
+  params: {
+    servico: string;
+  };
+}
+
+interface Servico {
+  title: string;
+  description: string;
+  gallery: { url: string; alt: string }[]; // Ajuste conforme o formato da galeria
+}
+
 export default function ServicoPage({ params }: any) {
   const { servico } = params;
   const obra = obras.find((obra) => obra.slug === servico);
