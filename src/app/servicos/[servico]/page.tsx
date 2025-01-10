@@ -9,6 +9,12 @@ interface ServicoPageProps {
   params: { servico: string };
 }
 
+export async function generateStaticParams() {
+  return obras.map((obra) => ({
+    params: { servico: obra.slug },
+  }));
+}
+
 export default function ServicoPage({ params }: ServicoPageProps) {
   const { servico } = params;
 
@@ -47,10 +53,4 @@ export default function ServicoPage({ params }: ServicoPageProps) {
       <Footer1 />
     </div>
   );
-}
-
-export async function generateStaticParams() {
-  return obras.map((obra) => ({
-    servico: obra.slug,
-  }));
 }
