@@ -3,8 +3,9 @@ import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
 import Image from "next/image"; // Componente otimizado para imagens
+import { notFound } from "next/navigation"; // Função para lidar com 404
 
-// Define o tipo da Obra (Servico)
+// Define o tipo da Obra
 interface Obra {
   slug: string;
   title: string;
@@ -13,21 +14,16 @@ interface Obra {
   image: string;
 }
 
-// Rota dinâmica recebe `params`
-interface ServicoPageProps {
-  params: {
-    servico: string;
-  };
-}
-
-// Componente principal da página
-export default function ServicoPage({ params }: ServicoPageProps) {
+// Pega os parâmetros da rota dinâmica
+export default function ServicoPage({ params }: { params: { servico: string } }) {
   const { servico } = params;
-  const obra = obras.find((obra) => obra.slug === servico); // Busca a obra correspondente
 
-  // Se a obra não for encontrada
+  // Encontra a obra correspondente
+  const obra = obras.find((obra) => obra.slug === servico);
+
+  // Redireciona para página 404 caso a obra não exista
   if (!obra) {
-    return <div>Serviço não encontrado.</div>;
+    notFound(); // Lida automaticamente com páginas inexistentes
   }
 
   return (
@@ -67,7 +63,7 @@ export default function ServicoPage({ params }: ServicoPageProps) {
   );
 }
 
-// Configuração para tornar a rota estática
+// Gera parâmetros estáticos para rotas dinâmicas
 export async function generateStaticParams() {
   return obras.map((obra) => ({
     servico: obra.slug,
