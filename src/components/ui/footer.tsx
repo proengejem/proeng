@@ -115,8 +115,10 @@ export const Footer1 = (props: Footer1Props) => {
           <div className="grid grid-cols-1 gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[0.75fr_1fr] lg:gap-y-4 lg:pb-20">
             <div className="flex flex-col">
               {logo.url && <Link href={logo.url} className="mb-3 md:mb-3">
-                <Image src= "/ProengLogo.png" alt="Proeng Engenharia" className="inline-block" />
-              </Link>}
+                <Image src= "/ProengLogo.png" alt="Proeng Engenharia" className="inline-block" 
+  width={500} // Defina a largura apropriada
+  height={100} // Defina a altura apropriada
+/>              </Link>}
               <p className="mb-5 md:mb-6" style={{color:"#027A48"} }>{newsletterDescription}</p>
               <div className="w-full max-w-md">
               <form

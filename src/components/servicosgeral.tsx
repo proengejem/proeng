@@ -24,9 +24,9 @@ export default function Servicos() {
               <div className="card-content">
                 <h2>{service.title}</h2>
                 <p>{service.description}</p>
-                <Link key={service.slug} style={{ color: '#027A48' }} className="text-green-600 font-semibold hover:underline"
-                  href={`/servicos/${service.slug}`}>
-                  Ver mais →
+                <Link key={service.servico} style={{ color: '#027A48' }} className="text-green-600 font-semibold hover:underline"
+                  href={`/servicos/${service.servico}`}>
+                  Ver projeto →
                 </Link>
               </div>
             </div>

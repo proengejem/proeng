@@ -1,5 +1,5 @@
 export type Service = {
-  slug: string;
+  servico: string;
   title: string;
   description: string;
   image: string;

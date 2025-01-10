@@ -9,40 +9,44 @@ interface ServicoPageProps {
   params: { servico: string };
 }
 
+// Gera parâmetros estáticos
 export async function generateStaticParams() {
   return obras.map((obra) => ({
-    params: { servico: obra.slug },
+    servico: obra.slug,
   }));
 }
 
-export default function ServicoPage({ params }: ServicoPageProps) {
-  const { servico } = params;
+export default async function ServicoPage({ params }: any) {
+  // Obtem o parâmetro "servico"
+  const { servico } = await params;
 
+  // Encontra a obra correspondente
   const obra = obras.find((obra) => obra.slug === servico);
 
   if (!obra) {
-    notFound();
+    return <div>Serviço não encontrado.</div>;
   }
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="container mx-auto px-40 py-10 mb-0">
+
+      {/* Conteúdo principal */}
+      <main className="container mx-auto px-4 py-10">
         <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]">
           {obra.title}
         </h1>
         <p className="mb-20 text-lg text-justify">{obra.description}</p>
-        <div className="mb-3 w-full h-auto rounded-md shadow-md">
-          <Image
-            src={obra.image}
-            alt={obra.title}
-            width={800}
-            height={600}
-            className="rounded-md"
-            priority
-          />
-        </div>
-        <p className="text-lg font-bold text-left">| Publicado por Proeng Geotécnia</p>
+        <img
+          src={obra.image}
+          alt={obra.title}
+          className="mb-3 w-full h-auto rounded-md shadow-md"
+        />
+        <p className="text-lg font-bold text-left">
+          | Publicado por Proeng Geotécnia
+        </p>
+
+        {/* Galeria */}
         <Gallery7
           heading="Galeria de Obras"
           description=""
@@ -50,6 +54,8 @@ export default function ServicoPage({ params }: ServicoPageProps) {
           headingClassName="text-lg font-semibold mb-4 text-center"
         />
       </main>
+
+      {/* Footer */}
       <Footer1 />
     </div>
   );
