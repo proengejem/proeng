@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
+import Image from 'next/image'
 
 export default function EditObra() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -15,9 +16,7 @@ export default function EditObra() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically fetch the obra data based on the search term
     console.log('Procurando por uma obra:', searchTerm)
-    // For this example, we'll just set some dummy data
     setName('Sample Obra')
     setDescription('This is a sample obra description')
     setService('Sample Service')
@@ -26,7 +25,6 @@ export default function EditObra() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the updated data to your backend
     console.log('Editando obra:', { 
       name, 
       description, 
@@ -37,7 +35,7 @@ export default function EditObra() {
   }
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || [])
+    const files = Array.from(e.target.files ?? []) // Substituído `||` por `??`
     setImages(prevImages => [
       ...prevImages,
       ...files.map(file => ({
@@ -102,7 +100,13 @@ export default function EditObra() {
           <div className="grid grid-cols-3 gap-2">
             {existingImages.map((image, index) => (
               <div key={index} className="relative">
-                <img src={image} alt={`Existing ${index}`} className="w-full h-24 object-cover rounded" />
+                <Image
+                  src={image}
+                  alt={`Existing ${index}`}
+                  width={300}
+                  height={300}
+                  className="w-full h-24 object-cover rounded"
+                />
                 <button
                   type="button"
                   onClick={() => removeExistingImage(index)}
@@ -126,7 +130,13 @@ export default function EditObra() {
             <div className="grid grid-cols-3 gap-2">
               {images.map((image, index) => (
                 <div key={index} className="relative">
-                  <img src={image.preview} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded" />
+                  <Image
+                    src={image.preview}
+                    alt={`Preview ${index}`}
+                    width={300}
+                    height={300}
+                    className="w-full h-24 object-cover rounded"
+                  />
                   <button
                     type="button"
                     onClick={() => removeNewImage(index)}
@@ -146,4 +156,3 @@ export default function EditObra() {
     </div>
   )
 }
-

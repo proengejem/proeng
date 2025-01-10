@@ -12,21 +12,17 @@ export default function Numero({ n }: NumeroProps) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry && entry.isIntersecting) {
+        if (entry?.isIntersecting) { // Usando optional chaining
           setStartAnimation(true);
         }
       },
       { threshold: 0.5 } // Define que a animação começa quando 50% do elemento está visível
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    ref.current && observer.observe(ref.current); // Usando && ao invés de if para ser mais conciso
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      ref.current && observer.unobserve(ref.current); // Usando && novamente
     };
   }, []);
 

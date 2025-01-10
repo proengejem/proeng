@@ -12,7 +12,8 @@ interface Project {
   image: string;
 }
 
-const projects: { [key: string]: Project[] } = {
+// Substituído o índice genérico por Record
+const projects: Record<string, Project[]> = {
   "Solo Grampeado": [
     {
       id: "1",
@@ -52,7 +53,8 @@ const projects: { [key: string]: Project[] } = {
       description: "Descrição da obra 2",
       link: "#",
       image: "/images/obra2.jpg",
-    },    {
+    },
+    {
       id: "3",
       name: "Obra 3",
       description: "Descrição da obra 3",
@@ -97,7 +99,8 @@ const PortfolioPageContent = () => {
                   <p className="text-gray-600">{project.description}</p>
                   <a
                     href={"/portifolio-extended2"}
-                   style={{ color: '#027A48' }} className="text-green-600 font-semibold hover:underline"
+                    style={{ color: "#027A48" }}
+                    className="text-green-600 font-semibold hover:underline"
                   >
                     Ver obra →
                   </a>

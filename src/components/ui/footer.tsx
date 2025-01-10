@@ -13,6 +13,7 @@ import {
 } from "react-icons/bi";
 import { db } from "pages/api/firebase/firebase";
 import Link from "next/link";
+import Image from "next/image";
 
 
 type ImageProps = {
@@ -75,9 +76,9 @@ export const Footer1 = (props: Footer1Props) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = {
-      name: form.nome.value,
-      email: form.email.value,
-      message: form.mensagem.value,
+      name: (form.elements.namedItem("nome") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("mensagem") as HTMLInputElement).value,
     };
   
     try {
@@ -85,8 +86,8 @@ export const Footer1 = (props: Footer1Props) => {
       await addDoc(collection(db, "contato"), formData);
   
       // Envia o email
-      const response = await fetch("api/send-email", 
-        {method: "POST",
+      const response = await fetch("api/send-email", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
@@ -100,6 +101,7 @@ export const Footer1 = (props: Footer1Props) => {
       console.error("Erro ao processar o formulário: ", error);
     }
   };
+  
 
   return (
     <footer>
@@ -113,7 +115,7 @@ export const Footer1 = (props: Footer1Props) => {
           <div className="grid grid-cols-1 gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[0.75fr_1fr] lg:gap-y-4 lg:pb-20">
             <div className="flex flex-col">
               {logo.url && <Link href={logo.url} className="mb-3 md:mb-3">
-                <img src= "/ProengLogo.png" alt="Proeng Engenharia" className="inline-block" />
+                <Image src= "/ProengLogo.png" alt="Proeng Engenharia" className="inline-block" />
               </Link>}
               <p className="mb-5 md:mb-6" style={{color:"#027A48"} }>{newsletterDescription}</p>
               <div className="w-full max-w-md">

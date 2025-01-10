@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
+import Image from 'next/image'
 
 export default function CreateObra() {
   const [name, setName] = useState('')
@@ -13,9 +14,9 @@ export default function CreateObra() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send this data to your backend
+    // Aqui normalmente você enviaria esses dados para o backend
     console.log('Criando uma obra:', { name, description, service, images: images.map(img => img.file) })
-    // Reset form
+    // Resetar o formulário
     setName('')
     setDescription('')
     setService('')
@@ -56,7 +57,7 @@ export default function CreateObra() {
             accept="image/*"
             multiple
             onChange={(e) => {
-              const files = Array.from(e.target.files || [])
+              const files = Array.from(e.target.files ?? []) // Usando `??` ao invés de `||`
               setImages(prevImages => [
                 ...prevImages,
                 ...files.map(file => ({
@@ -70,7 +71,14 @@ export default function CreateObra() {
             <div className="grid grid-cols-3 gap-2">
               {images.map((image, index) => (
                 <div key={index} className="relative">
-                  <img src={image.preview} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded" />
+                  {/* Usando o componente `Image` do Next.js para otimização */}
+                  <Image
+                    src={image.preview}
+                    alt={`Preview ${index}`}
+                    width={300}
+                    height={300}
+                    className="w-full h-24 object-cover rounded"
+                  />
                   <button
                     type="button"
                     onClick={() => setImages(images.filter((_, i) => i !== index))}
