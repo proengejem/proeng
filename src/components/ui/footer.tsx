@@ -12,6 +12,8 @@ import {
   BiLogoWhatsapp,
 } from "react-icons/bi";
 import { db } from "pages/api/firebase/firebase";
+import { insertData } from 'pages/api/supabse/database';
+import { Contato } from '~/interfaces/ContatoInterface';
 
 type ImageProps = {
   url?: string;
@@ -72,7 +74,7 @@ export const Footer1 = (props: Footer1Props) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const formData = {
+    const formData: Contato = {
       name: form.nome.value,
       email: form.email.value,
       message: form.mensagem.value,
@@ -80,7 +82,16 @@ export const Footer1 = (props: Footer1Props) => {
   
     try {
       // Salva no Firebase
-      await addDoc(collection(db, "contato"), formData);
+      //await addDoc(collection(db, "contato"), formData);
+      const { error } = await insertData("contato", formData); 
+
+      if (error) {
+        console.log("Erro ao salvar no Supabase: ", error.message);
+      }
+
+      else {
+        console.log("Informações salvas com sucesso!");
+      }
   
       // Envia o email
       const response = await fetch("api/send-email", 

@@ -4,22 +4,67 @@ import { useEffect, useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
+import { insertData } from 'pages/api/supabse/database'
+import { useToast } from '~/hooks/use-toast'
+
+interface ObraInterface {
+  name: string
+  description: string
+  service: string
+  images?: File[]
+}
 
 export default function CreateObra() {
+  const { toast } = useToast()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [service, setService] = useState('')
   const [images, setImages] = useState<{ file: File; preview: string }[]>([])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // Here you would typically send this data to your backend
+    //const form = e.target as HTMLFormElement;
+      const formData: ObraInterface = {
+        name: name,
+        description: description,
+        service: service,
+      };
+
+
+    try {
+      
+      const { error } = await insertData('obras', formData)
+          
+      if (error) {
+        console.error('Erro ao criar uma obra:', error.message)
+        toast({
+          title: 'Erro ao criar uma obra',
+          description: error.message,
+        })
+        return
+      }
+
+    } catch (error) {
+      console.error('Erro ao criar uma obra:', error)
+      return
+    
+    } finally {
+      
+      setName('')
+      setDescription('')
+      setService('')
+      setImages([])
+    }
+
     console.log('Criando uma obra:', { name, description, service, images: images.map(img => img.file) })
+    toast
+    ({
+      title: 'Obra criada com sucesso',
+      description: 'Sua obra foi criada com sucesso!',
+    })
     // Reset form
-    setName('')
-    setDescription('')
-    setService('')
-    setImages([])
+   
   }
 
   useEffect(() => {
@@ -33,18 +78,21 @@ export default function CreateObra() {
         <Input
           type="text"
           placeholder="Nome"
+          name = 'name'
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
         <Textarea
           placeholder="Descrição"
+          name = 'description'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
         />
         <Input
           type="text"
+          name = 'service'
           placeholder="Serviço/Categoria"
           value={service}
           onChange={(e) => setService(e.target.value)}

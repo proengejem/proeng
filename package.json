@@ -28,6 +28,7 @@
     "@radix-ui/react-visually-hidden": "^1.1.1",
     "@relume_io/relume-tailwind": "^1.0.0",
     "@relume_io/relume-ui": "^1.0.1",
+    "@supabase/supabase-js": "^2.47.14",
     "@t3-oss/env-nextjs": "^0.10.1",
     "card": "^2.5.4",
     "carousel": "^0.0.3",
@@ -59,6 +60,7 @@
     "tailwindcss-animate": "^1.0.7",
     "utils": "^0.2.2",
     "uuid": "^11.0.4",
+    "whatwg-url": "^14.1.0",
     "zod": "^3.23.3"
   },
   "devDependencies": {
