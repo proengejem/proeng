@@ -47,7 +47,7 @@ export default function Sobrenoscompo2() {
         </a>
             </div>
             {/* Image */}
-            <div className="max-w-md flex-1">
+            <div className="max-w-md flex-1 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
               <Image
                 src="/figurinha.png"
                 alt="Engineering equipment"
