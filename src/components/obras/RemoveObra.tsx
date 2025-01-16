@@ -5,6 +5,7 @@ import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { deleteData, getData } from 'pages/api/supabse/database'
 import { useToast } from '~/hooks/use-toast'
+import { deleteFolderFromStorage } from 'pages/api/supabse/storage'
 export default function RemoveObra() {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState<string | null>(null);
@@ -32,6 +33,7 @@ export default function RemoveObra() {
 
       setSearchResult(`Obra encontrada: ${searchTerm}`);
       const { error } = await deleteData('obras', searchTerm);
+      deleteFolderFromStorage('Obras', searchTerm);
 
       if (error) {
         console.error('Erro ao remover uma obra:', error.message);
