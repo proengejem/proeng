@@ -120,7 +120,7 @@ async function onSignInWithGoogle() {
                                         <Input
                                             placeholder="example@gmail.com"
                                             type="email"
-                                            className="bg-white dark:bg-blue-700 text-blue-900 dark:text-blue-100"
+                                            className="bg-white dark:bg-blue-500 text-[#027A48] dark:text-blue-100"
                                             {...field}
                                             defaultValue={''}
                                         />
