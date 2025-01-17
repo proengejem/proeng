@@ -3,7 +3,9 @@
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { addDoc, collection } from "firebase/firestore";
+import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 import {
   BiLogoFacebookCircle,
   BiLogoInstagram,
@@ -12,9 +14,8 @@ import {
   BiLogoWhatsapp,
 } from "react-icons/bi";
 import { db } from "pages/api/firebase/firebase";
-import Link from "next/link";
-import Image from "next/image";
-
+import { insertData } from 'pages/api/supabse/database';
+import { Contato } from '~/interfaces/ContatoInterface';
 
 type ImageProps = {
   url?: string;
@@ -75,15 +76,24 @@ export const Footer1 = (props: Footer1Props) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const formData = {
-      name: (form.elements.namedItem("nome") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      message: (form.elements.namedItem("mensagem") as HTMLInputElement).value,
+    const formData: Contato = {
+      name: form.nome.value,
+      email: form.email.value,
+      message: form.mensagem.value,
     };
   
     try {
       // Salva no Firebase
-      await addDoc(collection(db, "contato"), formData);
+      //await addDoc(collection(db, "contato"), formData);
+      const { error } = await insertData("contato", formData); 
+
+      if (error) {
+        console.log("Erro ao salvar no Supabase: ", error.message);
+      }
+
+      else {
+        console.log("Informações salvas com sucesso!");
+      }
   
       // Envia o email
       const response = await fetch("api/send-email", {
@@ -115,10 +125,8 @@ export const Footer1 = (props: Footer1Props) => {
           <div className="grid grid-cols-1 gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[0.75fr_1fr] lg:gap-y-4 lg:pb-20">
             <div className="flex flex-col">
               {logo.url && <Link href={logo.url} className="mb-3 md:mb-3">
-                <Image src= "/ProengLogo.png" alt="Proeng Engenharia" className="inline-block" 
-  width={500} // Defina a largura apropriada
-  height={100} // Defina a altura apropriada
-/>              </Link>}
+                <Image src= "/ProengLogo.png" alt="Proeng Engenharia"  width={500} height={100} className="inline-block "/>              
+                </Link>}
               <p className="mb-5 md:mb-6" style={{color:"#027A48"} }>{newsletterDescription}</p>
               <div className="w-full max-w-md">
               <form
