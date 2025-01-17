@@ -10,74 +10,80 @@ export default function RemoveVideo() {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [selectedVideo, setSelectedVideo] = useState<any | null>(null)
-  const [error, setError] = useState<boolean | null>(false);
   const { toast } = useToast()
 
+  // Função para buscar obras
   const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault()
+  e.preventDefault()
+  try {
+    const result = await getData('videos', searchTerm) // Altere conforme sua API
 
-    const result = await getData('videos', searchTerm)
-
-    if (result.error) {
-      console.error('Erro ao buscar vídeos:', result.error.message)
+    if (result.error || result.data.length === 0) {
       toast({
-        title: 'Erro na busca',
-        description: 'Não foi possível encontrar vídeos com o termo fornecido.',
-      })
-      return
-    }
-
-    if (result.data.length === 0) {
-      toast({
-        title: 'Nenhum vídeo encontrado',
-        description: 'Tente outro termo de busca.',
+        title: 'Nenhum vídeo encontrada',
+        description: `Não foi possível encontrar vídeos para "${searchTerm}".`,
       })
       setSearchResults([])
       return
     }
 
-    setSearchResults(result.data) // Assume que result.data é um array de objetos com informações dos vídeos
+    setSearchResults(result.data)
+    toast({
+      title: 'Vídeos encontrados',
+      description: `Foram encontrados ${result.data.length} vídeos.`,
+    })
+  } catch (err) {
+    console.error('Erro ao buscar vídeos:', err)
+    toast({
+      title: 'Erro ao buscar vídeos',
+      description: 'Ocorreu um erro ao buscar vídeos. Tente novamente.',
+    })
+  }
+}
+
+// Função para remover obra
+const handleRemove = async (e: React.FormEvent) => {
+  e.preventDefault()
+
+  if (!selectedVideo) {
+    toast({
+      title: 'Erro ao remover',
+      description: 'Selecione um vídeo antes de removê-lo.',
+    })
+    return
   }
 
-  const handleRemove = async () => {
-    if (!selectedVideo) {
+  try {
+    // Remover do banco de dados
+    const { error } = await deleteData('videos', selectedVideo.name)
+
+    if (error) {
+      console.error('Erro ao remover o vídeo:', error.message)
       toast({
-        title: 'Erro',
-        description: 'Selecione um vídeo para remover.',
+        title: 'Erro ao remover vídeo',
+        description: error.message,
       })
       return
     }
-  
-    try {
-      const { error } = await deleteData('videos', selectedVideo.id) // Certifique-se de que o ID é o campo correto
-  
-      if (error) {
-        console.error('Erro ao remover o vídeo:', error.message)
-        toast({
-          title: 'Erro ao remover',
-          description: error.message,
-        })
-        return
-      }
-  
-      toast({
-        title: 'Vídeo removido com sucesso',
-        description: `O vídeo "${selectedVideo.title}" foi removido.`,
-      })
-  
-      // Atualizar lista de resultados após a remoção
-      setSearchResults(searchResults.filter((video) => video.id !== selectedVideo.id))
-      setSelectedVideo(null)
-      setSearchTerm('')
 
-    } catch (err) {
-      console.error('Erro inesperado ao remover o vídeo:', err)
-      toast({
-        title: 'Erro inesperado',
-        description: 'Ocorreu um erro ao tentar remover o vídeo. Tente novamente.',
-      })
-    }
+
+    toast({
+      title: 'Vídeo removido com sucesso',
+      description: `O vídeo "${selectedVideo.name}" foi removido com sucesso.`,
+    })
+
+    // Atualizar lista de resultados após remoção
+    setSearchResults(searchResults.filter((video) => video.name !== selectedVideo.name))
+    setSelectedVideo(null)
+    setSearchTerm('')
+  } catch (err) {
+    console.error('Erro inesperado ao remover o vídeo:', err)
+    toast({
+      title: 'Erro inesperado',
+      description: 'Ocorreu um erro ao tentar remover o vídeo.',
+    })
   }
+}
   
   
   return (
@@ -130,9 +136,6 @@ export default function RemoveVideo() {
           <Button onClick={handleRemove} className="bg-red-600 hover:bg-red-700 text-white">
             Remover Vídeo Selecionado
           </Button>
-          <p className="text-sm mt-2 text-gray-600">
-            Vídeo selecionado: <span className="font-bold">{selectedVideo.title}</span>
-          </p>
         </div>
       )}
     </div>

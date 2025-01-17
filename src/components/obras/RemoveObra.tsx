@@ -5,6 +5,7 @@ import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { deleteData, getData } from 'pages/api/supabse/database'
 import { useToast } from '~/hooks/use-toast'
+import { deleteFolderFromStorage } from 'pages/api/supabse/storage'
 
 export default function RemoveObra() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -54,8 +55,8 @@ export default function RemoveObra() {
     }
   
     try {
-      // Chame o `deleteData` com o identificador correto
-      const { error } = await deleteData('obras', selectedObra.id)
+      // Remover do banco de dados
+      const { error } = await deleteData('obras', selectedObra.name)
   
       if (error) {
         console.error('Erro ao remover a obra:', error.message)
@@ -66,13 +67,16 @@ export default function RemoveObra() {
         return
       }
   
+      // Remover o folder correspondente do storage
+      await deleteFolderFromStorage('Obras', selectedObra.name)
+  
       toast({
         title: 'Obra removida com sucesso',
         description: `A obra "${selectedObra.title}" foi removida com sucesso.`,
       })
   
       // Atualizar lista de resultados após remoção
-      setSearchResults(searchResults.filter((obra) => obra.id !== selectedObra.id))
+      setSearchResults(searchResults.filter((obra) => obra.name !== selectedObra.name))
       setSelectedObra(null)
       setSearchTerm('')
     } catch (err) {
@@ -83,7 +87,6 @@ export default function RemoveObra() {
       })
     }
   }
-  
 
   return (
     <div className="border p-4 rounded-md">
@@ -99,7 +102,7 @@ export default function RemoveObra() {
             onChange={(e) => setSearchTerm(e.target.value)}
             required
           />
-          <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+          <Button type="submit" className="bg-[#027A48] hover:bg-green-500 text-white">
             Pesquisar
           </Button>
         </div>
@@ -122,7 +125,6 @@ export default function RemoveObra() {
                 <p className="text-sm text-gray-600">{obra.description}</p>
                 <p>Serviço: {obra.service || 'Sem serviço'}</p>
                 <p>Criado em: {obra.created_at || '?!'}</p>
-
               </li>
             ))}
           </ul>

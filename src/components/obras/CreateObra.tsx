@@ -6,6 +6,8 @@ import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
 import { insertData } from 'pages/api/supabse/database'
 import { useToast } from '~/hooks/use-toast'
+import { uploadFilesToStorage } from 'pages/api/supabse/storage'
+
 
 interface ObraInterface {
   name: string
@@ -30,7 +32,6 @@ export default function CreateObra() {
         description: description,
         service: service,
       };
-
 
     try {
       
@@ -57,14 +58,20 @@ export default function CreateObra() {
       setImages([])
     }
 
-    console.log('Criando uma obra:', { name, description, service, images: images.map(img => img.file) })
-    toast
-    ({
-      title: 'Obra criada com sucesso',
-      description: 'Sua obra foi criada com sucesso!',
-    })
-    // Reset form
-   
+    // Upload images to storage
+    const imagePaths = await uploadFilesToStorage('Obras', images.map(img => img.file), formData.name)
+    console.log('imagePaths:', imagePaths)
+    // Create the obra
+
+    if(imagePaths.uploadedFiles.length > 0) {
+      console.log('Criando uma obra:', { name, description, service, images: images.map(img => img.file) })
+      toast
+      ({
+        title: 'Obra criada com sucesso',
+        description: 'Sua obra foi criada com sucesso!',
+      })
+      
+    }   
   }
 
   useEffect(() => {
@@ -98,6 +105,7 @@ export default function CreateObra() {
           onChange={(e) => setService(e.target.value)}
           required
         />
+ 
         <div className="space-y-2">
           <Input
             type="file"
