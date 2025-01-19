@@ -4,19 +4,64 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play } from "lucide-react";
 import { useState } from "react";
-import ProengLogo from "public/ProengLogo.png";
-import SoloGrampeado from "public/Solo Grampeado.jpeg";
-import PortifolioHeader from "public/portifolio header.png";
+import { motion, AnimatePresence } from "framer-motion";
+import { InfoModal } from "~/components/info-modal";
 
 type MediaType = "photo" | "video";
 
+interface ModalContent {
+  title: string;
+  content: string;
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function Portfolio() {
   const [mediaType, setMediaType] = useState<MediaType>("photo");
+  const [selectedModal, setSelectedModal] = useState<ModalContent | null>(null);
+
+  const modalContent = {
+    quality: {
+      title: "Qualidade Garantida",
+      content:
+        "Nossa equipe altamente qualificada garante a excelência em cada etapa do projeto. Utilizamos tecnologias avançadas e seguimos rigorosos padrões de qualidade para entregar resultados que superam as expectativas. Cada projeto é minuciosamente planejado e executado com precisão, garantindo durabilidade e segurança.",
+    },
+    solutions: {
+      title: "Soluções Personalizadas",
+      content:
+        "Entendemos que cada projeto é único e requer uma abordagem específica. Nossa equipe trabalha em estreita colaboração com você para desenvolver soluções que atendam perfeitamente às suas necessidades. Combinamos nossa experiência técnica com sua visão para criar soluções inovadoras e eficientes.",
+    },
+  };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <div className="relative h-[200px] w-full overflow-hidden">
+      {/* Hero Section with slide-in animation */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative h-[200px] w-full overflow-hidden"
+      >
         <Image
           src="/portifolio header.png?height=200&width=1920"
           alt="Portfolio header"
@@ -24,40 +69,59 @@ export default function Portfolio() {
           height={200}
           className="w-full object-cover"
         />
-      </div>
+      </motion.div>
+
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid items-start gap-12 md:grid-cols-2">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid items-start gap-12 md:grid-cols-2"
+        >
           {/* Left Column */}
           <div className="space-y-8">
-            <div>
+            <motion.div variants={itemVariants}>
               <h2 className="mb-4 text-3xl font-bold">Solo Grampeado</h2>
               <p className="mb-6 text-gray-600">
                 Nossos serviços são projetados para atender às suas necessidades
                 específicas. Experimente a eficiência e a qualidade que
                 oferecemos.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-lg bg-gray-50 p-6">
+            <motion.div
+              variants={itemVariants}
+              className="grid gap-6 md:grid-cols-2"
+            >
+              <motion.button
+                onClick={() => setSelectedModal(modalContent.quality)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
+              >
                 <h3 className="mb-2 font-bold">Qualidade Garantida</h3>
                 <p className="text-sm text-gray-600">
-                  Entregamos resultados excepcionais em todos os projetos que
-                  realizamos.
+                  Clique para saber mais sobre nossa qualidade excepcional.
                 </p>
-              </div>
-              <div className="rounded-lg bg-gray-50 p-6">
+              </motion.button>
+              <motion.button
+                onClick={() => setSelectedModal(modalContent.solutions)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
+              >
                 <h3 className="mb-2 font-bold">Soluções Personalizadas</h3>
                 <p className="text-sm text-gray-600">
-                  Adaptamos nossos serviços para se adequar às sua projeto
-                  único.
+                  Clique para descobrir como personalizamos nossas soluções.
                 </p>
-              </div>
-            </div>
+              </motion.button>
+            </motion.div>
 
-            <div className="flex space-x-4">
-              <button
+            <motion.div variants={itemVariants} className="flex space-x-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setMediaType("photo")}
                 className={`rounded border px-6 py-2 transition-colors ${
                   mediaType === "photo"
@@ -66,8 +130,10 @@ export default function Portfolio() {
                 }`}
               >
                 Fotos
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setMediaType("video")}
                 className={`rounded border px-6 py-2 transition-colors ${
                   mediaType === "video"
@@ -76,37 +142,65 @@ export default function Portfolio() {
                 }`}
               >
                 Vídeos
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
 
           {/* Right Column - Image/Video Section */}
-          <div className="relative">
-            {mediaType === "photo" ? (
-              <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl">
-                <Image
-                  src="/Estaca Raiz.jpeg"
-                  alt="Solo Grampeado Project Photo"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ) : (
-              <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-900">
-                <Image
-                  src="/placeholder.svg"
-                  alt="Solo Grampeado Project Video"
-                  fill
-                  className="object-cover opacity-90"
-                />
-                <button className="group absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40">
-                  <Play className="h-16 w-16 text-white opacity-80 group-hover:opacity-100" />
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+          <motion.div variants={itemVariants} className="relative">
+            <AnimatePresence mode="wait">
+              {mediaType === "photo" ? (
+                <motion.div
+                  key="photo"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl"
+                >
+                  <Image
+                    src="/Estaca Raiz.jpeg"
+                    alt="Solo Grampeado Project Photo"
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="video"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative aspect-square overflow-hidden rounded-lg bg-gray-900"
+                >
+                  <Image
+                    src="/placeholder.svg"
+                    alt="Solo Grampeado Project Video"
+                    fill
+                    className="object-cover opacity-90"
+                  />
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="group absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40"
+                  >
+                    <Play className="h-16 w-16 text-white opacity-80 group-hover:opacity-100" />
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
       </div>
+
+      {/* Modal */}
+      <InfoModal
+        isOpen={!!selectedModal}
+        onClose={() => setSelectedModal(null)}
+        title={selectedModal?.title ?? ""}
+        content={selectedModal?.content ?? ""}
+      />
     </div>
   );
 }
