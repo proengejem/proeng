@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+
 
 interface VideoCardProps {
   videoUrl: string;
@@ -76,9 +78,11 @@ const SolutionsSectionVideos: React.FC = () => {
           ))}
         </div>
         <div className="text-center mt-8">
+          <Link  href="https://www.youtube.com/@proeng.geotecnia">
           <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700" style={{ backgroundColor: '#027A48' }}>
             Ver mais
           </button>
+        </Link >
         </div>
       </div>
     </div>
