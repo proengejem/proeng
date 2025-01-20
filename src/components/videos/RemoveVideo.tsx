@@ -18,7 +18,7 @@ export default function RemoveVideo() {
   try {
     const result = await getData('videos', searchTerm) // Altere conforme sua API
 
-    if (result.error || result.data.length === 0) {
+    if (result.error || !result.data || result.data.length === 0) {
       toast({
         title: 'Nenhum vídeo encontrada',
         description: `Não foi possível encontrar vídeos para "${searchTerm}".`,
@@ -30,7 +30,7 @@ export default function RemoveVideo() {
     setSearchResults(result.data)
     toast({
       title: 'Vídeos encontrados',
-      description: `Foram encontrados ${result.data.length} vídeos.`,
+      description: `Foram encontrados ${result.data ? result.data.length : 0} vídeos.`,
     })
   } catch (err) {
     console.error('Erro ao buscar vídeos:', err)
