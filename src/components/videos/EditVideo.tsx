@@ -6,29 +6,43 @@ import { Input } from '~/components/ui/input';
 import { useToast } from '~/hooks/use-toast';
 import { updateData, getData } from 'pages/api/supabse/database';
 
-// Interface para representar um vídeo
+// Interface for representing a video
 interface VideoInterface {
   name: string;
   url: string;
   service: string;
 }
 
+// Define the expected structure of `getData`'s return value
+import { PostgrestError } from '@supabase/supabase-js';
+
+interface GetDataResult {
+  data: VideoInterface[] | null;
+  error: PostgrestError | null;
+}
+
 export default function EditObra() {
-  const [searchTerm, setSearchTerm] = useState<string>(''); 
-  const [searchResult, setSearchResult] = useState<VideoInterface[] | null>(null); 
-  const [name, setName] = useState<string>(''); 
-  const [link, setLink] = useState<string>(''); 
-  const [service, setService] = useState<string>(''); 
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResult, setSearchResult] = useState<VideoInterface[] | null>(null);
+  const [name, setName] = useState<string>('');
+  const [link, setLink] = useState<string>('');
+  const [service, setService] = useState<string>('');
   const { toast } = useToast();
 
-  const isVideoInterface = (obj: any): obj is VideoInterface => {
-    return obj && typeof obj.name === 'string' && typeof obj.url === 'string' && typeof obj.service === 'string';
+  const isVideoInterface = (obj: unknown): obj is VideoInterface => {
+    return (
+      typeof obj === 'object' &&
+      obj !== null &&
+      typeof (obj as VideoInterface).name === 'string' &&
+      typeof (obj as VideoInterface).url === 'string' &&
+      typeof (obj as VideoInterface).service === 'string'
+    );
   };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await getData('videos', searchTerm);
+      const result: GetDataResult = await getData('videos', searchTerm);
 
       if (result.error ?? !result.data ?? result.data.length === 0) {
         toast({
@@ -79,7 +93,7 @@ export default function EditObra() {
       const { error } = await updateData('videos', searchTerm, formData);
 
       if (error) {
-        console.error('Erro ao editar vídeo:', error.message);
+        console.error('Erro ao editar vídeo:', error);
         toast({
           title: 'Erro ao editar vídeo',
           description: error.message,

@@ -55,7 +55,7 @@ export default function BlurFade({
       filter: `blur(0px)`,
     },
   };
-  const combinedVariants = variant || defaultVariants;
+  const combinedVariants = variant ?? defaultVariants;
   return (
     <AnimatePresence>
       <motion.div
