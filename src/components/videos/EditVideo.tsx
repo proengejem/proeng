@@ -21,7 +21,7 @@ interface GetDataResult {
   error: PostgrestError | null;
 }
 
-export default function EditObra() {
+export default function EditVideo() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResult, setSearchResult] = useState<VideoInterface[] | null>(null);
   const [name, setName] = useState<string>('');
