@@ -1,4 +1,6 @@
 'use client';
+
+
 import React, { useState } from 'react';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -8,10 +10,12 @@ import { updateData, getData } from 'pages/api/supabse/database';
 import { uploadNewFilesToStorage } from 'pages/api/supabse/storage';
 import { createClient } from '@supabase/supabase-js';
 
+
 const supabase = createClient(
   'https://xaljbeozaieyoecnxvum.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8'
 );
+
 
 interface ObraInterface {
   name: string;
@@ -20,11 +24,6 @@ interface ObraInterface {
   images?: File[];
 }
 
-interface Obra {
-  name: string;
-  description: string;
-  service: string;
-}
 
 export default function EditObra() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,54 +35,70 @@ export default function EditObra() {
   const [searchResult, setSearchResult] = useState<string | null>(null);
   const { toast } = useToast();
 
+
+  interface ObraInterface {
+    name: string;
+    description: string;
+    service: string;
+    images?: File[];
+  }
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     try {
-      // Corrigido para garantir que o retorno da função seja tipado corretamente
-      const { data, error } = await getData('obras', searchTerm);
-
+      const { data, error } = await getData<ObraInterface[]>('obras', searchTerm);
+  
       if (error) {
-        console.error('Erro ao buscar obra:', error.message);
         toast({
           title: 'Erro ao buscar obra',
           description: error.message,
         });
         return;
       }
-
+  
       if (data && data.length > 0) {
         const obra = data[0];
-        setName(obra.name);
-        setDescription(obra.description);
-        setService(obra.service);
-
+        setName(obra?.name ?? '');
+        setDescription(obra?.description ?? '');
+        setService(obra?.service ?? '');
+  
         const folderName = obra.name;
         const { data: files, error: listError } = await supabase.storage
           .from('Obras')
           .list(folderName, { limit: 100 });
-
+  
         if (listError) {
-          console.error('Erro ao listar imagens:', listError.message);
+          console.error('Erro ao listar imagens:', listError.message); // Melhor captura de erro
           toast({
             title: 'Erro ao carregar imagens',
             description: listError.message,
           });
           return;
         }
-
-        // Garantido que o imageUrls tenha um valor de fallback correto
-        const imageUrls = files?.map((file) =>
-          supabase.storage
-            .from('Obras')
-            .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-        ) ?? [];
-
+  
+        if (!files || files.length === 0) {
+          console.log('Nenhuma imagem encontrada para essa obra.');
+          setExistingImages([]);
+          toast({
+            title: 'Nenhuma imagem encontrada',
+            description: 'Não há imagens associadas a essa obra.',
+          });
+          return;
+        }
+  
+        // Caso contrário, montar a lista de URLs das imagens
+        const imageUrls = files.map(
+          (file) =>
+            supabase.storage
+              .from('Obras')
+              .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
+        );
+  
         setExistingImages(imageUrls);
-        setSearchResult('Obra encontrada: ${obra.name}');
+        setSearchResult(`Obra encontrada: ${obra.name}`);
         toast({
           title: 'Obra encontrada',
-          description: 'A obra "${obra.name}" foi carregada para edição.',
+          description: `A obra "${obra.name}" foi carregada para edição.`,
         });
       } else {
         setSearchResult(null);
@@ -93,16 +108,19 @@ export default function EditObra() {
         });
       }
     } catch (err) {
-      console.error(err);
+      console.error('Erro inesperado ao buscar obra:', err); // Melhor captura de erro
       toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao buscar a obra.',
       });
     }
   };
-
+  
+  
+ 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
+
 
     const formData: ObraInterface = {
       name,
@@ -110,11 +128,12 @@ export default function EditObra() {
       service,
     };
 
+
     try {
       const { error } = await updateData('obras', searchTerm, formData);
 
+
       if (error) {
-        console.error('Erro ao editar obra:', error.message);
         toast({
           title: 'Erro ao editar obra',
           description: error.message,
@@ -122,17 +141,20 @@ export default function EditObra() {
         return;
       }
 
+
       // Upload images to storage
-      const imagePaths = await uploadNewFilesToStorage(
+      await uploadNewFilesToStorage(
         'Obras',
         images.map((img) => img.file),
         formData.name
       );
 
+
       toast({
         title: 'Obra atualizada com sucesso',
         description: 'As informações da obra foram atualizadas.',
       });
+
 
       // Reset form
       setName('');
@@ -143,13 +165,13 @@ export default function EditObra() {
       setSearchResult(null);
       setSearchTerm('');
     } catch (err) {
-      console.error(err);
       toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao atualizar a obra.',
       });
     }
   };
+
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -162,9 +184,11 @@ export default function EditObra() {
     ]);
   };
 
+
   const removeNewImage = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
+
 
   const removeExistingImage = async (index: number) => {
     const imageToRemove = existingImages[index];
@@ -177,11 +201,12 @@ export default function EditObra() {
     }
     const filePath = imageToRemove.split('/').slice(-2).join('/');
 
+
     try {
       const { error } = await supabase.storage.from('Obras').remove([filePath]);
 
+
       if (error) {
-        console.error('Erro ao remover imagem:', error.message);
         toast({
           title: 'Erro ao remover imagem',
           description: error.message,
@@ -189,13 +214,13 @@ export default function EditObra() {
         return;
       }
 
+
       setExistingImages((prevImages) => prevImages.filter((_, i) => i !== index));
       toast({
         title: 'Imagem removida',
         description: 'A imagem foi removida com sucesso.',
       });
     } catch (err) {
-      console.error(err);
       toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao remover a imagem.',
@@ -203,9 +228,15 @@ export default function EditObra() {
     }
   };
 
+
+
+
+
+
   return (
     <div className="border p-4 rounded-md">
       <h3 className="text-xl font-semibold mb-4 text-[#027A48]">Editar Obra</h3>
+
 
       <form onSubmit={handleSearch} className="mb-4">
         <div className="flex gap-2">
@@ -221,6 +252,7 @@ export default function EditObra() {
           </Button>
         </div>
       </form>
+
 
       {searchResult && (
         <form onSubmit={handleUpdate} className="space-y-4">
@@ -258,6 +290,7 @@ export default function EditObra() {
             <option value="tirantes">Tirantes</option>
           </select>
 
+
           {/* Imagens existentes */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Imagens Existentes</label>
@@ -276,6 +309,7 @@ export default function EditObra() {
               ))}
             </div>
           </div>
+
 
           {/* Upload de novas imagens */}
           <div className="space-y-2">
@@ -298,6 +332,7 @@ export default function EditObra() {
               </div>
             )}
           </div>
+
 
           <Button type="submit" className="bg-[#027A48] hover:bg-green-500 text-white">
             Editar Obra
