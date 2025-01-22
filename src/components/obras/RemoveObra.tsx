@@ -19,7 +19,7 @@ export default function RemoveObra() {
     try {
       const result = await getData('obras', searchTerm) // Altere conforme sua API
 
-      if (result.error || result.data.length === 0) {
+      if (result.error || !result.data || result.data.length === 0) {
         toast({
           title: 'Nenhuma obra encontrada',
           description: `Não foi possível encontrar obras para "${searchTerm}".`,

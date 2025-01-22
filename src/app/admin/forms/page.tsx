@@ -5,6 +5,16 @@ import CreateVideo from '~/components/videos/CreateVideos'
 import EditVideo from '~/components/videos/EditVideo'
 import RemoveVideo from '~/components/videos/RemoveVideo'
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5GJKN3V0L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Y5GJKN3V0L');
+</script>
+
 export default function Home() {
     return (
       <main className="min-h-screen bg-gray-100 p-8">
@@ -33,3 +43,7 @@ export default function Home() {
     </main>
   );
 };
+
+function tag(js: any) {
+  throw new Error('Function not implemented.')
+}
