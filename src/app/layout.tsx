@@ -3,6 +3,8 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { Toaster } from '~/components/ui/toaster';
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -17,9 +19,12 @@ export default function RootLayout({
     <>
       <html lang="en" className={`${GeistSans.variable}`}>
       <body>{children}</body>
+      <GoogleAnalytics gaId="G-Y5GJKN3V0L" />
+
       <Toaster />
     </html>
     </>
     
   );
 }
+
