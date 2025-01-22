@@ -7,7 +7,6 @@ import { useToast } from '~/hooks/use-toast';
 import { updateData, getData } from 'pages/api/supabse/database';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient('https://xaljbeozaieyoecnxvum.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8');
 
 interface VideoInterface {
   name: string
@@ -37,12 +36,12 @@ export default function EditObra() {
         return;
       }
   
-      const video = result.data[0]; // Pega o primeiro vídeo encontrado (ajuste conforme sua lógica)
-      setName(video.name || ''); // Preenche o campo "Nome"
-      setLink(video.url || ''); // Preenche o campo "Link do Vídeo"
-      setService(video.service || ''); // Preenche o campo "Serviço/Categoria"
+      const video = result.data[0];
+      setName(video.name || ''); 
+      setLink(video.url || ''); 
+      setService(video.service || ''); 
   
-      setSearchResult(result.data); // Atualiza o estado com os resultados da busca
+      setSearchResult(result.data);
       toast({
         title: 'Vídeo encontrado',
         description: `O vídeo "${video.name}" foi carregado para edição.`,
@@ -84,7 +83,6 @@ export default function EditObra() {
         description: 'As informações de vídeo foram atualizadas.',
       });
 
-      // Reset form
       setName('');
       setLink('');
       setService('');

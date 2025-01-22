@@ -12,11 +12,10 @@ export default function RemoveVideo() {
   const [selectedVideo, setSelectedVideo] = useState<any | null>(null)
   const { toast } = useToast()
 
-  // Função para buscar obras
   const handleSearch = async (e: React.FormEvent) => {
   e.preventDefault()
   try {
-    const result = await getData('videos', searchTerm) // Altere conforme sua API
+    const result = await getData('videos', searchTerm) 
 
     if (result.error || !result.data || result.data.length === 0) {
       toast({
@@ -41,7 +40,6 @@ export default function RemoveVideo() {
   }
 }
 
-// Função para remover obra
 const handleRemove = async (e: React.FormEvent) => {
   e.preventDefault()
 
@@ -54,7 +52,6 @@ const handleRemove = async (e: React.FormEvent) => {
   }
 
   try {
-    // Remover do banco de dados
     const { error } = await deleteData('videos', selectedVideo.name)
 
     if (error) {
@@ -72,7 +69,6 @@ const handleRemove = async (e: React.FormEvent) => {
       description: `O vídeo "${selectedVideo.name}" foi removido com sucesso.`,
     })
 
-    // Atualizar lista de resultados após remoção
     setSearchResults(searchResults.filter((video) => video.name !== selectedVideo.name))
     setSelectedVideo(null)
     setSearchTerm('')
@@ -104,7 +100,6 @@ const handleRemove = async (e: React.FormEvent) => {
         </div>
       </form>
 
-      {/* Lista de resultados */}
       {searchResults.length > 0 && (
         <div className="mt-4">
           <h4 className="text-md font-medium mb-2">Resultados da pesquisa:</h4>
@@ -117,7 +112,6 @@ const handleRemove = async (e: React.FormEvent) => {
                   selectedVideo?.id === video.id ? 'bg-green-200' : 'hover:bg-gray-100'
                 }`}
               >
-                {/* Informações detalhadas do vídeo */}
                 <div>
                   <p className="font-bold">Título: {video.name}</p>
                   <p>Link: {video.url || 'Sem link'}</p>
@@ -130,7 +124,6 @@ const handleRemove = async (e: React.FormEvent) => {
         </div>
       )}
 
-      {/* Botão de remover */}
       {selectedVideo && (
         <div className="mt-4">
           <Button onClick={handleRemove} className="bg-red-600 hover:bg-red-700 text-white">
