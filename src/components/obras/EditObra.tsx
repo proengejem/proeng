@@ -9,6 +9,7 @@ import { useToast } from '~/hooks/use-toast';
 import { updateData, getData } from 'pages/api/supabse/database';
 import { uploadNewFilesToStorage } from 'pages/api/supabse/storage';
 import { createClient } from '@supabase/supabase-js';
+import Image from 'next/image';
 
 
 const supabase = createClient(
@@ -46,8 +47,21 @@ export default function EditObra() {
     e.preventDefault();
   
     try {
-      const { data, error } = await getData<ObraInterface[]>('obras', searchTerm);
-  
+      const { data, error } = await getData('obras', searchTerm) as { data: ObraInterface[]; error: any };
+
+      if (data && data.length > 0) {
+        const obra: ObraInterface | undefined = data[0];
+        if (!obra) {
+          toast({
+            title: 'Erro ao buscar obra',
+            description: 'Obra não encontrada.',
+          });
+          return;
+        }
+setName(obra.name);
+setDescription(obra.description);
+setService(obra.service);
+      }  
       if (error) {
         toast({
           title: 'Erro ao buscar obra',
@@ -76,14 +90,14 @@ export default function EditObra() {
           return;
         }
   
-        if (!files || files.length === 0) {
-          console.log('Nenhuma imagem encontrada para essa obra.');
-          setExistingImages([]);
-          toast({
-            title: 'Nenhuma imagem encontrada',
-            description: 'Não há imagens associadas a essa obra.',
-          });
-          return;
+        if (files && files.length > 0) {
+          const imageUrls = files.map(
+            (file) =>
+              supabase.storage
+                .from('Obras')
+                .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
+          );
+          setExistingImages(imageUrls);
         }
   
         // Caso contrário, montar a lista de URLs das imagens
@@ -174,7 +188,7 @@ export default function EditObra() {
 
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+    const files = Array.from(e.target.files ?? []);
     setImages((prevImages) => [
       ...prevImages,
       ...files.map((file) => ({
@@ -297,8 +311,8 @@ export default function EditObra() {
             <div className="grid grid-cols-3 gap-2">
               {existingImages.map((imageUrl, index) => (
                 <div key={index} className="relative">
-                  <img src={imageUrl} alt={`Existing ${index}`} className="w-full h-24 object-cover rounded" />
-                  <button
+<Image src={imageUrl} alt={`Existing ${index}`} width={200} height={100} className="object-cover rounded" />
+<button
                     type="button"
                     onClick={() => removeExistingImage(index)}
                     className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs"
@@ -319,7 +333,7 @@ export default function EditObra() {
               <div className="grid grid-cols-3 gap-2">
                 {images.map((image, index) => (
                   <div key={index} className="relative">
-                    <img src={image.preview} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded" />
+                    <Image  src={image.preview} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded" />
                     <button
                       type="button"
                       onClick={() => removeNewImage(index)}
