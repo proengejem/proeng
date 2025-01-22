@@ -40,7 +40,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ videoUrl, title, description, lin
 const SolutionsSectionVideos: React.FC = () => {
   const videos = [
     {
-      videoUrl: "https://youtu.be/Dm6TIenXuOs?feature=shared",
+      videoUrl: "https://www.youtube.com/embed/Dm6TIenXuOs",
       title: "Estaca Raiz",
       description:
         "A Fundações Estaque é especializada em Estaca Raiz, soluções técnicas ...",
@@ -48,7 +48,7 @@ const SolutionsSectionVideos: React.FC = () => {
       linkUrl: "https://youtu.be/Dm6TIenXuOs?feature=shared",
     },
     {
-      videoUrl: "https://youtu.be/ouioLUJWd0Q?feature=shared",
+      videoUrl: "https://www.youtube.com/embed/ouioLUJWd0Q",
       title: "Solo Grampeado",
       description:
         "O Solo Grampeado é uma opção para estabilizar encostas ...",
@@ -56,7 +56,8 @@ const SolutionsSectionVideos: React.FC = () => {
       linkUrl: "https://youtu.be/ouioLUJWd0Q?feature=shared",
     },
     {
-      videoUrl: "https://youtu.be/Z6oR9i-blgw?feature=shared",
+
+      videoUrl: "https://www.youtube.com/embed/Z6oR9i-blgw",
       title: "Estaca Hélice",
       description:
         "A Fundações Estaque é especializada em execução de Estaca Hélice...",

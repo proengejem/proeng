@@ -1,11 +1,8 @@
 import "~/styles/globals.css";
-
-import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 import { type Metadata } from "next";
-import { Toaster } from '~/components/ui/toaster';
-import Script from 'next/script';
-import '../styles/globals.css';
-
+import { Toaster } from "~/components/ui/toaster";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -13,33 +10,31 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
-      <html lang="en" className={`${GeistSans.variable}`}>
-        <head>
-        <Script 
-        strategy="afterInteractive" 
-        src="https://www.googletagmanager.com/gtag/js?id=G-Y5GJKN3V0L"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-Y5GJKN3V0L');
-        `}
-      </Script>
-         
-        </head>
-        <body>{children}</body>
+    <html lang="en" className={inter.variable}>
+      <body>
+        {children}
+
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-Y5GJKN3V0L"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-Y5GJKN3V0L');
+          `}
+        </Script>
+
         <Toaster />
-      </html>
-    </>
-    
+      </body>
+    </html>
   );
 }
-
-

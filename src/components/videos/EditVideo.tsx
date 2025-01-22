@@ -5,7 +5,6 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { useToast } from '~/hooks/use-toast';
 import { updateData, getData } from 'pages/api/supabse/database';
-import { createClient } from '@supabase/supabase-js';
 
 
 interface VideoInterface {
@@ -25,7 +24,7 @@ export default function EditObra() {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await getData('videos', searchTerm); // Busca os dados do vídeo
+      const result = await getData('videos', searchTerm); 
   
       if (result.error || !result.data || result.data.length === 0) {
         toast({
