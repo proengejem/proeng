@@ -85,26 +85,24 @@ export const Footer1 = (props: Footer1Props) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
+  
     const formData: Contato = {
-      name: form.nome.value,
-      email: form.email.value,
-      message: form.mensagem.value,
+      name: (form.elements.namedItem("nome") as HTMLInputElement)?.value ?? "",
+      email: (form.elements.namedItem("email") as HTMLInputElement)?.value ?? "",
+      message: (form.elements.namedItem("mensagem") as HTMLInputElement)?.value ?? "",
     };
   
     try {
-      // Salva no Firebase
-      //await addDoc(collection(db, "contato"), formData);
-      const { error } = await insertData("contato", formData); 
-
+      // Save to Supabase
+      const { error } = await insertData("contato", formData);
+  
       if (error) {
         console.log("Erro ao salvar no Supabase: ", error.message);
-      }
-
-      else {
+      } else {
         console.log("Informações salvas com sucesso!");
       }
   
-      // Envia o email
+      // Send email
       const response = await fetch("api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

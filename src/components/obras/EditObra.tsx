@@ -152,7 +152,7 @@ export default function EditObra() {
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+    const files = Array.from(e.target.files ?? []);
     setImages((prevImages) => [
       ...prevImages,
       ...files.map((file) => ({

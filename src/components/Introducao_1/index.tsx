@@ -55,14 +55,14 @@ const HeroSectionWithVideo: React.FC = () => {
                   Sobre nós
                 </button>
                 </Link >
-              <a href="/servicos">
+              <Link href="/servicos">
                 <button
                   className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition"
                   style={{ color: "#027A48" }}
                 >
                   Contato
                 </button>
-              </a>
+              </Link>
             </div>
           </BlurFade>
         </div>

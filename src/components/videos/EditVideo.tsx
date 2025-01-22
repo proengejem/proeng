@@ -14,19 +14,23 @@ interface VideoInterface {
 }
 
 export default function EditObra() {
-  const [searchTerm, setSearchTerm] = useState<string>(''); // Tipado como string
-  const [searchResult, setSearchResult] = useState<VideoInterface[] | null>(null); // Tipado como VideoInterface[]
-  const [name, setName] = useState<string>(''); // Tipado como string
-  const [link, setLink] = useState<string>(''); // Tipado como string
-  const [service, setService] = useState<string>(''); // Tipado como string
+  const [searchTerm, setSearchTerm] = useState<string>(''); 
+  const [searchResult, setSearchResult] = useState<VideoInterface[] | null>(null); 
+  const [name, setName] = useState<string>(''); 
+  const [link, setLink] = useState<string>(''); 
+  const [service, setService] = useState<string>(''); 
   const { toast } = useToast();
+
+  const isVideoInterface = (obj: any): obj is VideoInterface => {
+    return obj && typeof obj.name === 'string' && typeof obj.url === 'string' && typeof obj.service === 'string';
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await getData('videos', searchTerm); 
+      const result = await getData('videos', searchTerm);
 
-      if (result.error || !result.data || result.data.length === 0) {
+      if (result.error ?? !result.data ?? result.data.length === 0) {
         toast({
           title: 'Nenhum vídeo encontrado',
           description: `Não foi possível encontrar vídeos para "${searchTerm}".`,
@@ -35,16 +39,24 @@ export default function EditObra() {
         return;
       }
 
-      const video = result.data[0]; // Considerando apenas o primeiro vídeo encontrado
-      setName(video.name || ''); 
-      setLink(video.url || ''); 
-      setService(video.service || ''); 
+      const video = result.data[0]; // Assume only the first video for simplicity
 
-      setSearchResult(result.data);
-      toast({
-        title: 'Vídeo encontrado',
-        description: `O vídeo "${video.name}" foi carregado para edição.`,
-      });
+      if (isVideoInterface(video)) {
+        setName(video.name);
+        setLink(video.url);
+        setService(video.service);
+        setSearchResult(result.data);
+
+        toast({
+          title: 'Vídeo encontrado',
+          description: `O vídeo "${video.name}" foi carregado para edição.`,
+        });
+      } else {
+        toast({
+          title: 'Erro de tipo',
+          description: 'Os dados recebidos não correspondem à estrutura esperada.',
+        });
+      }
     } catch (err) {
       console.error('Erro ao buscar vídeos:', err);
       toast({
@@ -58,9 +70,9 @@ export default function EditObra() {
     e.preventDefault();
 
     const formData: VideoInterface = {
-      name: name,
+      name,
       url: link,
-      service: service,
+      service,
     };
 
     try {

@@ -132,8 +132,8 @@ export default function RemoveObra() {
               >
                 <p className="font-medium">{obra.name}</p>
                 <p className="text-sm text-gray-600">{obra.description}</p>
-                <p>Serviço: {obra.service || 'Sem serviço'}</p>
-                <p>Criado em: {obra.created_at || '?!'}</p>
+                <p>Serviço: {obra.service ?? 'Sem serviço'}</p>
+                <p>Criado em: {obra.created_at ?? '?!'}</p>
               </li>
             ))}
           </ul>
