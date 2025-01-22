@@ -7,10 +7,19 @@ import { deleteData, getData } from 'pages/api/supabse/database'
 import { useToast } from '~/hooks/use-toast'
 import { deleteFolderFromStorage } from 'pages/api/supabse/storage'
 
+// Interface para representar uma obra
+interface Obra {
+  id: string;
+  name: string;
+  description: string;
+  service?: string;
+  created_at?: string;
+}
+
 export default function RemoveObra() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState<any[]>([])
-  const [selectedObra, setSelectedObra] = useState<any | null>(null)
+  const [searchResults, setSearchResults] = useState<Obra[]>([]) // Tipagem de resultados de busca
+  const [selectedObra, setSelectedObra] = useState<Obra | null>(null) // Tipagem do objeto selecionado
   const { toast } = useToast()
 
   // Função para buscar obras
@@ -24,11 +33,11 @@ export default function RemoveObra() {
           title: 'Nenhuma obra encontrada',
           description: `Não foi possível encontrar obras para "${searchTerm}".`,
         })
-        setSearchResults([])
+        setSearchResults([]) // Resetando resultados
         return
       }
 
-      setSearchResults(result.data)
+      setSearchResults(result.data) // Atualizando a lista de resultados
       toast({
         title: 'Obras encontradas',
         description: `Foram encontradas ${result.data.length} obras.`,
@@ -45,7 +54,7 @@ export default function RemoveObra() {
   // Função para remover obra
   const handleRemove = async (e: React.FormEvent) => {
     e.preventDefault()
-  
+
     if (!selectedObra) {
       toast({
         title: 'Erro ao remover',
@@ -53,11 +62,11 @@ export default function RemoveObra() {
       })
       return
     }
-  
+
     try {
       // Remover do banco de dados
       const { error } = await deleteData('obras', selectedObra.name)
-  
+
       if (error) {
         console.error('Erro ao remover a obra:', error.message)
         toast({
@@ -66,15 +75,15 @@ export default function RemoveObra() {
         })
         return
       }
-  
+
       // Remover o folder correspondente do storage
       await deleteFolderFromStorage('Obras', selectedObra.name)
-  
+
       toast({
         title: 'Obra removida com sucesso',
-        description: `A obra "${selectedObra.title}" foi removida com sucesso.`,
+        description: `A obra "${selectedObra.name}" foi removida com sucesso.`,
       })
-  
+
       // Atualizar lista de resultados após remoção
       setSearchResults(searchResults.filter((obra) => obra.name !== selectedObra.name))
       setSelectedObra(null)

@@ -6,26 +6,26 @@ import { Input } from '~/components/ui/input';
 import { useToast } from '~/hooks/use-toast';
 import { updateData, getData } from 'pages/api/supabse/database';
 
-
+// Interface para representar um vídeo
 interface VideoInterface {
-  name: string
+  name: string;
   url: string;
   service: string;
 }
 
 export default function EditObra() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResult, setSearchResult] = useState<any[] | null>(null);
-  const [name, setName] = useState('')
-  const [link, setLink] = useState('');
-  const [service, setService] = useState('');
+  const [searchTerm, setSearchTerm] = useState<string>(''); // Tipado como string
+  const [searchResult, setSearchResult] = useState<VideoInterface[] | null>(null); // Tipado como VideoInterface[]
+  const [name, setName] = useState<string>(''); // Tipado como string
+  const [link, setLink] = useState<string>(''); // Tipado como string
+  const [service, setService] = useState<string>(''); // Tipado como string
   const { toast } = useToast();
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const result = await getData('videos', searchTerm); 
-  
+
       if (result.error || !result.data || result.data.length === 0) {
         toast({
           title: 'Nenhum vídeo encontrado',
@@ -34,12 +34,12 @@ export default function EditObra() {
         setSearchResult(null);
         return;
       }
-  
-      const video = result.data[0];
+
+      const video = result.data[0]; // Considerando apenas o primeiro vídeo encontrado
       setName(video.name || ''); 
       setLink(video.url || ''); 
       setService(video.service || ''); 
-  
+
       setSearchResult(result.data);
       toast({
         title: 'Vídeo encontrado',
@@ -53,8 +53,7 @@ export default function EditObra() {
       });
     }
   };
-  
-  
+
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -76,7 +75,6 @@ export default function EditObra() {
         return;
       }
 
-      
       toast({
         title: 'Vídeo atualizado com sucesso',
         description: 'As informações de vídeo foram atualizadas.',
@@ -95,8 +93,6 @@ export default function EditObra() {
       });
     }
   };
-
-
 
   return (
     <div className="border p-4 rounded-md">
@@ -126,30 +122,28 @@ export default function EditObra() {
             onChange={(e) => setName(e.target.value)}
             required
           />
-                  <Input
-          type="url"
-          placeholder="Link do Vídeo"
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-          required
-        />
-     
-                <label className="block text-sm font-medium text-gray-700">Serviços/Categoria</label>
-<select
-  value={service}
-  onChange={(e) => setService(e.target.value)}
-  required
-  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#027A48] focus:border-[#027A48] sm:text-sm"
->
-  <option value="" disabled>
-    Selecione um serviço
-  </option>
-  <option value="solo-grampeado">Solo Grampeado</option>
-  <option value="helice-continua-monitorada">Hélice Contínua Monitorada</option>
-  <option value="estaca-tipo-raiz">Estaca Tipo Raiz</option>
+          <Input
+            type="url"
+            placeholder="Link do Vídeo"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            required
+          />
+          <label className="block text-sm font-medium text-gray-700">Serviços/Categoria</label>
+          <select
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            required
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#027A48] focus:border-[#027A48] sm:text-sm"
+          >
+            <option value="" disabled>
+              Selecione um serviço
+            </option>
+            <option value="solo-grampeado">Solo Grampeado</option>
+            <option value="helice-continua-monitorada">Hélice Contínua Monitorada</option>
+            <option value="estaca-tipo-raiz">Estaca Tipo Raiz</option>
+          </select>
 
-</select>
-          
           <Button type="submit" className="bg-[#027A48] hover:bg-green-500 text-white">
             Editar Vídeo
           </Button>

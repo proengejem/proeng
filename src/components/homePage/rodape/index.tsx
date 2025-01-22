@@ -8,27 +8,29 @@ const Rodape: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
 
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0]; // Obtém o primeiro elemento observado
-        if (entry && entry.isIntersecting) {
+        if (entry?.isIntersecting) { // Usando optional chaining
           setIsVisible(true);
         }
       },
       { threshold: 0.5 } // Ativado quando 50% do elemento estiver visível
     );
-
+  
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
-
+  
     return () => {
       if (sectionRef.current) {
         observer.disconnect();
       }
     };
   }, []);
+  
 
   return (
     <section ref={sectionRef} className="relative h-[70vh]">

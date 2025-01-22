@@ -17,6 +17,15 @@ import { db } from "pages/api/firebase/firebase";
 import { insertData } from 'pages/api/supabse/database';
 import { Contato } from '~/interfaces/ContatoInterface';
 
+interface Logo {
+  url: string;
+}
+
+interface FooterProps {
+  logo: Logo;
+  newsletterDescription: string;
+}
+
 type ImageProps = {
   url?: string;
   src: string;
@@ -124,9 +133,9 @@ export const Footer1 = (props: Footer1Props) => {
         <div className="container">
           <div className="grid grid-cols-1 gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[0.75fr_1fr] lg:gap-y-4 lg:pb-20">
             <div className="flex flex-col">
-              {logo.url && <Link href={logo.url} className="mb-3 md:mb-3">
+              {logo.url && (<Link href={logo.url} className="mb-3 md:mb-3">
                 <Image src= "/ProengLogo.png" alt="Proeng Engenharia"  width={500} height={100} className="inline-block "/>              
-                </Link>}
+                </Link>)}
               <p className="mb-5 md:mb-6" style={{color:"#027A48"} }>{newsletterDescription}</p>
               <div className="w-full max-w-md">
               <form

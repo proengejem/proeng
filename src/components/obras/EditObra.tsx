@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -9,13 +8,22 @@ import { updateData, getData } from 'pages/api/supabse/database';
 import { uploadNewFilesToStorage } from 'pages/api/supabse/storage';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient('https://xaljbeozaieyoecnxvum.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8');
+const supabase = createClient(
+  'https://xaljbeozaieyoecnxvum.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8'
+);
 
 interface ObraInterface {
   name: string;
   description: string;
   service: string;
   images?: File[];
+}
+
+interface Obra {
+  name: string;
+  description: string;
+  service: string;
 }
 
 export default function EditObra() {
@@ -32,6 +40,7 @@ export default function EditObra() {
     e.preventDefault();
 
     try {
+      // Corrigido para garantir que o retorno da função seja tipado corretamente
       const { data, error } = await getData('obras', searchTerm);
 
       if (error) {
@@ -63,11 +72,14 @@ export default function EditObra() {
           return;
         }
 
+        // Garantido que o imageUrls tenha um valor de fallback correto
         const imageUrls = files?.map((file) =>
-          supabase.storage.from('Obras').getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-        );
+          supabase.storage
+            .from('Obras')
+            .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
+        ) ?? [];
 
-        setExistingImages(imageUrls || []);
+        setExistingImages(imageUrls);
         setSearchResult(`Obra encontrada: ${obra.name}`);
         toast({
           title: 'Obra encontrada',
@@ -111,7 +123,11 @@ export default function EditObra() {
       }
 
       // Upload images to storage
-      const imagePaths = await uploadNewFilesToStorage('Obras', images.map(img => img.file), formData.name);
+      const imagePaths = await uploadNewFilesToStorage(
+        'Obras',
+        images.map((img) => img.file),
+        formData.name
+      );
 
       toast({
         title: 'Obra atualizada com sucesso',
@@ -221,34 +237,28 @@ export default function EditObra() {
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-          {/* <Input
-            type="text"
-            placeholder="Serviço/Categoria"
+          {/* Dropdown para selecionar o serviço */}
+          <label className="block text-sm font-medium text-gray-700">Serviços/Categoria</label>
+          <select
             value={service}
             onChange={(e) => setService(e.target.value)}
             required
-          /> */}
-                  <label className="block text-sm font-medium text-gray-700">Serviços/Categoria</label>
-<select
-  value={service}
-  onChange={(e) => setService(e.target.value)}
-  required
-  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#027A48] focus:border-[#027A48] sm:text-sm"
->
-  <option value="" disabled>
-    Selecione um serviço
-  </option>
-  <option value="solo-grampeado">Solo Grampeado</option>
-  <option value="concreto-projetado">Concreto Projetado</option>
-  <option value="helice-continua-monitorada">Hélice Contínua Monitorada</option>
-  <option value="estaca-tipo-raiz">Estaca Tipo Raiz</option>
-  <option value="micro-estacas-injetadas">Micro Estacas Injetadas</option>
-  <option value="injecoes-de-consolidacao">Injeções de Consolidação</option>
-  <option value="d-h-p">Dreno Sub-Horizontal Profundo</option>
-  <option value="tirantes">Tirantes</option>
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#027A48] focus:border-[#027A48] sm:text-sm"
+          >
+            <option value="" disabled>
+              Selecione um serviço
+            </option>
+            <option value="solo-grampeado">Solo Grampeado</option>
+            <option value="concreto-projetado">Concreto Projetado</option>
+            <option value="helice-continua-monitorada">Hélice Contínua Monitorada</option>
+            <option value="estaca-tipo-raiz">Estaca Tipo Raiz</option>
+            <option value="micro-estacas-injetadas">Micro Estacas Injetadas</option>
+            <option value="injecoes-de-consolidacao">Injeções de Consolidação</option>
+            <option value="d-h-p">Dreno Sub-Horizontal Profundo</option>
+            <option value="tirantes">Tirantes</option>
+          </select>
 
-</select>
-
+          {/* Imagens existentes */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Imagens Existentes</label>
             <div className="grid grid-cols-3 gap-2">
@@ -267,6 +277,7 @@ export default function EditObra() {
             </div>
           </div>
 
+          {/* Upload de novas imagens */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Adicionar Nova Imagem</label>
             <Input type="file" accept="image/*" multiple onChange={handleImageUpload} />

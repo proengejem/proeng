@@ -132,7 +132,7 @@ export default function CreateObra() {
             accept="image/*"
             multiple
             onChange={(e) => {
-              const files = Array.from(e.target.files || [])
+              const files = Array.from(e.target.files ?? [])
               setImages(prevImages => [
                 ...prevImages,
                 ...files.map(file => ({
