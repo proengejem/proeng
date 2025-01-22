@@ -20,18 +20,18 @@ export default function RootLayout({
     <>
       <html lang="en" className={`${GeistSans.variable}`}>
         <head>
-          <Script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-Y5GJKN3V0L"
-          />
-          <Script id="google-analytics">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', ${'G-Y5GJKN3V0L'});
-            `}
-          </Script>
+        <Script 
+        strategy="afterInteractive" 
+        src="https://www.googletagmanager.com/gtag/js?id=G-Y5GJKN3V0L"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-Y5GJKN3V0L');
+        `}
+      </Script>
          
         </head>
         <body>{children}</body>
