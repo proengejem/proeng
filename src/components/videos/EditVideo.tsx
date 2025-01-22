@@ -3,10 +3,8 @@
 import React, { useState } from 'react';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
-import { Textarea } from '~/components/ui/textarea';
 import { useToast } from '~/hooks/use-toast';
 import { updateData, getData } from 'pages/api/supabse/database';
-import { uploadNewFilesToStorage } from 'pages/api/supabse/storage';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient('https://xaljbeozaieyoecnxvum.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8');
@@ -138,13 +136,7 @@ export default function EditObra() {
           onChange={(e) => setLink(e.target.value)}
           required
         />
-          {/* <Input
-            type="text"
-            placeholder="Serviço/Categoria"
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-            required
-          /> */}
+     
                 <label className="block text-sm font-medium text-gray-700">Serviços/Categoria</label>
 <select
   value={service}

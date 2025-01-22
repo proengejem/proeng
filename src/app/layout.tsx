@@ -3,7 +3,8 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { Toaster } from '~/components/ui/toaster';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script';
+import '../styles/globals.css';
 
 
 export const metadata: Metadata = {
@@ -18,13 +19,27 @@ export default function RootLayout({
   return (
     <>
       <html lang="en" className={`${GeistSans.variable}`}>
-      <body>{children}</body>
-      <GoogleAnalytics gaId="G-Y5GJKN3V0L" />
-
-      <Toaster />
-    </html>
+        <head>
+          <Script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-Y5GJKN3V0L"
+          />
+          <Script id="google-analytics">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-Y5GJKN3V0L');
+            `}
+          </Script>
+         
+        </head>
+        <body>{children}</body>
+        <Toaster />
+      </html>
     </>
     
   );
 }
+
 
