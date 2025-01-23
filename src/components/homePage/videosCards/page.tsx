@@ -95,7 +95,7 @@ const SolutionsSectionVideos: React.FC = () => {
         // Formata os vídeos
         const formattedVideos = latestVideos.map((video: any) => ({
           videoUrl: `https://www.youtube.com/embed/${video.idUrl}`,
-          title: serviceTitles[video.service],
+          title: serviceTitles[video.service] || "Título Desconhecido",
           description:
             video.description || "Confira este vídeo no nosso canal.",
           linkText: "Ver vídeo",

@@ -341,7 +341,7 @@ export default function EditObra() {
               <div className="grid grid-cols-3 gap-2">
                 {images.map((image, index) => (
                   <div key={index} className="relative">
-                    <Image  src={image.preview} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded" />
+                    <Image  src={image.preview} alt={`Preview ${index}`} width={200} height={100} className="w-full h-24 object-cover rounded" />
                     <button
                       type="button"
                       onClick={() => removeNewImage(index)}
