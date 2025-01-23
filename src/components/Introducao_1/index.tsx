@@ -62,7 +62,7 @@ const HeroSectionWithVideo: React.FC = () => {
                 </button>
               </Link>
             </div>
-          </BlurFade>
+          </div>
         </div>
       </div>
 
