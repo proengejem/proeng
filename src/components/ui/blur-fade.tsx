@@ -7,7 +7,7 @@ import {
   useInView,
   UseInViewOptions,
   Variants,
-} from "motion/react";
+} from "framer-motion";
 
 type MarginType = UseInViewOptions["margin"];
 
@@ -41,7 +41,8 @@ export default function BlurFade({
 }: BlurFadeProps) {
   const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
-  const isInView = inView ?? inViewResult; // Using nullish coalescing operator
+  // const isInView = inView ?? inViewResult; // Using nullish coalescing operator
+  const isInView = true;
   const defaultVariants: Variants = {
     hidden: {
       [direction === "left" || direction === "right" ? "x" : "y"]:
