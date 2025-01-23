@@ -92,15 +92,19 @@ const SolutionsSectionVideos: React.FC = () => {
         // Tipar explicitamente os dados recebidos
         const typedData = data as VideoData[];
 
-        // Filtrar o vídeo mais recente de cada serviço
         const latestVideos = Object.values(
           typedData.reduce<Record<string, VideoData>>((acc, video) => {
-            if (video.created_at && (acc[video.service] ?? (acc[video.service] && new Date(video.created_at) > new Date(acc[video.service]?.created_at ?? 0)))) {
+            const existingVideo = acc[video.service]; // Verifica se o serviço já existe no acumulador
+            if (
+              !existingVideo || // Se não existir, adicionar
+              new Date(video.created_at) > new Date(existingVideo.created_at) // Se o vídeo atual for mais recente, substituir
+            ) {
               acc[video.service] = video;
             }
             return acc;
           }, {})
         );
+        
 
         // Formatar os vídeos
         const formattedVideos = latestVideos
