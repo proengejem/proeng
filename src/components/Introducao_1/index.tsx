@@ -1,5 +1,5 @@
 import React from "react";
-import BlurFade from "~/components/ui/blur-fade"; // Ajuste o caminho, se necessário.
+import BlurFade from "../../components/ui/blur-fade"; 
 import Link from "next/link";
 
 
@@ -52,7 +52,7 @@ const HeroSectionWithVideo: React.FC = () => {
                 <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
                   Sobre nós
                 </button>
-                </Link >
+              </Link>
               <Link href="/servicos">
                 <button
                   className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition"
@@ -62,11 +62,10 @@ const HeroSectionWithVideo: React.FC = () => {
                 </button>
               </Link>
             </div>
-          </div>
+          </BlurFade>
         </div>
       </div>
 
-      {/* Adiciona espaçamento extra abaixo */}
       <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
     </section>
   );
