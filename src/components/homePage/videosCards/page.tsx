@@ -71,51 +71,48 @@ const SolutionsSectionVideos: React.FC = () => {
           .from("videos")
           .select("*")
           .order("created_at", { ascending: false });
-    
+
         if (error) {
           console.error("Erro ao buscar vídeos:", error);
           return;
         }
-    
+
         if (!data || data.length === 0) {
           console.warn("Nenhum vídeo encontrado.");
           return;
         }
-    
+
         // Mapear os serviços para os títulos correspondentes
         const serviceTitles: Record<string, string> = {
           "solo-grampeado": "Solo Grampeado",
           "estaca-tipo-raiz": "Estaca Raiz",
           "helice-continua-monitorada": "Estaca Hélice",
         };
-    
-        // Tipar o array `data` explicitamente como `VideoData[]`
+
+        // Tipar explicitamente os dados recebidos
         const typedData = data as VideoData[];
-    
+
         // Filtrar o vídeo mais recente de cada serviço
         const latestVideos = Object.values(
-          typedData.reduce((acc, video) => {
-            if (
-              video.service &&
-              video.created_at &&
-              (acc[video.service] ??
-                new Date(video.created_at) > new Date(acc[video.service]?.created_at ?? 0))
-            ) {
+          typedData.reduce<Record<string, VideoData>>((acc, video) => {
+            if (video.created_at && (acc[video.service] ?? (acc[video.service] && new Date(video.created_at) > new Date(acc[video.service]?.created_at ?? 0)))) {
               acc[video.service] = video;
             }
             return acc;
-          }, {} as Record<string, VideoData>)
-        ).filter((video) => serviceTitles[video.service]);
-    
+          }, {})
+        );
+
         // Formatar os vídeos
-        const formattedVideos = latestVideos.map((video) => ({
-          videoUrl: `https://www.youtube.com/embed/${video.idUrl}`,
-          title: serviceTitles[video.service] ?? "Título Desconhecido",
-          description: video.description ?? "Confira este vídeo no nosso canal.",
-          linkText: "Ver vídeo",
-          linkUrl: `https://www.youtube.com/watch?v=${video.idUrl}`,
-        }));
-    
+        const formattedVideos = latestVideos
+          .filter((video) => serviceTitles[video.service])
+          .map((video) => ({
+            videoUrl: `https://www.youtube.com/embed/${video.idUrl}`,
+            title: serviceTitles[video.service] ?? "Título Desconhecido",
+            description: video.description ?? "Confira este vídeo no nosso canal.",
+            linkText: "Ver vídeo",
+            linkUrl: `https://www.youtube.com/watch?v=${video.idUrl}`,
+          }));
+
         setVideos(formattedVideos);
       } catch (err) {
         console.error("Erro ao buscar vídeos:", err);
