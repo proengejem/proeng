@@ -25,6 +25,18 @@ interface ObraInterface {
   images?: File[];
 }
 
+interface SupabaseError {
+    message: string;
+    details?: string;
+    hint?: string;
+    code?:string;
+  }
+  
+interface SupabaseResponse<T> {
+      data: T | null;
+      error: SupabaseError | null;
+  }
+
 
 export default function EditObra() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,39 +49,36 @@ export default function EditObra() {
   const { toast } = useToast();
 
 
-  interface ObraInterface {
-    name: string;
-    description: string;
-    service: string;
-    images?: File[];
-  }
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
   
     try {
-      const { data, error } = await getData('obras', searchTerm) as { data: ObraInterface[]; error: any };
-
-      if (data && data.length > 0) {
-        const obra: ObraInterface | undefined = data[0];
-        if (!obra) {
-          toast({
-            title: 'Erro ao buscar obra',
-            description: 'Obra não encontrada.',
-          });
-          return;
-        }
-setName(obra.name);
-setDescription(obra.description);
-setService(obra.service);
-      }  
-      if (error) {
-        toast({
-          title: 'Erro ao buscar obra',
-          description: error.message,
-        });
-        return;
+        const { data, error } = (await getData(
+            'obras',
+            searchTerm
+          )) as SupabaseResponse<ObraInterface[]>;
+          
+        if (data && data.length > 0) {
+          const obra: ObraInterface | undefined = data[0];
+          if (!obra) {
+            toast({
+              title: 'Erro ao buscar obra',
+              description: 'Obra não encontrada.',
+            });
+            return;
+          }
+        setName(obra.name);
+        setDescription(obra.description);
+        setService(obra.service);
       }
-  
+      
+      if (error) {
+            toast({
+                title: "Error ao buscar obra",
+                description: error?.message || "Ocorreu um erro ao buscar obra.",
+            });
+            return;
+        }
       if (data && data.length > 0) {
         const obra = data[0];
         setName(obra?.name ?? '');
@@ -82,7 +91,7 @@ setService(obra.service);
           .list(folderName, { limit: 100 });
   
         if (listError) {
-          console.error('Erro ao listar imagens:', listError.message); // Melhor captura de erro
+          console.error('Erro ao listar imagens:', listError.message);
           toast({
             title: 'Erro ao carregar imagens',
             description: listError.message,
@@ -100,7 +109,6 @@ setService(obra.service);
           setExistingImages(imageUrls);
         }
   
-        // Caso contrário, montar a lista de URLs das imagens
         const imageUrls = files.map(
           (file) =>
             supabase.storage
@@ -122,7 +130,7 @@ setService(obra.service);
         });
       }
     } catch (err) {
-      console.error('Erro inesperado ao buscar obra:', err); // Melhor captura de erro
+      console.error('Erro inesperado ao buscar obra:', err);
       toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao buscar a obra.',
@@ -144,7 +152,7 @@ setService(obra.service);
 
 
     try {
-      const { error } = await updateData('obras', searchTerm, formData);
+      const { error } = (await updateData('obras', searchTerm, formData)) as SupabaseResponse<null>;
 
 
       if (error) {
