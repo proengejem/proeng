@@ -10,7 +10,7 @@ interface FeatureProps {
 
 const Feature: React.FC<FeatureProps> = ({ icon, title, description, linkText, linkUrl }) => {
   return (
-    <div className="flex items-start space-x-4 w-full">
+    <div className="flex items-start space-x-4 w-full transform transition-transform duration-300 hover:scale-105 hover:shadow-lg bg-white p-4 rounded-lg">
       <div className="text-green-600 text-3xl">{icon}</div>
       <div className="w-full">
         <h3 className="text-lg font-semibold" style={{ color: '#027A48' }}>{title}</h3>
@@ -32,7 +32,7 @@ const Feature: React.FC<FeatureProps> = ({ icon, title, description, linkText, l
 
 const Valores: React.FC = () => {
   const texto = {
-    title: "Valores",
+    title: <h1>Valores</h1>,
     description:
     "Nossa equipe também conta com a expertise de profissionais capacitados e bem treinados, procurando sempre atualizar seus padrões de excelência, com qualidade e seriedade nos trabalhos executados, oferecendo atendimento personalizado, competitividade e transparência nos negociações, mantendo-nos tecnicamente e eticamente constantes fazem da Proeng uma empresa diferenciada no mercado."  };
 

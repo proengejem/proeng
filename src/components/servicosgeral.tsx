@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import TypingAnimation from "~/components/ui/typing-animation";
+import BlurFade from "~/components/ui/blur-fade";
 import { services } from '~/lib/servicos';
 
 export default function Servicos() {
@@ -13,8 +15,9 @@ export default function Servicos() {
         <Image src="/IntroServiços.png" alt="Hero" width={1520} height={500} />
       </div>
       <div className="container">
-      <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]">Nossos Serviços</h1>
-            <p>Explore nossa variedade de serviços</p>
+        <h1><TypingAnimation>Nossos Serviços</TypingAnimation></h1>
+        <BlurFade delay={0.4}><p>Explore nossa variedade de serviços</p></BlurFade>
+        
         <div className="grid">
           {services.map((service, index) => (
             <div className="card" key={index}>
