@@ -9,7 +9,7 @@ import { updateData, getData } from 'pages/api/supabse/database';
 // Interface for representing a video
 interface VideoInterface {
   name: string;
-  url: string;
+  idUrl: string;
   service: string;
 }
 
@@ -25,7 +25,7 @@ export default function EditVideo() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResult, setSearchResult] = useState<VideoInterface[] | null>(null);
   const [name, setName] = useState<string>('');
-  const [link, setLink] = useState<string>('');
+  const [idUrl, setidUrl] = useState<string>('');
   const [service, setService] = useState<string>('');
   const { toast } = useToast();
 
@@ -34,7 +34,7 @@ export default function EditVideo() {
       typeof obj === 'object' &&
       obj !== null &&
       typeof (obj as VideoInterface).name === 'string' &&
-      typeof (obj as VideoInterface).url === 'string' &&
+      typeof (obj as VideoInterface).idUrl === 'string' &&
       typeof (obj as VideoInterface).service === 'string'
     );
   };
@@ -57,7 +57,7 @@ export default function EditVideo() {
 
       if (isVideoInterface(video)) {
         setName(video.name);
-        setLink(video.url);
+        setidUrl(video.idUrl);
         setService(video.service);
         setSearchResult(result.data);
 
@@ -85,7 +85,7 @@ export default function EditVideo() {
 
     const formData: VideoInterface = {
       name,
-      url: link,
+      idUrl: idUrl,
       service,
     };
 
@@ -107,7 +107,7 @@ export default function EditVideo() {
       });
 
       setName('');
-      setLink('');
+      setidUrl('');
       setService('');
       setSearchResult(null);
       setSearchTerm('');
@@ -149,10 +149,10 @@ export default function EditVideo() {
             required
           />
           <Input
-            type="url"
+            type="text"
             placeholder="Link do Vídeo"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
+            value={idUrl}
+            onChange={(e) => setidUrl(e.target.value)}
             required
           />
           <label className="block text-sm font-medium text-gray-700">Serviços/Categoria</label>

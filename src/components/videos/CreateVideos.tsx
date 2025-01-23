@@ -8,14 +8,14 @@ import { insertData } from 'pages/api/supabse/database';
 
 interface VideoInterface {
   name: string
-  url: string;
+  idUrl: string;
   service: string;
 }
 
 export default function CreateVideo() {
   const { toast } = useToast();
   const [name, setName] = useState('')
-  const [link, setLink] = useState('');
+  const [idUrl, setidUrl] = useState('');
   const [service, setService] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,7 +23,7 @@ export default function CreateVideo() {
 
     const formData: VideoInterface = {
       name: name,
-      url: link,
+      idUrl: idUrl,
       service: service,
     };
 
@@ -46,7 +46,7 @@ export default function CreateVideo() {
 
       // Resetar o formulário
       setName('')
-      setLink('');
+      setidUrl('');
       setService('');
     } catch (error) {
       console.error('Erro ao criar um vídeo:', error);
@@ -70,10 +70,10 @@ export default function CreateVideo() {
           required
         />
         <Input
-          type="url"
+          type="text"
           placeholder="Link do Vídeo"
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
+          value={idUrl}
+          onChange={(e) => setidUrl(e.target.value)}
           required
         />
         {/* <Input

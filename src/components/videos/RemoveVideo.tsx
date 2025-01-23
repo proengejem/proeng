@@ -10,7 +10,7 @@ import { useToast } from '~/hooks/use-toast';
 interface VideoInterface {
   id: string; // Presumido que cada vídeo tenha um 'id' único
   name: string;
-  url: string;
+  idUrl: string;
   service: string;
 }
 
@@ -121,7 +121,7 @@ export default function RemoveVideo() {
               >
                 <div>
                   <p className="font-bold">Título: {video.name}</p>
-                  <p>Link: {video.url || 'Sem link'}</p>
+                  <p>Id Link: {video.idUrl || 'Sem id link'}</p>
                   <p>Serviço: {video.service || 'Sem serviço'}</p>
                   <p>ID: {video.id}</p>
                 </div>
