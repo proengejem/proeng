@@ -4,11 +4,21 @@ import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 
+// Configuração do Supabase
 const supabase = createClient(
   "https://xaljbeozaieyoecnxvum.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8"
 );
 
+// Interface para representar os dados de vídeo
+interface VideoData {
+  idUrl: string;
+  service: string;
+  created_at: string;
+  description?: string;
+}
+
+// Interface para as props do componente de cartão de vídeo
 interface VideoCardProps {
   videoUrl: string;
   title: string;
@@ -17,6 +27,7 @@ interface VideoCardProps {
   linkUrl: string;
 }
 
+// Componente de cartão de vídeo
 const VideoCard: React.FC<VideoCardProps> = ({
   videoUrl,
   title,
@@ -49,12 +60,13 @@ const VideoCard: React.FC<VideoCardProps> = ({
   </div>
 );
 
+// Componente principal para exibir os vídeos
 const SolutionsSectionVideos: React.FC = () => {
   const [videos, setVideos] = useState<VideoCardProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchVideos = async () => {
+    const fetchVideos = async (): Promise<void> => {
       try {
         const { data, error } = await supabase
           .from("videos")
@@ -71,33 +83,33 @@ const SolutionsSectionVideos: React.FC = () => {
           return;
         }
 
-        // Mapeia serviços para os títulos correspondentes
+        // Mapear serviços para títulos correspondentes
         const serviceTitles: Record<string, string> = {
           "solo-grampeado": "Solo Grampeado",
           "estaca-tipo-raiz": "Estaca Raiz",
           "helice-continua-monitorada": "Estaca Hélice",
         };
 
-        // Filtra o vídeo mais recente de cada serviço
+        // Filtrar o vídeo mais recente de cada serviço
         const latestVideos = Object.values(
           data.reduce((acc, video) => {
-            const { service } = video;
-            if (
-              !acc[service] ||
-              new Date(video.created_at) > new Date(acc[service].created_at)
-            ) {
-              acc[service] = video;
+            if (video.service && video.created_at) {
+              if (
+                !acc[video.service] ||
+                new Date(video.created_at) > new Date(acc[video.service].created_at)
+              ) {
+                acc[video.service] = video;
+              }
             }
             return acc;
-          }, {} as Record<string, any>)
-        ).filter((video: any) => serviceTitles[video.service]); // Remove serviços sem título mapeado
+          }, {} as Record<string, VideoData>)
+        ).filter((video) => serviceTitles[video.service]);
 
-        // Formata os vídeos
-        const formattedVideos = latestVideos.map((video: any) => ({
+        // Formatar os vídeos
+        const formattedVideos = latestVideos.map((video) => ({
           videoUrl: `https://www.youtube.com/embed/${video.idUrl}`,
-          title: serviceTitles[video.service] || "Título Desconhecido",
-          description:
-            video.description || "Confira este vídeo no nosso canal.",
+          title: serviceTitles[video.service] ?? "Título Desconhecido",
+          description: video.description ?? "Confira este vídeo no nosso canal.",
           linkText: "Ver vídeo",
           linkUrl: `https://www.youtube.com/watch?v=${video.idUrl}`,
         }));
@@ -110,7 +122,7 @@ const SolutionsSectionVideos: React.FC = () => {
       }
     };
 
-    fetchVideos();
+    void fetchVideos();
   }, []);
 
   if (loading) {
