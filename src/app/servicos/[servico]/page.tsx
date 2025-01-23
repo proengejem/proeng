@@ -1,4 +1,4 @@
-'use client'
+
 
 import { Gallery7 } from "~/components/Gallery7";
 import Navbar from "~/components/navbar";
