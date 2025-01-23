@@ -41,7 +41,7 @@ export default function BlurFade({
 }: BlurFadeProps) {
   const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
-  const isInView = !inView || inViewResult;
+  const isInView = inView ?? inViewResult; // Using nullish coalescing operator
   const defaultVariants: Variants = {
     hidden: {
       [direction === "left" || direction === "right" ? "x" : "y"]:
@@ -55,7 +55,7 @@ export default function BlurFade({
       filter: `blur(0px)`,
     },
   };
-  const combinedVariants = variant || defaultVariants;
+  const combinedVariants = variant ?? defaultVariants;
   return (
     <AnimatePresence>
       <motion.div

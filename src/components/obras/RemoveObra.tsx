@@ -6,62 +6,103 @@ import { Input } from '~/components/ui/input'
 import { deleteData, getData } from 'pages/api/supabse/database'
 import { useToast } from '~/hooks/use-toast'
 import { deleteFolderFromStorage } from 'pages/api/supabse/storage'
+
+// Interface para representar uma obra
+interface Obra {
+  id: string;
+  name: string;
+  description: string;
+  service?: string;
+  created_at?: string;
+}
+
 export default function RemoveObra() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchResult, setSearchResult] = useState<string | null>(null);
-  const [error, setError] = useState<boolean | null>(false);
+  const [searchResults, setSearchResults] = useState<Obra[]>([]) // Tipagem de resultados de busca
+  const [selectedObra, setSelectedObra] = useState<Obra | null>(null) // Tipagem do objeto selecionado
   const { toast } = useToast()
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   // Here you would typically send a request to search for the obra
-  //   console.log('Procurando por uma obra:', searchTerm);
-  //   // Simulating a search result
-  //   setSearchResult(`Obra found: ${searchTerm}`);
-  // };
+  // Função para buscar obras
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const result = await getData('obras', searchTerm) // Altere conforme sua API
 
-   const handleRemove = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = await getData('obras', searchTerm);
+      if (result.error || !result.data || result.data.length === 0) {
+        toast({
+          title: 'Nenhuma obra encontrada',
+          description: `Não foi possível encontrar obras para "${searchTerm}".`,
+        })
+        setSearchResults([]) // Resetando resultados
+        return
+      }
 
-    if (result.error) {
-      console.error('Erro ao buscar uma obra:', result.error.message);
-      return;
+      setSearchResults(result.data) // Atualizando a lista de resultados
+      toast({
+        title: 'Obras encontradas',
+        description: `Foram encontradas ${result.data.length} obras.`,
+      })
+    } catch (err) {
+      console.error('Erro ao buscar obras:', err)
+      toast({
+        title: 'Erro ao buscar obras',
+        description: 'Ocorreu um erro ao buscar obras. Tente novamente.',
+      })
+    }
+  }
+
+  // Função para remover obra
+  const handleRemove = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!selectedObra) {
+      toast({
+        title: 'Erro ao remover',
+        description: 'Selecione uma obra antes de removê-la.',
+      })
+      return
     }
 
-    else {
-
-      setSearchResult(`Obra encontrada: ${searchTerm}`);
-      const { error } = await deleteData('obras', searchTerm);
-      deleteFolderFromStorage('Obras', searchTerm);
+    try {
+      // Remover do banco de dados
+      const { error } = await deleteData('obras', selectedObra.name)
 
       if (error) {
-        console.error('Erro ao remover uma obra:', error.message);
+        console.error('Erro ao remover a obra:', error.message)
         toast({
-          title: 'Erro ao remover uma obra',
+          title: 'Erro ao remover obra',
           description: error.message,
-        });
-        setError(true);
-        return;
+        })
+        return
       }
 
-      else {
-        //alert('Obra removida com sucesso!');
-        toast({
-          title: 'Obra removida com sucesso',
-          description: `A obra ${searchTerm} foi removida com sucesso`,
-        });
-        setError(false);
-        setSearchTerm('');
-        setSearchResult(null);
-      }
+      // Remover o folder correspondente do storage
+      await deleteFolderFromStorage('Obras', selectedObra.name)
+
+      toast({
+        title: 'Obra removida com sucesso',
+        description: `A obra "${selectedObra.name}" foi removida com sucesso.`,
+      })
+
+      // Atualizar lista de resultados após remoção
+      setSearchResults(searchResults.filter((obra) => obra.name !== selectedObra.name))
+      setSelectedObra(null)
+      setSearchTerm('')
+    } catch (err) {
+      console.error('Erro inesperado ao remover a obra:', err)
+      toast({
+        title: 'Erro inesperado',
+        description: 'Ocorreu um erro ao tentar remover a obra.',
+      })
     }
-  };
+  }
 
   return (
     <div className="border p-4 rounded-md">
       <h3 className="text-xl font-semibold mb-4 text-[#027A48]">Remover Obra</h3>
-      <form onSubmit={handleRemove} className="space-y-4">
+
+      {/* Formulário de busca */}
+      <form onSubmit={handleSearch} className="space-y-4">
         <div className="flex gap-2">
           <Input
             type="text"
@@ -70,14 +111,46 @@ export default function RemoveObra() {
             onChange={(e) => setSearchTerm(e.target.value)}
             required
           />
-          <Button type="submit" className="bg-red-600 hover:bg-red-700 text-white">
-          Remover Obra
+          <Button type="submit" className="bg-[#027A48] hover:bg-green-500 text-white">
+            Pesquisar
           </Button>
         </div>
-        {error && (
-          <p className="text-red-600">A obra ${searchTerm} não foi encontrada</p>
-        )}
       </form>
+
+      {/* Exibição dos resultados */}
+      {searchResults.length > 0 && (
+        <div className="mt-4">
+          <h4 className="text-lg font-semibold">Resultados da Busca:</h4>
+          <ul className="space-y-2">
+            {searchResults.map((obra) => (
+              <li
+                key={obra.id}
+                onClick={() => setSelectedObra(obra)}
+                className={`p-2 border rounded-md cursor-pointer ${
+                  selectedObra?.id === obra.id ? 'bg-green-100 border-green-400' : 'bg-white'
+                }`}
+              >
+                <p className="font-medium">{obra.name}</p>
+                <p className="text-sm text-gray-600">{obra.description}</p>
+                <p>Serviço: {obra.service ?? 'Sem serviço'}</p>
+                <p>Criado em: {obra.created_at ?? '?!'}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Botão de remoção */}
+      {selectedObra && (
+        <div className="mt-4">
+          <Button
+            onClick={handleRemove}
+            className="bg-red-600 hover:bg-red-700 text-white"
+          >
+            Remover Obra
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

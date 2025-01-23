@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "../../components/ui/form";
 
+
 // export default function LoginPage() {
 //   const [email, setEmail] = useState('')
 //   const [password, setPassword] = useState('')
@@ -120,7 +121,7 @@ async function onSignInWithGoogle() {
                                         <Input
                                             placeholder="example@gmail.com"
                                             type="email"
-                                            className="bg-white dark:bg-blue-700 text-blue-900 dark:text-blue-100"
+                                            className="bg-white dark:bg-blue-500 text-[#027A48] dark:text-blue-100"
                                             {...field}
                                             defaultValue={''}
                                         />

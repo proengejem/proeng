@@ -28,6 +28,32 @@ export const uploadFilesToStorage = async (bucketName: string, files: File[], na
   };
 };
 
+export const uploadNewFilesToStorage = async (bucketName: string, files: File[], nameFolder: string) => {
+
+  // Faz o upload de todos os arquivos na pasta criada
+  const uploadedFiles = await Promise.all(
+    files.map(async (file) => {
+      const fileName = `${nameFolder}/${uuidV4()}-${file.name}`;
+      const { error } = await supabase.storage
+        .from(bucketName)
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (error) {
+        throw new Error(`Error uploading file: ${error.message}`);
+      }
+
+      return fileName; // Retorna o caminho do arquivo para uso posterior
+    })
+  );
+
+  return {
+    uploadedFiles, // Retorna a lista de arquivos carregados
+  };
+};
+
 // Função para deletar uma pasta com todos os arquivos
 export const deleteFolderFromStorage = async (bucketName: string, nameFolder: string) => {
   try {

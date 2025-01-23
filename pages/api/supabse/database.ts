@@ -16,6 +16,11 @@ export const updateData = async (table: string, name: string, data: any) => {
   return { error };
 }
 
+export const deleteData1 = async (table: string, id: string | number) => {
+  const { error } = await supabase.from(table).delete().eq('id', id)
+  return { error }
+}
+
 export const deleteData = async (table: string, name: string) => {
   const { error } = await supabase.from(table).delete().match({ name: name });
   return { error };

@@ -8,6 +8,7 @@ import { insertData } from 'pages/api/supabse/database'
 import { useToast } from '~/hooks/use-toast'
 import { uploadFilesToStorage } from 'pages/api/supabse/storage'
 
+
 interface ObraInterface {
   name: string
   description: string
@@ -96,21 +97,42 @@ export default function CreateObra() {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-        <Input
+        {/* <Input
           type="text"
           name = 'service'
           placeholder="Serviço/Categoria"
           value={service}
           onChange={(e) => setService(e.target.value)}
           required
-        />
+        /> */}
+        <label className="block text-sm font-medium text-gray-700">Serviços/Categoria</label>
+<select
+  value={service}
+  onChange={(e) => setService(e.target.value)}
+  required
+  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#027A48] focus:border-[#027A48] sm:text-sm"
+>
+  <option value="" disabled>
+    Selecione um serviço
+  </option>
+  <option value="solo-grampeado">Solo Grampeado</option>
+  <option value="concreto-projetado">Concreto Projetado</option>
+  <option value="helice-continua-monitorada">Hélice Contínua Monitorada</option>
+  <option value="estaca-tipo-raiz">Estaca Tipo Raiz</option>
+  <option value="micro-estacas-injetadas">Micro Estacas Injetadas</option>
+  <option value="injecoes-de-consolidacao">Injeções de Consolidação</option>
+  <option value="d-h-p">Dreno Sub-Horizontal Profundo</option>
+  <option value="tirantes">Tirantes</option>
+
+</select>
+ 
         <div className="space-y-2">
           <Input
             type="file"
             accept="image/*"
             multiple
             onChange={(e) => {
-              const files = Array.from(e.target.files || [])
+              const files = Array.from(e.target.files ?? [])
               setImages(prevImages => [
                 ...prevImages,
                 ...files.map(file => ({

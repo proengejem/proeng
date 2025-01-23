@@ -12,7 +12,7 @@ export default function Numero({ n }: NumeroProps) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry && entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setStartAnimation(true);
         }
       },
@@ -20,19 +20,19 @@ export default function Numero({ n }: NumeroProps) {
     );
 
     if (ref.current) {
-      observer.observe(ref.current);
+      observer.observe(ref.current); // Usa `if` explícito para observar
     }
 
     return () => {
       if (ref.current) {
-        observer.unobserve(ref.current);
+        observer.unobserve(ref.current); // Usa `if` explícito para desobservar
       }
     };
   }, []);
 
   const { numero } = useSpring({
     from: { numero: 0 },
-    to: { numero: startAnimation ? n : 0 }, // Inicia a animação quando `startAnimation` for verdadeiro
+    to: { numero: startAnimation ? n : 0 }, // Inicia a animação quando startAnimation for verdadeiro
     config: { mass: 1, tension: 20, friction: 10 },
     delay: 200,
   });

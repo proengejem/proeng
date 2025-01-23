@@ -2,6 +2,12 @@ import { Gallery7 } from "~/components/Gallery7";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+
+interface ServicoPageProps {
+  params: { servico: string };
+}
 
 // Gera parâmetros estáticos
 export async function generateStaticParams() {
@@ -23,7 +29,6 @@ export default async function ServicoPage({ params }: any) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navbar */}
       <Navbar />
 
       {/* Conteúdo principal */}

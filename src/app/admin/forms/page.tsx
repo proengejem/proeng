@@ -21,7 +21,7 @@ export default function Home() {
       </div>
     </section>
         <section>
-        <h2 className="text-2xl font-semibold mb-4 text-[#027A48]">VÍdeos</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-[#027A48]">Vídeos</h2>
         <div className="space-y-6">
           <CreateVideo />
           <EditVideo />

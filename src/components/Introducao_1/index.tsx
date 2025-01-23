@@ -1,6 +1,7 @@
 import React from "react";
-import Image from "next/image";
 import BlurFade from "~/components/ui/blur-fade"; // Ajuste o caminho, se necessário.
+import Link from "next/link";
+
 
 const HeroSectionWithVideo: React.FC = () => {
   return (
@@ -49,19 +50,19 @@ const HeroSectionWithVideo: React.FC = () => {
           {/* Botões */}
           <BlurFade delay={0.6}>
             <div className="mt-6 flex space-x-4 justify-center">
-              <a href="/sobrenos">
+              <Link href="/sobrenos">
                 <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
                   Sobre nós
                 </button>
-              </a>
-              <a href="/servicos">
+                </Link >
+              <Link href="/servicos">
                 <button
                   className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition"
                   style={{ color: "#027A48" }}
                 >
                   Contato
                 </button>
-              </a>
+              </Link>
             </div>
           </BlurFade>
         </div>
