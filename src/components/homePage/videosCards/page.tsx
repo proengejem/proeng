@@ -10,11 +10,10 @@ const supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8"
 );
 
-// Interface para representar os dados de vídeo
 interface VideoData {
-  idUrl: string;
   service: string;
   created_at: string;
+  idUrl: string;
   description?: string;
 }
 
@@ -66,45 +65,48 @@ const SolutionsSectionVideos: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchVideos = async (): Promise<void> => {
+    const fetchVideos = async () => {
       try {
         const { data, error } = await supabase
           .from("videos")
           .select("*")
           .order("created_at", { ascending: false });
-
+    
         if (error) {
           console.error("Erro ao buscar vídeos:", error);
           return;
         }
-
+    
         if (!data || data.length === 0) {
           console.warn("Nenhum vídeo encontrado.");
           return;
         }
-
-        // Mapear serviços para títulos correspondentes
+    
+        // Mapear os serviços para os títulos correspondentes
         const serviceTitles: Record<string, string> = {
           "solo-grampeado": "Solo Grampeado",
           "estaca-tipo-raiz": "Estaca Raiz",
           "helice-continua-monitorada": "Estaca Hélice",
         };
-
+    
+        // Tipar o array `data` explicitamente como `VideoData[]`
+        const typedData = data as VideoData[];
+    
         // Filtrar o vídeo mais recente de cada serviço
         const latestVideos = Object.values(
-          data.reduce((acc, video) => {
-            if (video.service && video.created_at) {
-              if (
-                !acc[video.service] ||
-                new Date(video.created_at) > new Date(acc[video.service].created_at)
-              ) {
-                acc[video.service] = video;
-              }
+          typedData.reduce((acc, video) => {
+            if (
+              video.service &&
+              video.created_at &&
+              (acc[video.service] ??
+                new Date(video.created_at) > new Date(acc[video.service]?.created_at ?? 0))
+            ) {
+              acc[video.service] = video;
             }
             return acc;
           }, {} as Record<string, VideoData>)
         ).filter((video) => serviceTitles[video.service]);
-
+    
         // Formatar os vídeos
         const formattedVideos = latestVideos.map((video) => ({
           videoUrl: `https://www.youtube.com/embed/${video.idUrl}`,
@@ -113,7 +115,7 @@ const SolutionsSectionVideos: React.FC = () => {
           linkText: "Ver vídeo",
           linkUrl: `https://www.youtube.com/watch?v=${video.idUrl}`,
         }));
-
+    
         setVideos(formattedVideos);
       } catch (err) {
         console.error("Erro ao buscar vídeos:", err);
