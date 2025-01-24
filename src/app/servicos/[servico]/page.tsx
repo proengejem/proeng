@@ -1,12 +1,9 @@
-
-
 import { Gallery7 } from "~/components/Gallery7";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
+import { obrasCards } from "~/components/ObrasCards"; // Importando o novo array
 import Image from "next/image";
-import { notFound } from "next/navigation";
-import ObrasCards from "~/components/ObrasCards"; // Importando o componente ObrasCards
 
 interface ServicoPageProps {
   params: { servico: string };
@@ -73,15 +70,12 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
           <Gallery7
             heading=""
             description=""
-            images={obra.gallery}
+            images={obras.map((obra) => ({
+              src: obra.image, // Supondo que o array possui a propriedade 'image'
+              alt: obra.title, // Supondo que o array possui a propriedade 'title'
+            }))}
             headingClassName="hidden" // Oculta o heading padrão
           />
-        </section>
-
-        {/* Obras Disponíveis */}
-        <section className="w-full mt-16">
-          <h2 className="text-2xl font-semibold mb-4">Obras Disponíveis</h2>
-          <ObrasCards /> {/* Componente adicionado aqui */}
         </section>
 
         {/* Outras obras */}
