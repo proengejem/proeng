@@ -49,19 +49,6 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
-async function fetchAllObras(): Promise<Obra[]> {
-  try {
-    const { data, error } = await supabase.from("obras").select("id, name, description");
-
-    if (error || !data) return [];
-
-    return data;
-  } catch (error) {
-    console.error("Erro ao buscar todas as obras:", error);
-    return [];
-  }
-}
-
 const ObraPage = () => {
   const params = useParams();
   const [obra, setObra] = useState<Obra | null>(null);
@@ -94,20 +81,29 @@ const ObraPage = () => {
     return null; // notFound já lidará com isso
   }
 
-  return <ObraDetails obra={obra} />;
+  return <ObraDetails obra={obra} setObra={setObra} />;
 };
 
-const ObraDetails = ({ obra }: { obra: Obra }) => {
+const ObraDetails = ({ obra, setObra }: { obra: Obra; setObra: React.Dispatch<React.SetStateAction<Obra | null>> }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
-    const loadAllObras = async () => {
-      const fetchedObras = await fetchAllObras();
-      setAllObras(fetchedObras);
+    const fetchAllObras = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("obras")
+          .select("id, name, description");
+
+        if (!error && data) {
+          setAllObras(data);
+        }
+      } catch (err) {
+        console.error("Erro ao buscar todas as obras:", err);
+      }
     };
 
-    loadAllObras();
+    fetchAllObras();
   }, []);
 
   const handlePrev = () => {
@@ -120,6 +116,14 @@ const ObraDetails = ({ obra }: { obra: Obra }) => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === obra.images.length - 1 ? 0 : prevIndex + 1
     );
+  };
+
+  const handleCardClick = async (id: number) => {
+    const fetchedObra = await fetchObra(id.toString());
+    if (fetchedObra) {
+      setObra(fetchedObra);
+      setCurrentImageIndex(0); // Resetar índice ao mudar obra
+    }
   };
 
   return (
@@ -159,29 +163,27 @@ const ObraDetails = ({ obra }: { obra: Obra }) => {
             <p className="text-gray-500">Imagem não disponível</p>
           </div>
         )}
-
-        <section className="mt-8 px-4">
-          <h2 className="text-2xl font-bold mb-4">Outras Obras</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {allObras.map((obra) => (
-              <div
-                key={obra.id}
-                className="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl transition"
-              >
-                <h3 className="text-xl font-semibold mb-2">{obra.name}</h3>
-                <p className="text-gray-700 text-sm">{obra.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
       </main>
 
-      <Footer1 />
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        {allObras.map((obraItem) => (
+          <div
+            key={obraItem.id}
+            className="cursor-pointer bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition"
+            onClick={() => handleCardClick(obraItem.id)}
+          >
+            <h2 className="text-xl font-bold mb-2">{obraItem.name}</h2>
+            <p className="text-gray-600">{obraItem.description}</p>
+          </div>
+        ))}
+      </section>
+
     </div>
   );
 };
 
 export default ObraPage;
+
 
 
 
