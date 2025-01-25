@@ -19,3 +19,6 @@ import "./src/env.js";
       domains: ['proeng-5r0c5koj2-proengs-projects.vercel.app'],
     },
   };
+
+// next.config.js
+
