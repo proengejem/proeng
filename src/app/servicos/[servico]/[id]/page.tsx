@@ -53,6 +53,7 @@ const ObraPage = () => {
   const params = useParams();
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
     const loadObra = async () => {
@@ -73,6 +74,27 @@ const ObraPage = () => {
     loadObra();
   }, [params?.id]);
 
+  useEffect(() => {
+    const fetchAllObras = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("obras")
+          .select("id, name, description, service");
+
+        if (!error && data && obra) {
+          const filteredObras = data.filter(
+            (obraItem) => obraItem.service === obra.service
+          );
+          setAllObras(filteredObras);
+        }
+      } catch (err) {
+        console.error("Erro ao buscar todas as obras:", err);
+      }
+    };
+
+    if (obra) fetchAllObras();
+  }, [obra]);
+
   if (isLoading) {
     return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
   }
@@ -81,30 +103,19 @@ const ObraPage = () => {
     return null; // notFound já lidará com isso
   }
 
-  return <ObraDetails obra={obra} setObra={setObra} />;
+  return <ObraDetails obra={obra} setObra={setObra} allObras={allObras} />;
 };
 
-const ObraDetails = ({ obra, setObra }: { obra: Obra; setObra: React.Dispatch<React.SetStateAction<Obra | null>> }) => {
+const ObraDetails = ({
+  obra,
+  setObra,
+  allObras,
+}: {
+  obra: Obra;
+  setObra: React.Dispatch<React.SetStateAction<Obra | null>>;
+  allObras: Obra[];
+}) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [allObras, setAllObras] = useState<Obra[]>([]);
-
-  useEffect(() => {
-    const fetchAllObras = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("obras")
-          .select("id, name, description");
-
-        if (!error && data) {
-          setAllObras(data);
-        }
-      } catch (err) {
-        console.error("Erro ao buscar todas as obras:", err);
-      }
-    };
-
-    fetchAllObras();
-  }, []);
 
   const handlePrev = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -166,23 +177,29 @@ const ObraDetails = ({ obra, setObra }: { obra: Obra; setObra: React.Dispatch<Re
       </main>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-        {allObras.map((obraItem) => (
-          <div
-            key={obraItem.id}
-            className="cursor-pointer bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition"
-            onClick={() => handleCardClick(obraItem.id)}
-          >
-            <h2 className="text-xl font-bold mb-2">{obraItem.name}</h2>
-            <p className="text-gray-600">{obraItem.description}</p>
-          </div>
-        ))}
-      </section>
+  {allObras
+    .filter(
+      (obraItem) => 
+        obraItem.service === obra.service && obraItem.id !== obra.id // Filtro por service e exclusão da obra atual
+    )
+    .map((obraItem) => (
+      <div
+        key={obraItem.id}
+        className="cursor-pointer bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition"
+        onClick={() => handleCardClick(obraItem.id)}
+      >
+        <h2 className="text-xl font-bold mb-2">{obraItem.name}</h2>
+        <p className="text-gray-600">{obraItem.description}</p>
+      </div>
+    ))}
+</section>
 
     </div>
   );
 };
 
 export default ObraPage;
+
 
 
 
