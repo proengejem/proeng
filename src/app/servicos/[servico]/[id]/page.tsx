@@ -49,6 +49,19 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
+async function fetchAllObras(): Promise<Obra[]> {
+  try {
+    const { data, error } = await supabase.from("obras").select("id, name, description");
+
+    if (error || !data) return [];
+
+    return data;
+  } catch (error) {
+    console.error("Erro ao buscar todas as obras:", error);
+    return [];
+  }
+}
+
 const ObraPage = () => {
   const params = useParams();
   const [obra, setObra] = useState<Obra | null>(null);
@@ -86,6 +99,16 @@ const ObraPage = () => {
 
 const ObraDetails = ({ obra }: { obra: Obra }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [allObras, setAllObras] = useState<Obra[]>([]);
+
+  useEffect(() => {
+    const loadAllObras = async () => {
+      const fetchedObras = await fetchAllObras();
+      setAllObras(fetchedObras);
+    };
+
+    loadAllObras();
+  }, []);
 
   const handlePrev = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -136,6 +159,21 @@ const ObraDetails = ({ obra }: { obra: Obra }) => {
             <p className="text-gray-500">Imagem não disponível</p>
           </div>
         )}
+
+        <section className="mt-8 px-4">
+          <h2 className="text-2xl font-bold mb-4">Outras Obras</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {allObras.map((obra) => (
+              <div
+                key={obra.id}
+                className="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl transition"
+              >
+                <h3 className="text-xl font-semibold mb-2">{obra.name}</h3>
+                <p className="text-gray-700 text-sm">{obra.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
       <Footer1 />
@@ -144,6 +182,7 @@ const ObraDetails = ({ obra }: { obra: Obra }) => {
 };
 
 export default ObraPage;
+
 
 
 
