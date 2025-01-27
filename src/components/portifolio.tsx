@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import HeadBar from "~/components/homePage/headerPortifolio";
+
 
 type MediaType = "photo" | "video";
 
@@ -58,16 +60,12 @@ export default function Portfolio() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative h-[200px] w-full overflow-hidden"
+        className="relative h-[250px] w-full overflow-hidden"
       >
-        <Image
-          src="/portifolio header.png?height=200&width=1920"
-          alt="Portfolio header"
-          width={1920}
-          height={200}
-          className="w-full object-cover"
-        />
+      <HeadBar />
+
       </motion.div>
+      {/* <HeadBar /> */}
 
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-12">

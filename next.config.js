@@ -14,19 +14,11 @@ import "./src/env.js";
 //   };
 //   module.exports = config;
 
-// /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    domains: ['xaljbeozaieyoecnxvum.supabase.co'], // Adicione o domínio aqui
-  },
-};
+  export default {
+    images: {
+      domains: ['proeng-5r0c5koj2-proengs-projects.vercel.app'],
+    },
+  };
 
-export default nextConfig;
+// next.config.js
 
-
-  // export default {
-  //   images: {
-  //     domains: ['proeng-5r0c5koj2-proengs-projects.vercel.app'],
-  //   },
-  // };

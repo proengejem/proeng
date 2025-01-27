@@ -17,14 +17,15 @@ return(
   <header className="bg-white shadow-sm">
   <nav className="container mx-auto flex items-center justify-between px-2 py-1">
   {/* <nav className="container mx-auto flex flex-col items-center px-4 py-2 md:flex-row"> */}
-
+  {/* <a href="/home"> */}
     <Image
       src="/ProengLogo.png"
       alt="Proeng Engenharia"
-      width={400}
+      width={500}
       height={350}
       className="mb-6"
     />
+      {/* </a> */}
             {/* Links de navegação - visíveis em telas maiores */}
     <div className="hidden items-center gap-6 text-lg md:flex">
     {/* text-4xl md:text-6xl font-bold leading-tight text-white */}

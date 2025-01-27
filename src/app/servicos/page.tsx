@@ -21,7 +21,6 @@ const  ServicoPage: React.FC = () => {
     <div>
     <Navbar />
     <Servicos />
-    
     <Footer1 />
 
 </div>

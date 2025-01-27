@@ -1,9 +1,13 @@
 "use client";
 
 import Numero from "~/components/numeros";
-import React from "react";
+import React, { useState, useEffect } from 'react';
+
 
 export default function Sobrenoscompo3() {
+    const [anoInicio] = useState(2006); // Exemplo de ano de nascimento
+    const anoAtual = new Date().getFullYear();
+    const anosExeperiencia = anoAtual - anoInicio;
   return (
     <div className="relative flex min-h-[400px] w-full items-center bg-[#027A48]">
       {/* Background Image */}
@@ -35,7 +39,7 @@ export default function Sobrenoscompo3() {
           </div>
           <div className="space-y-2">
             <div className="text-6xl font-bold text-white">
-              <Numero n={13} />
+              <Numero n={anosExeperiencia} />
             </div>
             <div className="text-xl uppercase text-white">
               Anos de Experiência
