@@ -6,6 +6,12 @@ import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import Navbar  from "~/components/navbar";
 import { Footer1 }  from "~/components/ui/footer";
+import type { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Obras - ProEng',
+  description: 'Conheça nossas obras e projetos concluídos com excelência.',
+  keywords: ['obras', 'engenharia', 'solo grampeado', 'estaca raíz', 'estaca hélice'],
+};
 
 
 export default function Page() {

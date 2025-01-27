@@ -11,7 +11,7 @@ import PortfolioBanner from "~/components/homePage/divisorPortifolio";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Portfólio de Obras - ProEng',
+  title: 'Portfólio - ProEng',
   description: 'Veja nosso portfólio de projetos e obras concluídas com excelência.',
   keywords: ['portfólio', 'obras', 'projetos', 'engenharia', 'solo grampeado'],
   // openGraph: {

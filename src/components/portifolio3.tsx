@@ -66,7 +66,7 @@ export default function PortfolioPage() {
           {/* Left Column */}
           <div className="space-y-8">
             <motion.div variants={itemVariants}>
-              <h2 className="mb-4 text-3xl font-bold">Solo Grampeado</h2>
+              <h2 className="mb-4 text-3xl font-bold">Estaca Hélice</h2>
               <p className="mb-6 text-gray-600">
                 Nossos serviços são projetados para atender às suas necessidades
                 específicas. Experimente a eficiência e a qualidade que

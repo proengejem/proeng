@@ -10,8 +10,8 @@ import SolutionsSectionVideos from '~/components/homePage/videosCards/page';
 
 export const metadata: Metadata = {
   title: 'ProEng - Sua Solução em Engenharia',
-  description: 'Bem-vindo à ProEng. Oferecemos serviços especializados em engenharia para atender todas as suas necessidades.',
-  keywords: ['engenharia', 'ProEng', 'construção', 'serviços de engenharia'],
+  description: 'Bem-vindo à ProEng. Oferecemos serviços especializados em engenharia para atender suas necessidades sempre.',
+  keywords: ['engenharia', 'ProEng', 'geotecnia', 'serviços de engenharia'],
   // openGraph: {
   //   title: 'ProEng - Sua Solução em Engenharia',
   //   description: 'Bem-vindo à ProEng. Oferecemos serviços especializados em engenharia para atender todas as suas necessidades.',

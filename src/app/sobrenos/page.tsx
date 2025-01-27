@@ -16,13 +16,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Sobre Nós - ProEng',
   description: 'Saiba mais sobre a ProEng, nossa história e valores.',
-  keywords: ['sobre nós', 'ProEng', 'empresa', 'engenharia'],
-  // openGraph: {
-  //   title: 'Sobre Nós - ProEng',
-  //   description: 'Saiba mais sobre a ProEng, nossa história e valores.',
-  //   url: 'https://www.proeng.com/sobre-nos',
-  //   images: [{ url: '/images/sobre-nos-og-image.png', alt: 'Imagem de Sobre Nós' }],
-  // },
+  keywords: ['sobre nós', 'ProEng', 'empresa', 'engenharia', 'melhor empresa de engenharia em São Paulo'],
 };
 
 export default function Sobrenos() {
