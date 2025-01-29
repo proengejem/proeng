@@ -6,15 +6,8 @@ import { Play, X } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-type MediaType = "photo" | "video";
-type ModalContent = {
-  title: string;
-  content: string;
-} | null;
 
 export default function Portfolio2() {
-  const [mediaType, setMediaType] = useState<MediaType>("photo");
-  const [modalContent, setModalContent] = useState<ModalContent>(null);
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -43,51 +36,23 @@ export default function Portfolio2() {
       <div className="mx-auto max-w-7xl">
         <div className="grid items-start gap-8 md:grid-cols-2 lg:gap-12">
           {/* Left Column - Image/Video Section */}
-          <motion.div className="relative" variants={itemVariants}>
-            {mediaType === "photo" ? (
-              <motion.div
-                className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl"
-                initial={{ scale: 0.95 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Image
-                  src="/Estaca Helice.jpeg"
-                  alt="Estaca Raíz Project Photo"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </motion.div>
-            ) : (
-              <motion.div
-                className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl"
-                initial={{ scale: 0.95 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Image
-                  src="/Estaca Helice.jpeg"
-                  alt="Estaca Raíz Project Video"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <button
-                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 transition-colors hover:bg-opacity-30"
-                  aria-label="Play video"
-                >
-                  <motion.div
-                    className="flex h-16 w-16 items-center justify-center rounded-xl bg-black bg-opacity-50"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Play className="h-8 w-8 text-white" />
-                  </motion.div>
-                </button>
-              </motion.div>
-            )}
-          </motion.div>
+         <motion.div className="relative" variants={itemVariants}>
+                       <motion.div
+                         className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl"
+                         initial={{ scale: 0.95 }}
+                         animate={{ scale: 1 }}
+                         transition={{ duration: 0.3 }}
+                       >
+                         <Image
+                           src="/Estaca Helice.jpeg"
+                           alt="Estaca Raíz Project Photo"
+                           fill
+                           className="object-cover"
+                           priority
+                         />
+                       </motion.div>
+                     </motion.div>            
+                
 
           {/* Right Column - Content */}
           <motion.div className="space-y-8" variants={itemVariants}>
@@ -130,10 +95,7 @@ export default function Portfolio2() {
 
 
             <motion.div className="flex space-x-4" variants={itemVariants}>
-            <Link href={{
-      pathname: "/portifolioindiv", // Nome da página do segundo código
-      query: { title: "Estaca Raíz" }, // Passa o título como parâmetro
-    }}>
+            <Link href={`/portifolio/${encodeURIComponent("estaca-tipo-raiz")}`}>
             <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
               Fotos
             </button>
@@ -149,36 +111,8 @@ export default function Portfolio2() {
           </motion.div>
         </div>
       </div>
-
-      {/* Modal */}
-      <AnimatePresence>
-        {modalContent && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
-            onClick={() => setModalContent(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-md rounded-xl bg-white p-6"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setModalContent(null)}
-                className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-              <h2 className="mb-4 text-2xl font-bold">{modalContent.title}</h2>
-              <p className="text-gray-600">{modalContent.content}</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      </motion.div>
   );
 }
+
+      

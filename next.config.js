@@ -16,7 +16,7 @@ import "./src/env.js";
 
   export default {
     images: {
-      domains: ['proeng-5r0c5koj2-proengs-projects.vercel.app'],
+      domains: ['xaljbeozaieyoecnxvum.supabase.co'],
     },
   };
 

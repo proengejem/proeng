@@ -4,6 +4,9 @@ import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
 import { obrasCards } from "~/components/ObrasCards"; // Importando o novo array
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import WhatsAppIcon from "~/components/whatsapp";
 import type { Metadata } from 'next';
 
 
@@ -53,7 +56,8 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
       <header className="bg-white border-b">
         <div className="container mx-auto px-4 py-6">
           <p className="text-sm text-gray-500">
-            Serviços &gt;{" "}
+            <Link href="/servicos">
+            Serviços</Link> &gt;{" "}
             <span className="font-semibold text-gray-700">{obra.title}</span>
           </p>
         </div>
@@ -74,9 +78,9 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
           <Image
             src={obra.image}
             alt={obra.title}
-            width={500} // Set the width (in pixels or appropriate size)
+            width={700} // Set the width (in pixels or appropriate size)
             height={300} 
-            className="h-[50vh] object-cover rounded-lg shadow-lg"
+            className="h-[60vh] object-cover rounded-lg shadow-lg"
           />
           <p className="mt-2 text-sm text-gray-500">| Publicado por Proeng Geotécnia</p>
         </div>
@@ -130,13 +134,13 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
         {/* Outros serviços */}
         <section className="w-full mt-16">
           <h2 className="text-2xl font-semibold mb-4">Outros Serviços</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
             {obras
               .filter((o) => o.slug !== servico)
               .map((outraObra) => (
                 <div
                   key={outraObra.slug}
-                  className="border rounded-lg p-4 shadow-lg bg-white"
+                  className="border rounded-lg p-4 shadow-lg rounded-lg bg-white overflow-hidden border transform transition-transform duration-300 hover:scale-105"
                 >
                   <img
                     src={outraObra.image}
@@ -159,8 +163,9 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
         </section>
       </main>
 
-      {/* Footer */}
+      <WhatsAppIcon />
       <Footer1 />
+
     </div>
   );
 }

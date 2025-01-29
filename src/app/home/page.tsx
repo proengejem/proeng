@@ -7,6 +7,7 @@ import Rodape from "~/components/homePage/rodape";
 import { Footer1 } from "~/components/ui/footer";
 import Navbar from "~/components/navbar";
 import SolutionsSectionVideos from '~/components/homePage/videosCards/page';
+import WhatsAppIcon from "~/components/whatsapp";
 
 export const metadata: Metadata = {
   title: 'ProEng - Sua Solução em Engenharia',
@@ -31,6 +32,7 @@ const HomePage: React.FC = () => {
       <SolutionsSection />
       <SolutionsSectionVideos />
       <Rodape />
+      <WhatsAppIcon />
       <Footer1 />
     </div>
   );

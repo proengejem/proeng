@@ -10,6 +10,8 @@ import { Footer1 }  from "~/components/ui/footer";
 import Sobrenoscompo from "~/components/sobrenos1";
 import Sobrenoscompo2 from "~/components/sobrenos2";
 import Sobrenoscompo3 from "~/components/sobrenos3";
+import WhatsAppIcon from "~/components/whatsapp";
+
 import type { Metadata } from 'next';
 
 
@@ -28,7 +30,7 @@ export default function Sobrenos() {
       <Sobrenoscompo3/>
       <footer className="w-full">
         <Valores/>
-
+        <WhatsAppIcon />
         <Footer1 />
       </footer>
     </div>

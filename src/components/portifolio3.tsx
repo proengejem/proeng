@@ -7,12 +7,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InfoModal } from "~/components/info-modal";
 
-type MediaType = "photo" | "video";
+// type MediaType = "photo" | "video";
 
-interface ModalContent {
-  title: string;
-  content: string;
-}
+// interface ModalContent {
+//   title: string;
+//   content: string;
+// }
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -37,8 +37,8 @@ const itemVariants = {
 };
 
 export default function PortfolioPage() {
-  const [mediaType, setMediaType] = useState<MediaType>("photo");
-  const [selectedModal, setSelectedModal] = useState<ModalContent | null>(null);
+  // const [mediaType, setMediaType] = useState<MediaType>("photo");
+  // const [selectedModal, setSelectedModal] = useState<ModalContent | null>(null);
 
   const modalContent = {
     quality: {
@@ -79,7 +79,7 @@ export default function PortfolioPage() {
               className="grid gap-6 md:grid-cols-2"
             >
               <motion.button
-                onClick={() => setSelectedModal(modalContent.quality)}
+                // onClick={() => setSelectedModal(modalContent.quality)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
@@ -90,7 +90,7 @@ export default function PortfolioPage() {
                 </p>
               </motion.button>
               <motion.button
-                onClick={() => setSelectedModal(modalContent.solutions)}
+                // onClick={() => setSelectedModal(modalContent.solutions)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
@@ -103,10 +103,7 @@ export default function PortfolioPage() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex space-x-4">
-            <Link href={{
-      pathname: "/portifolioindiv", // Nome da página do segundo código
-      query: { title: "Estaca Hélice Contínua Monitorada" }, // Passa o título como parâmetro
-    }}>
+            <Link href={`/portifolio/${encodeURIComponent("helice-continua-monitorada")}`}>
             <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
               Fotos
             </button>
@@ -125,7 +122,7 @@ export default function PortfolioPage() {
           {/* Right Column - Image/Video Section */}
           <motion.div variants={itemVariants} className="relative">
             <AnimatePresence mode="wait">
-              {mediaType === "photo" ? (
+              {/* {mediaType === "photo" ? ( */}
                 <motion.div
                   key="photo"
                   initial={{ opacity: 0, x: 20 }}
@@ -141,7 +138,7 @@ export default function PortfolioPage() {
                     className="object-cover"
                   />
                 </motion.div>
-              ) : (
+              {/* ) : (
                 <motion.div
                   key="video"
                   initial={{ opacity: 0, x: 20 }}
@@ -163,8 +160,8 @@ export default function PortfolioPage() {
                   >
                     <Play className="h-16 w-16 text-white opacity-80 group-hover:opacity-100" />
                   </motion.button>
-                </motion.div>
-              )}
+                </motion.div> */}
+              {/* )} */}
         <div className="relative h-[100px] w-full overflow-hidden"></div>
 
             </AnimatePresence>

@@ -53,7 +53,7 @@ const HeroSectionWithVideo: React.FC = () => {
                   Sobre nós
                 </button>
               </Link>
-              <Link href="/servicos">
+              <Link href="/contato">
                 <button
                   className="px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition"
                   style={{ color: "#027A48" }}

@@ -2,6 +2,7 @@ import React from "react";
 import { Footer1 }  from "~/components/ui/footer";
 import Navbar  from "~/components/navbar";
 import Servicos  from "~/components/servicosgeral";
+import WhatsAppIcon from "~/components/whatsapp";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ const  ServicoPage: React.FC = () => {
     <div>
     <Navbar />
     <Servicos />
+    <WhatsAppIcon />
     <Footer1 />
 
 </div>
