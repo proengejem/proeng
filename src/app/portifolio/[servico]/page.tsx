@@ -4,6 +4,7 @@ import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
 import { obrasCards } from "~/components/ObrasCards"; // Importando o novo array
 import Image from "next/image";
+import BlurFade from "~/components/ui/blur-fade"; 
 import WhatsAppIcon from "~/components/whatsapp";
 
 
@@ -55,11 +56,15 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
       {/* Conteúdo principal */}
       <main className="container mx-auto px-4 py-8">
         {/* Título */}
+                  <BlurFade delay={0.3}>        
+        
         <h1 className="text-4xl font-bold mb-10 text-center text-[#027A48]">{obra.title}</h1>
+                </BlurFade>
+                <BlurFade delay={0.5}>        
+
         <section className="w-full mt-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {obrasDinamicasFiltradas.slice(0).map((obraDinamica) => (
-            
             <a
       key={obraDinamica.id}     href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
       className="relative group overflow-hidden rounded-lg shadow-2xl rounded-lg border rounded p-4 overflow-hidden border transform transition-transform duration-300 hover:scale-105">
@@ -80,6 +85,8 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
               ))}
           </div>
         </section>
+        </BlurFade>
+
       </main>
       <WhatsAppIcon />
 

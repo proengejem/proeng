@@ -6,6 +6,7 @@ import { notFound, useParams } from "next/navigation";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import WhatsAppIcon from "~/components/whatsapp";
+import BlurFade from "~/components/ui/blur-fade"; 
 import { createClient } from "@supabase/supabase-js";
 
 // Configuração do Supabase
@@ -185,6 +186,8 @@ const ObraDetails = ({
 
       <main className="relative">
         {obra.images.length > 0 ? (
+                  <BlurFade delay={0.3}>        
+          
           <div className="relative">
             <Image
               src={obra.images[currentImageIndex] || ""}
@@ -222,11 +225,16 @@ const ObraDetails = ({
                 />
               ))}
             </div>
+        <BlurFade delay={0.5}>        
             <div className="absolute bottom-4 left-6 text-white z-10">
               <h1 className="text-3xl font-bold">{obra.name}</h1>
               <p className="text-lg mt-2">{obra.description}</p>
             </div>
+          </BlurFade>
+            
           </div>
+        </BlurFade>
+          
         ) : (
           <div className="h-[70vh] bg-gray-200 flex items-center justify-center">
             <p className="text-gray-500">Imagem não disponível</p>
@@ -234,7 +242,9 @@ const ObraDetails = ({
         )}
       </main>
 
-      <section className="p-10">
+      <section className="p-10">      
+          <BlurFade delay={0.5}>        
+
         <h2 className="text-2xl font-bold mb-4 text-green-700">Outras obras</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {allObras
@@ -258,10 +268,14 @@ const ObraDetails = ({
         )}
         <div className="p-4">
           <h3 className="text-lg font-bold">{obraItem.name}</h3>
+                  <p className="text-[#027A48] font-semibold hover:underline"
+                  >Ver obra →</p>
         </div>
       </div>
     ))}
 </div>
+</BlurFade>
+
       </section>
       <WhatsAppIcon />
       <Footer1 />

@@ -17,6 +17,7 @@ import "./src/env.js";
   export default {
     images: {
       domains: ['xaljbeozaieyoecnxvum.supabase.co'],
+
     },
   };
 

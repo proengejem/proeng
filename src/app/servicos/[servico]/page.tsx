@@ -5,7 +5,7 @@ import { obras } from "~/lib/obras";
 import { obrasCards } from "~/components/ObrasCards"; // Importando o novo array
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import BlurFade from "~/components/ui/blur-fade"; 
 import WhatsAppIcon from "~/components/whatsapp";
 import type { Metadata } from 'next';
 
@@ -66,14 +66,18 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
       {/* Conteúdo principal */}
       <main className="container mx-auto px-4 lg:px-24 py-10 flex flex-col items-start">
         {/* Título */}
+        <BlurFade delay={0.1}>        
         <h1 className="text-4xl font-bold mb-4 text-left text-[#027A48]">
           {obra.title}
         </h1>
+          </BlurFade>
 
-        {/* Descrição */}
+          <BlurFade delay={0.1}>
         <p className="mb-6 text-lg text-gray-700 text-justify">{obra.description}</p>
+        {/* </BlurFade> */}
 
         {/* Imagem principal */}
+        
         <div className="w-full mb-6 flex flex-col items-center">
           <Image
             src={obra.image}
@@ -84,6 +88,7 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
           />
           <p className="mt-2 text-sm text-gray-500">| Publicado por Proeng Geotécnia</p>
         </div>
+        </BlurFade>
 
         {/* Renderização dinâmica das 3 últimas obras */}
         <section className="w-full mt-10">
