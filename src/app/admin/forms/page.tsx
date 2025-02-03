@@ -1,11 +1,36 @@
+'use client';
 import CreateObra from '~/components/obras/CreateObra'
 import EditObra from '~/components/obras/EditObra'
 import RemoveObra from '~/components/obras/RemoveObra'
 import CreateVideo from '~/components/videos/CreateVideos'
 import EditVideo from '~/components/videos/EditVideo'
 import RemoveVideo from '~/components/videos/RemoveVideo'
+import { useAuthRedirect } from "../../../../hooks/useAuthRedirect";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../../../hooks/firebase";
 
 export default function Home() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/admin"); // Se não estiver autenticado, redireciona para login
+      } else {
+        setLoading(false); // Se autenticado, para de carregar
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup da verificação
+  }, [router]);
+
+  if (loading) {
+    return <p>Carregando...</p>; // Mostra uma tela de carregamento enquanto verifica
+  }
+
     return (
       <main className="min-h-screen bg-gray-100 p-8">
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">

@@ -342,14 +342,12 @@ export default function EditObra() {
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Imagens Existentes</label>
             <div className="grid grid-cols-3 gap-2">
-            console.log("Imagens existentes carregadas:", existingImages);
 
               {existingImages.map((imageUrl, index) => (
                 <div key={index} className="relative">
 <Image src={imageUrl} alt={`Existing ${index}`} width={200} height={100} className="object-cover rounded" />
 <button type="button"
                     onClick={() => {
-                      console.log("Botão de remover clicado!", index);
                       removeExistingImage(index);
                     }}
                     className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs pointer-events-auto"

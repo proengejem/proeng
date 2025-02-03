@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "~/components/ui/card"
 import { useRouter } from 'next/navigation'; // Importe o useRouter
-import { useToast } from '../../hooks/use-toast'
+import { useToast } from '../../hooks/use-toast';
 import {
   Form,
   FormControl,
@@ -37,6 +37,7 @@ import {
 //     console.log('Logging in with Google')
 //   }
 
+
 const authAPI = new AuthAPI();
 
 const loginSchema = z.object({
@@ -61,7 +62,12 @@ export default function Admin() {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast();
   const router = useRouter(); // Crie uma instância do useRouter
-  console.log(router);
+  // console.log(router);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [loading, setLoading ] = useState(false);
+  // const router = useRouter();
+  const authAPI = new AuthAPI();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema)
@@ -73,7 +79,7 @@ useEffect(() => {
 
 async function onSignIn({ email, password }: LoginSchema) {
   setIsLoading(true);
-  const user = await authAPI.signInWithEmailAndPassword(email, password);
+  const user = await authAPI.signInWithEmailAndPassword(email, password, setEmail, setPassword, setIsLoading, router);
 
   if(user && isMounted) {
       console.log("Seja bem vindo")
@@ -92,6 +98,8 @@ async function onSignInWithGoogle() {
       router.push('/admin/forms'); // Redirecione após o login bem-sucedido
   }
 }
+
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -124,6 +132,7 @@ async function onSignInWithGoogle() {
                                             className="bg-white dark:bg-blue-500 text-[#027A48] dark:text-blue-100"
                                             {...field}
                                             defaultValue={''}
+                                           
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -143,6 +152,8 @@ async function onSignInWithGoogle() {
                                             className='bg-white dark:bg-blue-700 text-blue-900 dark:text-blue-100'
                                             {...field}
                                             defaultValue={''}
+                                          
+
                                         />
                                     </FormControl>
                                     <FormMessage />
