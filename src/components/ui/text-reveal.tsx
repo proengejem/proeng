@@ -1,6 +1,7 @@
 "use client";
 
-import { FC, ReactNode, useRef } from "react";
+import { ReactNode, useRef } from "react";
+import type { FC } from "react";
 import { motion, MotionValue, useScroll, useTransform } from "motion/react";
 
 import { cn } from "~/lib/utils";

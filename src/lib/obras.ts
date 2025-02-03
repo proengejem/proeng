@@ -1,4 +1,4 @@
-import { Obra } from '~/interfaces/ObrasInterface';
+import type { Obra } from '~/interfaces/ObrasInterface';
 
 export const obras: Obra[] = [
   {

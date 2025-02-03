@@ -1,8 +1,10 @@
 "use client";
 
 import { cn } from "~/lib/utils";
-import { AnimatePresence, motion, MotionProps, Variants } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import type { MotionProps, Variants } from "motion/react";
 import { ElementType } from "react";
+
 
 type AnimationType = "text" | "word" | "character" | "line";
 type AnimationVariant =
@@ -300,20 +302,21 @@ const defaultItemAnimationVariants: Record<
   },
 };
 
-export function TextAnimate({
+function TextAnimate({
   children,
-  delay = 0,
-  duration = 0.3,
-  variants,
+  //delay = 0,
+  //duration = 0.3,
+  //variants,
   className,
   segmentClassName,
   as: Component = "p",
   startOnView = true,
-  once = false,
+  //once = false,
   by = "word",
   animation = "fadeIn",
   ...props
 }: TextAnimateProps) {
+
   const MotionComponent = motion.create(Component);
 
   // Use provided variants or default variants based on animation type

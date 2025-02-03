@@ -4,7 +4,12 @@ import { useRef } from "react";
 import {
   AnimatePresence,
   motion,
-  useInView,
+  //useInView,
+  
+} from "framer-motion";
+
+import type{
+
   UseInViewOptions,
   Variants,
 } from "framer-motion";
@@ -35,12 +40,12 @@ export default function BlurFade({
   delay = 0,
   offset = 6,
   direction = "down",
-  inView = false,
+  //inView = false,
   inViewMargin = "-50px",
   blur = "6px",
 }: BlurFadeProps) {
   const ref = useRef(null);
-  const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
+  //const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
   // const isInView = inView ?? inViewResult; // Using nullish coalescing operator
   const isInView = true;
   const defaultVariants: Variants = {

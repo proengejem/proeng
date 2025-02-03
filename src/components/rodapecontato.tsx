@@ -17,17 +17,20 @@ const Rodapecontato: React.FC = () => {
         },
         { threshold: 0.8 } // Ativado quando 80% do elemento estiver visível
       );
-  
-      if (sectionRef.current) {
-        observer.observe(sectionRef.current);
+    
+      const currentRef = sectionRef.current; // Salva a referência no momento
+    
+      if (currentRef) {
+        observer.observe(currentRef);
       }
-  
+    
       return () => {
-        if (sectionRef.current) {
-          observer.disconnect();
+        if (currentRef) {
+          observer.unobserve(currentRef); // Usa a variável salva
         }
       };
     }, []);
+    
 
   return (
     <section ref={sectionRef} className="relative h-[70vh]">

@@ -1,4 +1,4 @@
-import { Service } from '~/interfaces/ServiceInterface';
+import type { Service } from '~/interfaces/ServiceInterface';
 
 export const services : Service[] = [
     { servico: "solo-grampeado", title: "Solo Grampeado", description: "O solo grampeado é uma técnica de reforço dos solos amplamente utilizada no Brasil. Pode-se definí-la como o resultado da introdução de reforços, geralmente barras de aço, em um maciço de solo. Este processo é aliado, normalmente, a um revestimento da face (concreto projetado, tela ou grama) e a um sistema de drenagem. O grande interesse dos profissionais pela utilização da técnica do solo grampeado justifica-se pela sua praticidade, rapidez de execução, versatilidade e economia quando comparada a outras soluções técnicas utilizadas para estabilização de cortes e taludes naturais.", image: "/SoloGrampeado.png" },

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import Image from "next/image";
 
 const projects = [
   {
@@ -137,12 +138,15 @@ function ProjectCarousel({ project, onClose }: ProjectCarouselProps) {
       <DialogContent>
         <div className="flex flex-col space-y-4">
           {project?.images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`${project.title} - Image ${index + 1}`}
-              className="w-full rounded-md object-cover"
-            />
+            <Image
+            key={index}
+            src={image}
+            alt={`${project.title} - Image ${index + 1}`}
+            width={800} // Defina um valor adequado
+            height={600} // Defina um valor adequado
+            className="w-full rounded-md object-cover"
+          />
+          
           ))}
         </div>
       </DialogContent>

@@ -7,6 +7,7 @@ import { Textarea } from '~/components/ui/textarea'
 import { insertData } from 'pages/api/supabse/database'
 import { useToast } from '~/hooks/use-toast'
 import { uploadFilesToStorage } from 'pages/api/supabse/storage'
+import Image from 'next/image'
 
 
 interface ObraInterface {
@@ -146,7 +147,13 @@ export default function CreateObra() {
             <div className="grid grid-cols-3 gap-2">
               {images.map((image, index) => (
                 <div key={index} className="relative">
-                  <img src={image.preview} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded" />
+                  <Image
+  src={image.preview}
+  alt={`Preview ${index}`}
+  width={800} // Defina a largura adequada
+  height={96} // Defina a altura adequada
+  className="w-full h-24 object-cover rounded"
+/>
                   <button
                     type="button"
                     onClick={() => setImages(images.filter((_, i) => i !== index))}

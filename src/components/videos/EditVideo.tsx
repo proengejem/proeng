@@ -6,6 +6,7 @@ import { Input } from '~/components/ui/input';
 import { useToast } from '~/hooks/use-toast';
 import { updateData, getData } from 'pages/api/supabse/database';
 
+
 // Interface for representing a video
 interface VideoInterface {
   name: string;
@@ -14,7 +15,7 @@ interface VideoInterface {
 }
 
 // Define the expected structure of `getData`'s return value
-import { PostgrestError } from '@supabase/supabase-js';
+import type { PostgrestError } from '@supabase/supabase-js';
 
 interface GetDataResult {
   data: VideoInterface[] | null;

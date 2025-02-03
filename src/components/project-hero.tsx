@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCallback } from "react";
+
 
 const projectImages = [
   "/Estaca Raiz.jpeg?height=600&width=1200",
@@ -34,10 +36,11 @@ export function ProjectHero() {
 
   const imageIndex = Math.abs(page % projectImages.length);
 
-  const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
-  };
 
+  const paginate = useCallback((newDirection: number) => {
+    setPage(([prevPage, _]) => [prevPage + newDirection, newDirection]);
+  }, []);
+  
   useEffect(() => {
     if (isAutoPlaying) {
       const timer = setTimeout(() => {
@@ -45,7 +48,7 @@ export function ProjectHero() {
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [page, isAutoPlaying]);
+  }, [page, isAutoPlaying, paginate]);
 
   return (
     <div className="bg-gray-100">

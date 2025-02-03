@@ -2,7 +2,6 @@
 
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
-import { addDoc, collection } from "firebase/firestore";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";

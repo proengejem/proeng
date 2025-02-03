@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import TypingAnimation from "~/components/ui/typing-animation";
+import React from "react";
+
 
 const StyledBarAssimetrica: React.FC = () => {
   

@@ -2,10 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Play } from "lucide-react";
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { InfoModal } from "~/components/info-modal";
+
 
 // type MediaType = "photo" | "video";
 

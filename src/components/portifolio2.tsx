@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Play, X } from "lucide-react";
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 

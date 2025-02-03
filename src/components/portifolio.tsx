@@ -4,8 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import HeadBar from "~/components/homePage/headerPortifolio";
-import { services } from "~/lib/servicos";
-import { useState } from "react";
+
 
 export default function Portfolio() {
   const containerVariants = {
