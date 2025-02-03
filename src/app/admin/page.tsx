@@ -72,15 +72,14 @@ async function onSignIn({ email, password }: LoginSchema) {
   }
 }
 
-async function onSignInWithGoogle() {
-  const user = await authAPI.signInWithGoogle();
+// async function onSignInWithGoogle() {
+//   const user = await authAPI.signInWithGoogle();
 
-  if(user && isMounted ){
-      console.log("Seja bem vindo")
-      router.push('/admin/forms'); // Redirecione após o login bem-sucedido
-  }
-}
-
+//   if(user && isMounted ){
+//       console.log("Seja bem vindo")
+//       router.push('/admin/forms'); // Redirecione após o login bem-sucedido
+//   }
+// }
 
 
   return (
