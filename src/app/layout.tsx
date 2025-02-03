@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { Toaster } from "~/components/ui/toaster";
 import Script from "next/script";
 
+
 export const metadata: Metadata = {
   title: "PROENG",
   description: "ProEng - Sua Solução em Engenharia",

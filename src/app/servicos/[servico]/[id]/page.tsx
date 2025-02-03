@@ -9,6 +9,7 @@ import BlurFade from "~/components/ui/blur-fade";
 import WhatsAppIcon from "~/components/whatsapp";
 import { createClient } from "@supabase/supabase-js";
 
+
 // Configuração do Supabase
 const supabase = createClient(
   "https://xaljbeozaieyoecnxvum.supabase.co",
