@@ -24,3 +24,5 @@ const bucket = getStorage(app);
 const googleProvider = new GoogleAuthProvider()
 
 // export { auth, googleProvider, bucket, db };
+
+export {bucket}

@@ -80,4 +80,4 @@ class FirebaseStorageRepository {
     }
 }
 
-export function FirebaseStorageRepository ;
+export { FirebaseStorageRepository };
