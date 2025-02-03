@@ -8,6 +8,15 @@ import { Footer1 } from "~/components/ui/footer";
 import WhatsAppIcon from "~/components/whatsapp";
 import BlurFade from "~/components/ui/blur-fade"; 
 import { createClient } from "@supabase/supabase-js";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Portfólio - ProEng',
+  description: 'Veja nosso portfólio de projetos e obras concluídas com excelência.',
+  keywords: ['portfólio', 'obras', 'projetos', 'engenharia', ],
+  
+};
+
 
 // Configuração do Supabase
 const supabase = createClient(
