@@ -4,6 +4,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; // Estilos básicos do React Slick
 import "slick-carousel/slick/slick-theme.css"; // Estilos adicionais do tema
+import Image from "next/image";
 
 const HeroCarousel: React.FC = () => {
   const settings = {
@@ -31,11 +32,13 @@ const HeroCarousel: React.FC = () => {
       <Slider {...settings}>
         {images.map((src, index) => (
           <div key={index} className="relative w-full h-[500px]">
-            <img
-              src={src}
-              alt={`Slide ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
+            <Image
+  src={src}
+  alt={`Slide ${index + 1}`}
+  width={800} // Defina a largura
+  height={600} // Defina a altura
+  className="w-full h-full object-cover"
+/>
           </div>
         ))}
       </Slider>

@@ -1,9 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
-import Numero from "~/components/numeros";
 import React from "react";
-import Carossel from "~/components/carossel";
-import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import Navbar  from "~/components/navbar";
 import Valores  from "~/components/valores";
 import { Footer1 }  from "~/components/ui/footer";

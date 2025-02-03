@@ -15,10 +15,17 @@ export interface Obra {
   images: string[];
 }
 
+interface SupabaseFile {
+  name: string;
+  id: string;
+  bucket_id: string;
+  metadata: any; // Caso haja metadados que você precise
+}
+
 export async function obrasCards(): Promise<Obra[]> {
   try {
     // Buscar dados das obras
-    const { data, error } = await supabase.from('obras').select('*');
+    const { data, error } = await supabase.from<Obra>('obras').select('*');
 
     if (error) {
       console.error('Erro ao buscar obras:', error.message);
@@ -40,7 +47,7 @@ export async function obrasCards(): Promise<Obra[]> {
           }
 
           // Gerar URLs públicas para as imagens
-          const imageUrls = files?.map((file) =>
+          const imageUrls = files?.map((file: SupabaseFile) =>
             supabase.storage.from('Obras').getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
           );
 
@@ -57,7 +64,3 @@ export async function obrasCards(): Promise<Obra[]> {
     throw new Error('Erro ao carregar os dados das obras.');
   }
 }
-
-
-
-

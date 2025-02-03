@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Image from "next/image";
 
 type ImageProps = {
   url?: string;
@@ -59,11 +60,12 @@ export const Gallery7 = (props: Props) => {
                   "pt-[56.25%]": index !== 0,
                 })}
               >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
+                <Image
+  src={image?.src ?? "/fallback-image.jpg"}
+  alt={image?.alt || "Imagem sem descrição"}
+  fill
+  className="absolute inset-0 object-cover transition-transform duration-300 group-hover:scale-110"
+/>
                 {/* Sobreposição do título */}
                 {image.title && (
                   <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-sm px-3 py-2">

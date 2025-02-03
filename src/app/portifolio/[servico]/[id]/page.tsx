@@ -39,13 +39,14 @@ async function fetchObra(id: string): Promise<Obra | null> {
       .from("Obras")
       .list(folderName, { limit: 100 });
 
-    const imageUrls =
+      const imageUrls =
       files?.map(
         (file) =>
           supabase.storage
             .from("Obras")
             .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-      ) || [];
+      ) ?? [];
+    
 
     return { ...data, images: imageUrls };
   } catch (error) {
@@ -63,12 +64,13 @@ const ObraPage = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const loadObra = async () => {
-        if (!params?.id) {
+        const obraId = params?.id;
+        if (!obraId) {
           notFound();
           return;
         }
-
-        const fetchedObra = await fetchObra(params.id as string);
+  
+        const fetchedObra = await fetchObra(obraId); // Passando uma string
         if (!fetchedObra) {
           notFound();
         } else {
@@ -76,10 +78,11 @@ const ObraPage = () => {
         }
         setIsLoading(false);
       };
-
+  
       loadObra();
     }
   }, [params?.id]);
+  
 
   useEffect(() => {
     const fetchAllObras = async () => {
@@ -257,10 +260,12 @@ const ObraDetails = ({
         onClick={() => handleCardClick(obraItem.id)}
       >
         {obraItem.images ? (
-          <img
+          <Image
             src={obraItem.images[0]}
             alt={obraItem.name}
             className="h-60 w-full object-cover"
+            height={600}
+            width={400}
           />
         ) : (
           <div className="h-60 bg-gray-200 flex items-center justify-center">

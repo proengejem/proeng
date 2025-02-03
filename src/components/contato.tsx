@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import type { ButtonProps } from "@relume_io/relume-ui";
-import TypingAnimation from "./ui/typing-animation";
+//import TypingAnimation from "./ui/typing-animation";
 import {
   BiLogoFacebookCircle,
   BiLogoInstagram,
@@ -54,14 +54,14 @@ export type Footer1Props = React.ComponentPropsWithoutRef<"section"> & Partial<P
 
 export const Contato = (props: Footer1Props) => {
   const {
-    logo,
-    newsletterDescription,
-    inputPlaceholder,
-    button,
-    termsAndConditions,
+    //logo,
+    //newsletterDescription,
+    //inputPlaceholder,
+    //button,
+    //termsAndConditions,
     columnLinks,
-    footerText,
-    footerLinks,
+    //footerText,
+    //footerLinks,
   } = { ...ContatoDefaults, ...props };
 
   return (

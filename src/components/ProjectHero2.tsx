@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+
 const projectImages = [
     "/Estaca Raiz.jpeg?height=600&width=1200",
     "/Estaca Helice.jpeg?height=600&width=1200",
@@ -22,11 +24,16 @@ export function ProjectHero2() {
     <div className="relative h-[calc(100vh-4rem)] bg-gray-900">
         
       <div className="absolute inset-0">
-        <img
-          src={projectImages[currentImageIndex]}
-          alt={`Project image ${currentImageIndex + 1}`}
-          className="h-full w-full object-cover"
-        />
+      import Image from 'next/image';
+
+<Image
+  src={projectImages[currentImageIndex]}
+  alt={`Project image ${currentImageIndex + 1}`}
+  width={800} // Defina a largura desejada
+  height={600} // Defina a altura desejada
+  className="h-full w-full object-cover"
+/>
+
         <div className="absolute inset-0 bg-black bg-opacity-40" />
       </div>
       <div className="absolute bottom-0 left-0 right-0 p-8 text-white">

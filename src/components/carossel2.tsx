@@ -10,6 +10,7 @@ import {
   CarouselPrevious,
 } from "~/components/ui/carousel";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 interface ProjectCarouselProps {
   project: {
@@ -39,11 +40,13 @@ export function ProjectCarousel({ project, onClose }: ProjectCarouselProps) {
               {project.images.map((image, index) => (
                 <CarouselItem key={index} className="h-full">
                   <div className="relative h-full">
-                    <img
-                      src={image}
-                      alt={`${project.title} - Image ${index + 1}`}
-                      className="h-full w-full object-cover"
-                    />
+                  <Image
+  src={image}
+  alt={`${project.title} - Image ${index + 1}`}
+  width={800} // Defina a largura
+  height={600} // Defina a altura
+  className="h-full w-full object-cover"
+/>
                     <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white">
                       <h2 className="text-2xl font-bold">{project.title}</h2>
                       <p className="text-sm">

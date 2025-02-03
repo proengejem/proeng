@@ -3,8 +3,8 @@
 import { Input } from "../../../src/components/ui/input";
 import { cn } from "../../../src/lib/utils";
 import {
-  Dispatch,
-  SetStateAction,
+  //Dispatch,
+  //SetStateAction,
   createContext,
   forwardRef,
   useCallback,
@@ -13,6 +13,13 @@ import {
   useRef,
   useState,
 } from "react";
+
+import type {
+  Dispatch,
+  SetStateAction,
+  
+} from "react";
+
 import {
   useDropzone,
   DropzoneState,

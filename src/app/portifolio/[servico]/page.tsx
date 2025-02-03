@@ -1,4 +1,3 @@
-import { Gallery7 } from "~/components/Gallery7";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
@@ -72,7 +71,7 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
             <a
       key={obraDinamica.id}     href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
       className="relative group overflow-hidden rounded-lg shadow-2xl border-2 transform transition-transform duration-300 hover:scale-105">
-                  <img
+                  <Image
                     src={obraDinamica.images[0] || "/placeholder.jpg"}
                     alt={obraDinamica.name}
                     width={300}

@@ -1,4 +1,3 @@
-import { Gallery7 } from "~/components/Gallery7";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
@@ -99,10 +98,12 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
   {obrasDinamicasFiltradas[0] && (
   <a href={`/servicos/${obrasDinamicasFiltradas[0].service}/${obrasDinamicasFiltradas[0].id}`} className="lg:col-span-2 relative group overflow-hidden rounded-lg shadow-lg">
 
-    <img
+    <Image
       src={obrasDinamicasFiltradas[0].images[0] || "/placeholder.jpg"}
       alt={obrasDinamicasFiltradas[0].name}
       className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-300"
+      width={700} // Defina uma largura para a imagem
+      height={400}
     />
     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
     <div className="absolute bottom-4 left-4 text-white p-4">
@@ -120,10 +121,12 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
       href={`/servicos/${obraDinamica.service}/${obraDinamica.id}`}
       className="relative group overflow-hidden rounded-lg shadow-lg h-[190px]"
     >
-      <img
+      <Image
         src={obraDinamica.images[0] || "/placeholder.jpg"}
         alt={obraDinamica.name}
         className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+        width={700} // Defina uma largura para a imagem
+        height={400} // Defina uma altura para a imagem
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
       <div className="absolute bottom-4 left-4 text-white p-3">
@@ -147,10 +150,12 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
                   key={outraObra.slug}
                   className="border rounded-lg p-4 shadow-lg rounded-lg bg-white overflow-hidden border transform transition-transform duration-300 hover:scale-105"
                 >
-                  <img
+                  <Image
                     src={outraObra.image}
                     alt={outraObra.title}
                     className="h-48 w-full object-cover rounded-md mb-4"
+                    width={700} // Defina uma largura para a imagem
+                    height={400} // Defina uma altura para a imagem
                   />
                   <h3 className="text-lg font-semibold text-[#027A48] mb-2">
                     {outraObra.title}
