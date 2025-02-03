@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 
 interface ServicoPageProps {
-  params: { servico: string };
+  params: Promise<{ servico: string }>;
 }
 
 // Gera parâmetros estáticos
@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 
 export default async function ServicoPage({ params }: ServicoPageProps) {
   // Obtem o parâmetro "servico"
-  const { servico } = params;
+  const { servico } = await params;
 
   // Encontra a obra correspondente
   const obra = obras.find((obra) => obra.slug === servico);
