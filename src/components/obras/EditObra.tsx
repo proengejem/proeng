@@ -231,8 +231,8 @@ export default function EditObra() {
     let folderName = urlParts[urlParts.length - 2]; // Nome da obra (pasta)
 
     // Decodifica espaços e caracteres especiais na pasta e no arquivo
-    folderName = decodeURIComponent(folderName);
-    fileName = decodeURIComponent(fileName);
+    folderName = folderName ? decodeURIComponent(folderName) : '';
+    fileName = fileName ? decodeURIComponent(fileName) : '';
 
     const filePath = `${folderName}/${fileName}`;
 
@@ -303,13 +303,13 @@ export default function EditObra() {
 
       {searchResult && (
         <form onSubmit={handleUpdate} className="space-y-4">
-          <Input
+          {/* <Input
             type="text"
             placeholder="Nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-          />
+          /> */}
           <Textarea
             placeholder="Descrição"
             value={description}

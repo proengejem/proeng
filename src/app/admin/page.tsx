@@ -22,22 +22,6 @@ import {
 } from "../../components/ui/form";
 
 
-// export default function LoginPage() {
-//   const [email, setEmail] = useState('')
-//   const [password, setPassword] = useState('')
-
-//   const handleEmailLogin = (e: React.FormEvent) => {
-//     e.preventDefault()
-//     Here you would typically handle the email/password login
-//     console.log('Logging in with:', { email, password })
-//   }
-
-//   const handleGoogleLogin = () => {
-//      Here you would typically handle the Google login
-//     console.log('Logging in with Google')
-//   }
-
-
 const authAPI = new AuthAPI();
 
 const loginSchema = z.object({
@@ -62,11 +46,9 @@ export default function Admin() {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast();
   const router = useRouter(); // Crie uma instância do useRouter
-  // console.log(router);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [loading, setLoading ] = useState(false);
-  // const router = useRouter();
+ 
   const authAPI = new AuthAPI();
 
   const form = useForm<LoginSchema>({
@@ -178,7 +160,7 @@ async function onSignInWithGoogle() {
            </Form>
         </CardContent>
         <CardFooter className="text-center text-sm text-gray-500">
-          Não possui uma conta? <a href="#" className="text-[#027A48] hover:underline">Registre-se</a>
+          Quer adicionar outra conta no sistema? <a href="https://console.firebase.google.com/u/0/project/proeng-1c603/authentication/users?hl=pt-br" className="text-[#027A48] hover:underline">Registre</a>
         </CardFooter>
       </Card>
       </motion.div>

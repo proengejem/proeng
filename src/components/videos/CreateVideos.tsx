@@ -69,9 +69,15 @@ export default function CreateVideo() {
           onChange={(e) => setName(e.target.value)}
           required
         />
+        <label className="block text-sm font-medium text-gray-700">Coloque aqui o ID do vídeo no youtube. Caso o Link do vídeo esteja
+          assim: https://www.youtube.com/watch?v=g8j4H9Cc4c8 , o ID seria apenas essa parte: g8j4H9Cc4c8 . Caso o Link esteja assim por estar
+          em uma playlist: https://www.youtube.com/watch?v=g8j4H9Cc4c8&list=PLnLPCcEY60IAok3QEttHV3Mkxj87koWqk , o ID continuaria sendo apenas:
+          g8j4H9Cc4c8 .
+        </label>
+
         <Input
           type="text"
-          placeholder="Link do Vídeo"
+          placeholder="ID do Link do Vídeo"
           value={idUrl}
           onChange={(e) => setidUrl(e.target.value)}
           required

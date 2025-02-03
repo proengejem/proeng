@@ -4,6 +4,7 @@ import Navbar  from "~/components/navbar";
 import StyledBar from "~/components/homePage/divisorAssimetrico";
 import Introducao_1 from "~/components/Introducao_1";
 import Rodapecontato from "~/components/rodapecontato";
+import WhatsAppIcon from "~/components/whatsapp";
 
 import type { Metadata } from 'next';
 
@@ -21,7 +22,7 @@ const contato: React.FC = () => {
       <Contato />  
       <StyledBar />
       <Rodapecontato />
-
+      <WhatsAppIcon />
         <Footer1 />
         
       </div>

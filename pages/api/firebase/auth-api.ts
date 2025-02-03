@@ -11,20 +11,20 @@ import {
     signOut,
   inMemoryPersistence,
 } from "firebase/auth";
-import { auth, googleProvider } from "./firebase";
+import { auth } from "./firebase";
 import { useRouter } from "next/navigation"; 
 
 class AuthAPI {
-    async signInWithGoogle() {
-        try {
-            const result = await signInWithPopup(auth, googleProvider);
-            await this.setPersistence(browserLocalPersistence);
-            return result.user;
-        } catch (error) {
-            console.error("Error signing in with Google:", error);
-            throw error;
-        }
-    }
+    // async signInWithGoogle() {
+    //     try {
+    //         const result = await signInWithPopup(auth, googleProvider);
+    //         await this.setPersistence(browserLocalPersistence);
+    //         return result.user;
+    //     } catch (error) {
+    //         console.error("Error signing in with Google:", error);
+    //         throw error;
+    //     }
+    // }
 
     async signUpWithEmailAndPassword(email: string, password: string): Promise<User | string> {
         try {

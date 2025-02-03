@@ -43,17 +43,7 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
     <div className="flex flex-col min-h-screen ">
       <Navbar />
 
-      {/* Cabeçalho com Breadcrumb */}
-      {/* <header className="bg-white border-b">
-        <div className="container mx-auto px-4 py-6">
-          <p className="text-sm text-gray-500">
-            Serviços &gt;{" "}
-            <span className="font-semibold text-gray-700">{obra.title}</span>
-          </p>
-        </div>
-      </header> */}
 
-      {/* Conteúdo principal */}
       <main className="container mx-auto px-4 py-8">
         {/* Título */}
                   <BlurFade delay={0.3}>        

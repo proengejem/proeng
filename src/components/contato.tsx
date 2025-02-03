@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import type { ButtonProps } from "@relume_io/relume-ui";
+import TypingAnimation from "./ui/typing-animation";
 import {
   BiLogoFacebookCircle,
   BiLogoInstagram,
@@ -8,6 +9,7 @@ import {
   BiLogoYoutube,
   BiLogoWhatsapp,
 } from "react-icons/bi";
+import BlurFade from "./ui/blur-fade";
 
 type ImageProps = {
   url?: string;
@@ -67,34 +69,31 @@ export const Contato = (props: Footer1Props) => {
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
             {/* Image Section */}
             <div className="w-full md:w-1/2 order-last md:order-first flex justify-center">
-              <div className="rounded-2xl shadow-2xl overflow-hidden">
+            <BlurFade delay={0.14}><div className="rounded-2xl shadow-2xl overflow-hidden hover:scale-105">
                 <Image
-                  src="/sede.png" // Substituir pelo caminho correto da imagem
+                  src="/sede.png" 
                   alt="Sobre a Proeng"
                   width={500}
                   height={300}
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover duration-300"
                 />
-          </div>
+          </div></BlurFade>
         </div>
         <div className="w-full md:w-1/2 space-y-8">
         <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
 
-
-        {/* <div className="px-[5%] py-12 md:py-18 lg:py-20 w-full"> */}
-          {/* <div className="container"> */}
             <div className="grid grid-cols-1 gap-8 pb-12 md:gap-12 lg:grid-cols-2 lg:gap-16">
               {columnLinks.map((column, index) => (
                 <div key={index} className="flex flex-col items-start justify-start">
-                  <h2 style={{ color: "#027A48" }} className="mb-3 font-semibold md:mb-4">
-                    {column.title}
+                  <h2 style={{ color: "#027A48" }} className="mb-3 font-semibold md:mb-4 hover:text-green-600  hover:scale-105">
+                    <BlurFade delay={0.14}>{column.title}</BlurFade>
                   </h2>
                   <ul className="space-y-4">
                     {column.links.map((link, linkIndex) => (
                       <li key={linkIndex} className="text-sm">
                         <a
                           href={link.url}
-                          className="flex items-center gap-3 text-gray-800 hover:text-gray-600"
+                          className="flex items-center gap-3 text-gray-800 hover:text-gray-600  hover:scale-105"
                           aria-label={link.title}
                         >
                           {link.icon && <span>{link.icon}</span>}

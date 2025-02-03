@@ -13,7 +13,7 @@ import {
   BiLogoYoutube,
   BiLogoWhatsapp,
 } from "react-icons/bi";
-import { db } from "pages/api/firebase/firebase";
+// import { db } from "pages/api/firebase/firebase";
 import { insertData } from 'pages/api/supabse/database';
 import { Contato } from '~/interfaces/ContatoInterface';
 
@@ -116,7 +116,12 @@ export const Footer1 = (props: Footer1Props) => {
       }
     } catch (error) {
       console.error("Erro ao processar o formulário: ", error);
-    }
+    }finally {
+      
+      setNomeInput('')
+      setEmailInput('')
+      setMensagemInput('')    }
+    
   };
   
 
