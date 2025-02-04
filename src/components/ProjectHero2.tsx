@@ -27,7 +27,7 @@ export function ProjectHero2() {
       import Image from 'next/image';
 
 <Image
-  src={projectImages[currentImageIndex]}
+  src={projectImages[currentImageIndex] || ""}
   alt={`Project image ${currentImageIndex + 1}`}
   width={800} // Defina a largura desejada
   height={600} // Defina a altura desejada
