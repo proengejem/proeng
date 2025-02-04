@@ -35,9 +35,14 @@ async function fetchObra(id: string): Promise<Obra | null> {
       if (!data || error) return null;
 
       const folderName = (data as Obra).name ?? "";
-const { data: files } = await supabase.storage
-  .from("Obras")
-  .list(folderName, { limit: 100 });
+      const { data: files, error: storageError } = await supabase.storage
+      .from("Obras")
+      .list(folderName, { limit: 100 });
+    
+    if (storageError) {
+      console.error("Erro ao buscar imagens da obra:", storageError);
+    }
+    
 
 
     const imageUrls =

@@ -235,13 +235,13 @@ export default function EditObra() {
     // Extraindo corretamente o nome da imagem e da pasta
     const urlParts = imageToRemove.split('/');
     let fileName = urlParts[urlParts.length - 1]; // Nome real do arquivo
-    let folderName = urlParts[urlParts.length - 2]; // Nome da obra (pasta)
+    let obraFolderName = urlParts[urlParts.length - 2]; // Nome da obra (pasta)
 
     // Decodifica espaços e caracteres especiais na pasta e no arquivo
-    folderName = folderName ? decodeURIComponent(folderName) : '';
+    obraFolderName = obraFolderName ? decodeURIComponent(obraFolderName) : '';
     fileName = fileName ? decodeURIComponent(fileName) : '';
 
-    const filePath = `${folderName}/${fileName}`;
+    const filePath = `${obraFolderName}/${fileName}`;
 
     console.log("Tentando remover a imagem do storage:", filePath);
     console.log("Imagem para remover:", imageToRemove);
@@ -277,14 +277,6 @@ export default function EditObra() {
       });
     }
 };
-
-
-    
-  
-  
-
-
-
 
 
   return (
@@ -398,3 +390,4 @@ export default function EditObra() {
     </div>
   );
 }
+ 

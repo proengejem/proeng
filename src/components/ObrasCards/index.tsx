@@ -49,14 +49,12 @@ if (listError || !files) {
   return { ...obra, images: [] };
 }
 
-// Ajustando o mapeamento para garantir que `files` é um array de `SupabaseFile`
-const imageUrls = files.map((file: { name: string }) =>
+// Definir explicitamente `files` como um array de objetos que possuem a propriedade `name`
+const imageUrls: string[] = files.map((file: { name: string }) =>
   supabase.storage.from('Obras').getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
 );
 
-          
-
-          return { ...obra, images: imageUrls || [] };
+return { ...obra, images: imageUrls || [] };
         })
       );
 
