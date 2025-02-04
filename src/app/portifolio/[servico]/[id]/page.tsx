@@ -61,9 +61,8 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
-const ObraPage = ({ params }: { params: Promise<{ id: string; servico: string }> }) => {
-  const resolvedParams = use(params); // Desembrulha `params` corretamente
-  const { id } = resolvedParams;
+const ObraPage = async ({ params }: { params: Promise<{ id: string; servico: string }> }) => {
+  const { id } = await params;
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
