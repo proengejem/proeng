@@ -62,7 +62,7 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
-const ObraPage = ({params}: SevicoPageProps) => {
+const ObraPage = async ({ params }: SevicoPageProps) => {  
   const { id } = params;
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
