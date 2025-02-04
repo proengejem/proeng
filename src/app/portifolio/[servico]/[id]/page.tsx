@@ -63,25 +63,28 @@ const ObraPage = () => {
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    // if (typeof window !== "undefined") {
       const loadObra = async () => {
-        const obraId = typeof params?.id === "string" ? params.id : undefined;
-if (!obraId) {
-  notFound();
+        const obraId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+        if (!obraId || typeof obraId !== "string") {
+          notFound();
   return;
-}
-const fetchedObra = await fetchObra(obraId);
-        if (!fetchedObra) {
+}try{
+  const fetchedObra = await fetchObra(obraId as string);
+  if (!fetchedObra) {
           notFound();
         } else {
           setObra(fetchedObra);
         }
+      } catch (error) {
+        console.error("Erro inesperado:", error);
+      } finally {
         setIsLoading(false);
-      };
-  
-      loadObra();
-    }
-  }, [params?.id]);
+      }
+    };
+
+    loadObra().catch(console.error); // Ensure the promise is handled
+  }, [params]);
   
 
   useEffect(() => {

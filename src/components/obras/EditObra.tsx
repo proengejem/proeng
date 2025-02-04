@@ -122,12 +122,14 @@ export default function EditObra() {
           title: 'Obra encontrada',
           description: `A obra "${obra?.name}" foi carregada para edição.`,
         });
-      } else {
+      } 
+      else {
         setSearchResult(null);
         toast({
           title: 'Obra não encontrada',
           description: 'Nenhuma obra corresponde ao termo de busca.',
         });
+        
       }
     } catch (err) {
       console.error('Erro inesperado ao buscar obra:', err);
@@ -136,8 +138,7 @@ export default function EditObra() {
         description: 'Ocorreu um erro ao buscar a obra.',
       });
     }
-  };
-  
+  };  
   
  
   const handleUpdate = async (e: React.FormEvent) => {

@@ -76,7 +76,7 @@ if (!obraId || typeof obraId !== "string") {
 }
   
       try {
-        const fetchedObra = await fetchObra(obraId);
+        const fetchedObra = await fetchObra(obraId as string);
         if (!fetchedObra) {
           notFound();
         } else {
