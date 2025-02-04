@@ -64,7 +64,7 @@ const ObraPage = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const loadObra = async () => {
-        const obraId = params?.id;
+        const obraId = Array.isArray(params?.id) ? params.id[0] : params?.id;
         if (!obraId) {
           notFound();
           return;
@@ -261,7 +261,7 @@ const ObraDetails = ({
       >
         {obraItem.images ? (
           <Image
-            src={obraItem.images[0]}
+            src={obraItem.images[0] ?? ""}
             alt={obraItem.name}
             className="h-60 w-full object-cover"
             height={600}
