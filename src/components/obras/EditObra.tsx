@@ -82,10 +82,19 @@ export default function EditObra() {
       }
 
       const obra = data[0];
-      setName(obra.name);
-      setDescription(obra.description);
-      setService(obra.service);
+      if (obra) {
+        setName(obra.name);
+        setDescription(obra.description);
+        setService(obra.service);
+      }
 
+      if (!obra) {
+        toast({
+          title: 'Erro inesperado',
+          description: 'A obra não foi encontrada.',
+        });
+        return;
+      }
       const folderName = obra.name;
       const { data: files, error: listError } = await supabase.storage
         .from('Obras')
