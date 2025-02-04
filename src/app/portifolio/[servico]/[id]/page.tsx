@@ -261,7 +261,7 @@ const ObraDetails = ({
       >
         {obraItem.images ? (
           <Image
-            src={obraItem.images[0]}
+            src={obraItem.images[0] || ""}
             alt={obraItem.name}
             className="h-60 w-full object-cover"
             height={600}
