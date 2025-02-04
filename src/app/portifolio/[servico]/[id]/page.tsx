@@ -25,16 +25,26 @@ interface Obra {
 
 async function fetchObra(id: string): Promise<Obra | null> {
   try {
-    const { data, error } = await supabase.from("obras").select("*").eq("id", id).single();
-    if (!data || error) return null;
+    const { data, error } = await supabase
+      .from("obras")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    const folderName = data.name ?? "";
-    const { data: files, error: fileError } = await supabase.storage.from("Obras").list(folderName, { limit: 100 });
-    
+    if (error || !data) return null;
+
+    if (typeof data.name !== "string") return null; // Proteção extra contra valores inesperados
+
+    const folderName = data.name;
+    const { data: files, error: fileError } = await supabase.storage
+      .from("Obras")
+      .list(folderName, { limit: 100 });
+
     if (fileError || !files) return { ...data, images: [] };
 
     const imageUrls = files.map((file) =>
-      supabase.storage.from("Obras").getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
+      supabase.storage.from("Obras").getPublicUrl(`${folderName}/${file.name}`)
+        .data.publicUrl
     );
 
     return { ...data, images: imageUrls };
@@ -45,18 +55,18 @@ async function fetchObra(id: string): Promise<Obra | null> {
 }
 
 const ObraPage = () => {
-  const params = useParams();
+  const params = useParams() as { id?: string }; // Especificamos que pode conter `id`
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
     const loadObra = async () => {
-      const obraId = Array.isArray(params?.id) ? params.id[0] : params?.id;
-      if (!obraId) {
-        notFound();
-        return;
-      }
+      const obraId = params?.id ? String(params.id) : null;
+if (!obraId) {
+  notFound();
+  return;
+}
       const fetchedObra = await fetchObra(obraId);
       if (!fetchedObra) notFound();
       else setObra(fetchedObra);
@@ -113,9 +123,9 @@ const ObraDetails = ({ obra, setObra, allObras }: { obra: Obra; setObra: React.D
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="relative">
-        {obra.images.length > 0 ? (
+      {obra?.images.length > 0 ? (
           <BlurFade delay={0.3}>
-            <Image src={obra.images[currentImageIndex] ?? ""} alt={obra.name} className="w-full h-[85vh] object-cover" width={800} height={600} />
+            <Image src={obra.images[currentImageIndex] ?? ""} alt={obra.name ?? "Imagem da obra"} className="w-full h-[85vh] object-cover" width={800} height={600} />
           </BlurFade>
         ) : (
           <div className="h-[70vh] bg-gray-200 flex items-center justify-center"><p className="text-gray-500">Imagem não disponível</p></div>

@@ -61,20 +61,22 @@ async function fetchObra(id: string): Promise<Obra | null> {
 }
 
 const ObraPage = () => {
-  const params = useParams();
+  const params = useParams<{ id?: string }>(); // Tipando useParams corretamente
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
     const loadObra = async () => {
-      if (!params?.id) {
+      const obraId = params?.id;
+
+      if (!obraId || typeof obraId !== "string") {
         notFound();
         return;
       }
   
       try {
-        const fetchedObra = await fetchObra(params.id as string);
+        const fetchedObra = await fetchObra(obraId);
         if (!fetchedObra) {
           notFound();
         } else {

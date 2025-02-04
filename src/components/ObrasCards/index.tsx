@@ -19,7 +19,7 @@ interface SupabaseFile {
 
 export async function obrasCards(): Promise<Obra[]> {
   try {
-    // Buscar dados das obras
+    // Buscar dados das obras e garantir a tipagem correta
     const { data, error } = await supabase.from("obras").select("*");
 
     if (error || !data) {
@@ -27,10 +27,13 @@ export async function obrasCards(): Promise<Obra[]> {
       return [];
     }
 
+    // Forçar a tipagem do Supabase
+    const obras: Obra[] = data as Obra[];
+
     // Para cada obra, buscar as imagens no storage do Supabase
     const obrasWithImages = await Promise.all(
-      data.map(async (obra): Promise<Obra> => {
-        const folderName = obra.name || ""; // Garantindo que é uma string válida
+      obras.map(async (obra): Promise<Obra> => {
+        const folderName: string = typeof obra.name === "string" ? obra.name : "";
 
         // Buscar imagens no storage
         const { data: files, error: listError } = await supabase.storage

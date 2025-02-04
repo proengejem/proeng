@@ -11,13 +11,6 @@ import { uploadNewFilesToStorage } from 'pages/api/supabse/storage';
 import { createClient } from '@supabase/supabase-js';
 import Image from 'next/image';
 
-interface Obra {
-  name: string;
-  description: string;
-  service: string;
-  images?: File[];
-}
-
 
 const supabase = createClient(
   'https://xaljbeozaieyoecnxvum.supabase.co',
@@ -60,69 +53,82 @@ export default function EditObra() {
     e.preventDefault();
   
     try {
-      const { data, error } = await supabase
-        .from('obras')
-        .select('*')
-        .returns<Obra[]>(); // Tipagem correta
-
-      if (error) {
-        toast({
-          title: 'Erro ao buscar obra',
-          description: error.message,
-        });
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        toast({
-          title: 'Obra não encontrada',
-          description: 'Nenhuma obra corresponde ao termo de busca.',
-        });
-        return;
-      }
-
-      const obra = data[0];
-      if (obra) {
+        const { data, error } = (await getData(
+            'obras',
+            searchTerm
+          )) as SupabaseResponse<ObraInterface[]>;
+          
+        if (data && data.length > 0) {
+          const obra: ObraInterface | undefined = data[0];
+          if (!obra) {
+            toast({
+              title: 'Erro ao buscar obra',
+              description: 'Obra não encontrada.',
+            });
+            return;
+          }
         setName(obra.name);
         setDescription(obra.description);
         setService(obra.service);
       }
-
-      if (!obra) {
-        toast({
-          title: 'Erro inesperado',
-          description: 'A obra não foi encontrada.',
-        });
-        return;
-      }
-      const folderName = obra.name;
-      const { data: files, error: listError } = await supabase.storage
-        .from('Obras')
-        .list(folderName, { limit: 100 });
-
-      if (listError) {
-        console.error('Erro ao listar imagens:', listError.message);
-        toast({
-          title: 'Erro ao carregar imagens',
-          description: listError.message,
-        });
-        return;
-      }
-
-      if (files && files.length > 0) {
-        const imageUrls = files.map((file) =>
-          supabase.storage
-            .from('Obras')
-            .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
+      
+      if (error) {
+            toast({
+                title: "Error ao buscar obra",
+                description: error?.message || "Ocorreu um erro ao buscar obra.",
+            });
+            return;
+        }
+      if (data && data.length > 0) {
+        const obra = data[0];
+        setName(obra?.name ?? '');
+        setDescription(obra?.description ?? '');
+        setService(obra?.service ?? '');
+  
+        const folderName = obra?.name;
+        const { data: files, error: listError } = await supabase.storage
+          .from('Obras')
+          .list(folderName, { limit: 100 });
+  
+        if (listError) {
+          console.error('Erro ao listar imagens:', listError.message);
+          toast({
+            title: 'Erro ao carregar imagens',
+            description: listError.message,
+          });
+          return;
+        }
+  
+        if (files && files.length > 0) {
+          const imageUrls = files.map(
+            (file) =>
+              supabase.storage
+                .from('Obras')
+                .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
+          );
+          setExistingImages(imageUrls);
+        }
+  
+        const imageUrls = files.map(
+          (file) =>
+            supabase.storage
+              .from('Obras')
+              .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
         );
+  
         setExistingImages(imageUrls);
+        setSearchResult(`Obra encontrada: ${obra?.name}`);
+        toast({
+          title: 'Obra encontrada',
+          description: `A obra "${obra?.name}" foi carregada para edição.`,
+        });
+      } else {
+        setSearchResult(null);
+        toast({
+          title: 'Obra não encontrada',
+          description: 'Nenhuma obra corresponde ao termo de busca.',
+        });
       }
-
-      setSearchResult(`Obra encontrada: ${obra.name}`);
-      toast({
-        title: 'Obra encontrada',
-        description: `A obra "${obra.name}" foi carregada para edição.`,
-      });
     } catch (err) {
       console.error('Erro inesperado ao buscar obra:', err);
       toast({
@@ -163,15 +169,7 @@ export default function EditObra() {
         'Obras',
         images.map((img) => img.file),
         formData.name
-      ).catch((error) => {
-        console.error('Erro ao fazer upload das imagens:', error);
-        toast({
-          title: 'Erro no upload',
-          description: 'Ocorreu um erro ao enviar as imagens.',
-        });
-      });
-      
-      
+      );
 
 
       toast({
@@ -230,13 +228,13 @@ export default function EditObra() {
     // Extraindo corretamente o nome da imagem e da pasta
     const urlParts = imageToRemove.split('/');
     let fileName = urlParts[urlParts.length - 1]; // Nome real do arquivo
-    let obraFolderName = urlParts[urlParts.length - 2]; // Nome da obra (pasta)
+    let folderName = urlParts[urlParts.length - 2]; // Nome da obra (pasta)
 
     // Decodifica espaços e caracteres especiais na pasta e no arquivo
-    obraFolderName = obraFolderName ? decodeURIComponent(obraFolderName) : '';
+    folderName = folderName ? decodeURIComponent(folderName) : '';
     fileName = fileName ? decodeURIComponent(fileName) : '';
 
-    const filePath = `${obraFolderName}/${fileName}`;
+    const filePath = `${folderName}/${fileName}`;
 
     console.log("Tentando remover a imagem do storage:", filePath);
     console.log("Imagem para remover:", imageToRemove);
@@ -272,6 +270,14 @@ export default function EditObra() {
       });
     }
 };
+
+
+    
+  
+  
+
+
+
 
 
   return (
@@ -385,4 +391,3 @@ export default function EditObra() {
     </div>
   );
 }
- 
