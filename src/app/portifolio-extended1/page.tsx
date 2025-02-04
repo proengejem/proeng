@@ -12,7 +12,9 @@
 //   description: 'Conheça nossas obras e projetos concluídos com excelência.',
 //   keywords: ['obras', 'engenharia', 'solo grampeado', 'estaca raíz', 'estaca hélice'],
 // };
-
+export default function portifolioextended1() {
+  return null;
+}
 
 // export default function Page() {
 //   return (

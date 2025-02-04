@@ -31,3 +31,6 @@
 //     </main>
 //   );
 // }
+export default function portifolioextended2() {
+  return null;
+}
