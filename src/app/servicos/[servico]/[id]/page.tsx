@@ -73,86 +73,82 @@ const ObraPage = () => {
         return;
       }
   
-      const fetchedObra = await fetchObra(params.id as string);
-      if (!fetchedObra) {
-        notFound();
-      } else {
-        setObra(fetchedObra);
-      }
-      setIsLoading(false);
-    };
-  
-    loadObra();
-    if (typeof window !== "undefined") {
-      const loadObra = async () => {
-        if (!params?.id) {
-          notFound();
-          return;
-        }
-
+      try {
         const fetchedObra = await fetchObra(params.id as string);
         if (!fetchedObra) {
           notFound();
         } else {
           setObra(fetchedObra);
         }
+      } catch (error) {
+        console.error("Erro ao carregar a obra:", error);
+      } finally {
         setIsLoading(false);
-      };
-
-      void loadObra();
-    }
-  }, [params?.id]);
-
-  useEffect(() => {
-    const fetchAllObras = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("obras")
-          .select("id, name, description, service, created_at")
-          .order("created_at", { ascending: false });
-
-        if (!error && data && obra) {
-          const obrasDoMesmoServico = data.filter(
-            (obraItem) => obraItem.service === obra.service
-          );
-
-          let filteredObras = obrasDoMesmoServico.slice(0, 3);
-
-          // Se a obra atual estiver entre as 3 mais recentes, incluir a 4ª mais recente
-          if (filteredObras.some((obraItem) => obraItem.id === obra.id)) {
-            filteredObras = obrasDoMesmoServico.slice(0, 4);
-          }
-
-          filteredObras = filteredObras.filter(
-            (obraItem) => obraItem.id !== obra.id
-          ).slice(0, 3); // Garantir que apenas 3 sejam exibidas
-
-          const obrasComImagens = await Promise.all(
-            filteredObras.map(async (obraItem) => {
-              const { data: files } = await supabase.storage
-                .from("Obras")
-                .list(obraItem.name, { limit: 1 });
-
-              const imageUrl =
-                files && files.length > 0
-                  ? supabase.storage
-                      .from("Obras")
-                      .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data?.publicUrl
-                  : null;
-
-              return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
-            })
-          );
-
-          setAllObras(obrasComImagens);
-        }
-      } catch (err) {
-        console.error("Erro ao buscar todas as obras:", err);
       }
     };
+  
+    void loadObra(); // Uso do `void` para evitar o erro de floating promise
+  }, [params?.id]);
+  
 
-    if (obra) fetchAllObras();
-  }, [obra]);
+    useEffect(() => {
+      const fetchAllObras = async () => {
+        try {
+          const { data, error } = await supabase
+            .from("obras")
+            .select("id, name, description, service, created_at")
+            .order("created_at", { ascending: false });
+    
+          if (error) throw error;
+    
+          if (data && obra) {
+            const obrasDoMesmoServico = data.filter(
+              (obraItem) => obraItem.service === obra.service
+            );
+    
+            let filteredObras = obrasDoMesmoServico.slice(0, 3);
+            if (filteredObras.some((obraItem) => obraItem.id === obra.id)) {
+              filteredObras = obrasDoMesmoServico.slice(0, 4);
+            }
+    
+            filteredObras = filteredObras
+              .filter((obraItem) => obraItem.id !== obra.id)
+              .slice(0, 3);
+    
+            const obrasComImagens = await Promise.all(
+              filteredObras.map(async (obraItem) => {
+                try {
+                  const { data: files, error: storageError } = await supabase.storage
+                    .from("Obras")
+                    .list(obraItem.name, { limit: 1 });
+    
+                  if (storageError) throw storageError;
+    
+                  const imageUrl =
+                    files && files.length > 0
+                      ? supabase.storage
+                          .from("Obras")
+                          .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data?.publicUrl
+                      : null;
+    
+                  return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
+                } catch (err) {
+                  console.error("Erro ao buscar imagens para obra:", err);
+                  return { ...obraItem, images: [] };
+                }
+              })
+            );
+    
+            setAllObras(obrasComImagens);
+          }
+        } catch (err) {
+          console.error("Erro ao buscar todas as obras:", err);
+        }
+      };
+    
+      if (obra) void fetchAllObras(); // Uso do `void` para evitar o erro
+    }, [obra]);
+    
   
   
 
