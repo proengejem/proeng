@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
-import WhatsAppIcon from "~/components/whatsapp";
 import BlurFade from "~/components/ui/blur-fade"; 
+import WhatsAppIcon from "~/components/whatsapp";
 import { createClient } from "@supabase/supabase-js";
-// import { PageProps } from "next"; // Se aplicável
+
 
 // Configuração do Supabase
 const supabase = createClient(
@@ -24,29 +24,29 @@ interface Obra {
   images: string[];
 }
 
-interface ObraPageProps {
-  params: { id: string; servico: string };
+interface SevicoPageProps {
+  params: { id: string };
 }
 
 async function fetchObra(id: string): Promise<Obra | null> {
   try {
     const { data, error } = await supabase
-      .from("obras")
-      .select("*")
-      .eq("id", id)
-      .single();
+  .from("obras")
+  .select("*")
+  .eq("id", id)
+  .single();
 
-    if (error || !data) return null;
+      if (!data || error) return null;
 
-    const obraData: Obra = data as Obra; // Garantir tipagem correta
-    const folderName = obraData.name;
-
-    if (typeof folderName !== "string") return null;
-
-    const { data: files } = await supabase.storage
+      const folderName: string = typeof (data as Obra).name === "string" ? (data as Obra).name : "";
+      const { data: files, error: storageError } = await supabase.storage
       .from("Obras")
       .list(folderName, { limit: 100 });
-
+    
+    if (storageError) {
+      console.error("Erro ao buscar imagens da obra:", storageError);
+    }
+    
     const imageUrls =
       files?.map(
         (file) =>
@@ -55,92 +55,106 @@ async function fetchObra(id: string): Promise<Obra | null> {
             .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
       ) ?? [];
 
-    return { ...obraData, images: imageUrls };
-  } catch (error) {
+      return { ...(data as Obra), images: imageUrls };
+    } catch (error) {
     console.error("Erro inesperado:", error);
     return null;
   }
 }
 
-const ObraPage: React.FC<{ params: { id: string; servico: string } }> = ({ params }) => {
+const ObraPage = ({params}: SevicoPageProps) => {
   const { id } = params;
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
-    const loadObraAsync = async () => {
-      try {
-        if (!id || typeof id !== "string") {
-          notFound();
-          return;
-        }
+    const loadObra = async () => {
+      const obraId = id;
+
+if (!obraId || typeof obraId !== "string") {
+  notFound();
+  return;
+}
   
-        const fetchedObra = await fetchObra(id);
+      try {
+        const fetchedObra = await fetchObra(obraId);
         if (!fetchedObra) {
           notFound();
         } else {
           setObra(fetchedObra);
         }
       } catch (error) {
-        console.error("Erro inesperado:", error);
+        console.error("Erro ao carregar a obra:", error);
       } finally {
         setIsLoading(false);
       }
     };
   
-    loadObraAsync().catch(console.error);
+    void loadObra(); // Uso do `void` para evitar o erro de floating promise
   }, [id]);
+  
 
-  useEffect(() => {
-    const fetchAllObras = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("obras")
-          .select("id, name, description, service, created_at")
-          .order("created_at", { ascending: false });
-
-        if (!error && data && obra) {
-          const obrasDoMesmoServico = data.filter(
-            (obraItem) => obraItem.service === obra.service
-          );
-
-          let filteredObras = obrasDoMesmoServico.slice(0, 3);
-
-          // Se a obra atual estiver entre as 3 mais recentes, incluir a 4ª mais recente
-          if (filteredObras.some((obraItem) => obraItem.id === obra.id)) {
-            filteredObras = obrasDoMesmoServico.slice(0, 4);
+    useEffect(() => {
+      const fetchAllObras = async () => {
+        try {
+          const { data, error } = await supabase
+            .from("obras")
+            .select("id, name, description, service, created_at")
+            .order("created_at", { ascending: false });
+    
+          if (error) throw error;
+    
+          if (data && obra) {
+            const obrasDoMesmoServico = data.filter(
+              (obraItem) => obraItem.service === obra.service
+            );
+    
+            let filteredObras = obrasDoMesmoServico.slice(0, 3);
+            if (filteredObras.some((obraItem) => obraItem.id === obra.id)) {
+              filteredObras = obrasDoMesmoServico.slice(0, 4);
+            }
+    
+            filteredObras = filteredObras
+              .filter((obraItem) => obraItem.id !== obra.id)
+              .slice(0, 3);
+    
+            const obrasComImagens = await Promise.all(
+              filteredObras.map(async (obraItem) => {
+                try {
+                  const { data: files, error: storageError } = await supabase.storage
+                    .from("Obras")
+                    .list(obraItem.name, { limit: 1 });
+    
+                  if (storageError) throw storageError;
+    
+                  const imageUrl =
+                    files && files.length > 0
+                      ? supabase.storage
+                          .from("Obras")
+                          .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data?.publicUrl
+                      : null;
+    
+                  return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
+                } catch (err) {
+                  console.error("Erro ao buscar imagens para obra:", err);
+                  return { ...obraItem, images: [] };
+                }
+              })
+            );
+    
+            setAllObras(obrasComImagens);
           }
-
-          filteredObras = filteredObras.filter(
-            (obraItem) => obraItem.id !== obra.id
-          ).slice(0, 3); // Garantir que apenas 3 sejam exibidas
-
-          const obrasComImagens = await Promise.all(
-            filteredObras.map(async (obraItem) => {
-              const { data: files } = await supabase.storage
-                .from("Obras")
-                .list(obraItem.name, { limit: 1 });
-
-              const imageUrl =
-                files && files.length > 0
-                  ? (await supabase.storage.from("Obras").getPublicUrl(`${obraItem.name}/${files[0]?.name}`))
-                      .data?.publicUrl
-                  : null;
-
-              return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
-            })
-          );
-
-          setAllObras(obrasComImagens);
+        } catch (err) {
+          console.error("Erro ao buscar todas as obras:", err);
         }
-      } catch (err) {
-        console.error("Erro ao buscar todas as obras:", err);
-      }
-    };
-
-    if (obra) fetchAllObras();
-  }, [obra]);
+      };
+    
+      if (obra) void fetchAllObras(); // Uso do `void` para evitar o erro
+    }, [obra]);
+    
+  
+  
 
   if (isLoading) {
     return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
@@ -194,51 +208,55 @@ const ObraDetails = ({
 
       <main className="relative">
         {obra.images.length > 0 ? (
-          <BlurFade delay={0.3}>
-            <div className="relative">
-              <Image
-                src={obra.images[currentImageIndex] ?? ""}
-                alt={obra.name}
-                className="w-full h-[85vh] object-cover"
-                width={800}
-                height={600}
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-              <button
-                onClick={handlePrev}
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-black p-3 rounded-full shadow hover:scale-110 transition-transform"
-              >
-                ‹
-              </button>
-              <button
-                onClick={handleNext}
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-black p-3 rounded-full shadow hover:scale-110 transition-transform"
-              >
-                ›
-              </button>
+        <BlurFade delay={0.3}>        
 
-              {/* Indicadores de navegação em forma de círculos */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {obra.images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleDotClick(index)}
-                    className={`w-3 h-3 rounded-full transition ${
-                      index === currentImageIndex
-                        ? "bg-white scale-125"
-                        : "bg-gray-400"
-                    }`}
-                  />
-                ))}
-              </div>
-              <BlurFade delay={0.5}>
-                <div className="absolute bottom-4 left-6 text-white z-10">
-                  <h1 className="text-3xl font-bold">{obra.name}</h1>
-                  <p className="text-lg mt-2">{obra.description}</p>
-                </div>
-              </BlurFade>
+          <div className="relative">
+            <Image
+              src={obra.images[currentImageIndex] ?? ""}
+              alt={obra.name}
+              className="w-full h-[85vh] object-cover"
+              // className="w-full h-[85vh] object-contain"
+               width={800} height={600}
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+            <button
+              onClick={handlePrev}
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-black p-3 rounded-full shadow hover:scale-110 transition-transform"
+            >
+              ‹
+            </button>
+            <button
+              onClick={handleNext}
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-black p-3 rounded-full shadow hover:scale-110 transition-transform"
+            >
+              ›
+            </button>
+            
+
+            {/* Indicadores de navegação em forma de círculos */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              {obra.images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleDotClick(index)}
+                  className={`w-3 h-3 rounded-full transition ${
+                    index === currentImageIndex
+                      ? "bg-white scale-125"
+                      : "bg-gray-400"
+                  }`}
+                />
+              ))}
             </div>
+           <BlurFade delay={0.5}>        
+            <div className="absolute bottom-4 left-6 text-white z-10">
+              <h1 className="text-3xl font-bold">{obra.name}</h1>
+              <p className="text-lg mt-2">{obra.description}</p>
+            </div>
+              </BlurFade>
+
+          </div>
           </BlurFade>
+
         ) : (
           <div className="h-[70vh] bg-gray-200 flex items-center justify-center">
             <p className="text-gray-500">Imagem não disponível</p>
@@ -247,40 +265,39 @@ const ObraDetails = ({
       </main>
 
       <section className="p-10">
-        <BlurFade delay={0.5}>
-          <h2 className="text-2xl font-bold mb-4 text-green-700">Outras obras</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {allObras
-              .filter((obraItem) => obraItem.id !== obra.id)
-              .map((obraItem) => (
-                <div
-                  key={obraItem.id}
-                  className="cursor-pointer bg-white shadow-2xl rounded-lg overflow-hidden border transform transition-transform duration-300 hover:scale-105"
-                  onClick={() => handleCardClick(obraItem.id)}
-                >
-                  {obraItem.images ? (
-                    <Image
-                      src={obraItem.images[0] ?? ""}
-                      alt={obraItem.name}
-                      className="h-60 w-full object-cover"
-                      height={600}
-                      width={400}
-                    />
-                  ) : (
-                    <div className="h-60 bg-gray-200 flex items-center justify-center">
-                      <p className="text-gray-500">Imagem não disponível</p>
-                    </div>
-                  )}
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold">{obraItem.name}</h3>
-                    <p className="text-[#027A48] font-semibold hover:underline">
-                      Ver obra →
-                    </p>
-                  </div>
-                </div>
-              ))}
+                  <BlurFade delay={0.5}>        
+        
+        <h2 className="text-2xl font-bold mb-4 text-green-700">Outras obras</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {allObras
+    .filter((obraItem) => obraItem.id !== obra.id)
+    .map((obraItem) => (
+      <div
+        key={obraItem.id}
+        className="cursor-pointer bg-white shadow-2xl rounded-lg overflow-hidden border transform transition-transform duration-300 hover:scale-105"
+        onClick={() => handleCardClick(obraItem.id)}
+      >
+        {obraItem.images ? (
+          <img
+            src={obraItem.images[0]}
+            alt={obraItem.name}
+            className="h-60 w-full object-cover"
+          />
+        ) : (
+          <div className="h-60 bg-gray-200 flex items-center justify-center">
+            <p className="text-gray-500">Imagem não disponível</p>
           </div>
-        </BlurFade>
+        )}
+        <div className="p-4">
+          <h3 className="text-lg font-bold">{obraItem.name}</h3>
+          <p className="text-[#027A48] font-semibold hover:underline"
+                  >Ver obra →</p>
+        </div>
+      </div>
+    ))}
+</div>
+</BlurFade>
+
       </section>
       <WhatsAppIcon />
       <Footer1 />
