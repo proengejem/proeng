@@ -7,6 +7,7 @@ import BlurFade from "~/components/ui/blur-fade";
 import WhatsAppIcon from "~/components/whatsapp";
 import { TypewriterEffectSmooth } from "~/components/ui/typewriter-effect";
 import type { Metadata } from 'next';
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: 'Portfólio - ProEng',
@@ -80,9 +81,11 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
                   />
                   <div className="p-4">
                     <h3 className="text-lg font-semibold mt-2">{obraDinamica.name}</h3>
-                    <a href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
-                      className="text-[#027A48] font-semibold hover:underline"
-                    > Ver obra →  </a>
+                    <Link href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}>
+                      <p className="text-[#027A48] font-semibold hover:underline">
+                        Ver obra →
+                      </p>
+                    </Link>
                   </div>
               </a>
               ))}

@@ -24,6 +24,10 @@ interface Obra {
   images: string[];
 }
 
+interface SevicoPageProps {
+  params: Promise<{ id: string }>;
+}
+
 async function fetchObra(id: string): Promise<Obra | null> {
   try {
     const { data, error } = await supabase
@@ -43,8 +47,6 @@ async function fetchObra(id: string): Promise<Obra | null> {
       console.error("Erro ao buscar imagens da obra:", storageError);
     }
     
-
-
     const imageUrls =
       files?.map(
         (file) =>
@@ -60,15 +62,15 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
-const ObraPage = () => {
-  const params = useParams<{ id?: string }>(); // Tipando useParams corretamente
+const ObraPage = async ({params}: SevicoPageProps) => {
+  const { id } = await params;
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
     const loadObra = async () => {
-      const obraId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+      const obraId = id;
 
 if (!obraId || typeof obraId !== "string") {
   notFound();
@@ -90,7 +92,7 @@ if (!obraId || typeof obraId !== "string") {
     };
   
     void loadObra(); // Uso do `void` para evitar o erro de floating promise
-  }, [params?.id]);
+  }, [id]);
   
 
     useEffect(() => {
