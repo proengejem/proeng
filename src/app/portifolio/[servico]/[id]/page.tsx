@@ -37,7 +37,11 @@ async function fetchObra(id: string): Promise<Obra | null> {
 
     if (error || !data) return null;
 
-    const folderName = data.name;
+    const obraData: Obra = data as Obra; // Garantir tipagem correta
+    const folderName = obraData.name;
+
+    if (typeof folderName !== "string") return null;
+
     const { data: files } = await supabase.storage
       .from("Obras")
       .list(folderName, { limit: 100 });
@@ -50,9 +54,7 @@ async function fetchObra(id: string): Promise<Obra | null> {
             .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
       ) ?? [];
 
-    if (!data) return null;
-    const obra: Obra = { ...data, images: imageUrls };
-    return obra;
+    return { ...obraData, images: imageUrls };
   } catch (error) {
     console.error("Erro inesperado:", error);
     return null;
@@ -67,12 +69,13 @@ const ObraPage = ({ params }: { params: Promise<{ id: string; servico: string }>
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
-    const loadObra = async () => {
-      if (!id || typeof id !== "string") {
-        notFound();
-        return;
-      }
+    const loadObraAsync = async () => {
       try {
+        if (!id || typeof id !== "string") {
+          notFound();
+          return;
+        }
+  
         const fetchedObra = await fetchObra(id);
         if (!fetchedObra) {
           notFound();
@@ -85,8 +88,8 @@ const ObraPage = ({ params }: { params: Promise<{ id: string; servico: string }>
         setIsLoading(false);
       }
     };
-
-    loadObra().catch(console.error); // Ensure the promise is handled
+  
+    loadObraAsync().catch(console.error);
   }, [id]);
 
   useEffect(() => {
