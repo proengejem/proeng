@@ -11,6 +11,13 @@ import { uploadNewFilesToStorage } from 'pages/api/supabse/storage';
 import { createClient } from '@supabase/supabase-js';
 import Image from 'next/image';
 
+interface Obra {
+  name: string;
+  description: string;
+  service: string;
+  images?: File[];
+}
+
 
 const supabase = createClient(
   'https://xaljbeozaieyoecnxvum.supabase.co',
@@ -53,11 +60,11 @@ export default function EditObra() {
     e.preventDefault();
   
     try {
-        const { data, error } = (await getData(
-            'obras',
-            searchTerm
-          )) as SupabaseResponse<ObraInterface[]>;
-          
+      const { data, error } = await supabase
+      .from('obras')
+      .select('*')
+      .returns<Obra[]>(); // Garante que o retorno seja do tipo Obra[]
+             
         if (data && data.length > 0) {
           const obra: ObraInterface | undefined = data[0];
           if (!obra) {
@@ -129,8 +136,8 @@ export default function EditObra() {
           description: 'Nenhuma obra corresponde ao termo de busca.',
         });
       }
-    } catch (err) {
-      console.error('Erro inesperado ao buscar obra:', err);
+    } catch  {
+      console.error('Erro inesperado ao buscar obra:');
       toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao buscar a obra.',
@@ -176,6 +183,7 @@ export default function EditObra() {
           description: 'Ocorreu um erro ao enviar as imagens.',
         });
       });
+      
       
 
 

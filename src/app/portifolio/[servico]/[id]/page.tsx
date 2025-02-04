@@ -34,7 +34,7 @@ async function fetchObra(id: string): Promise<Obra | null> {
 
     if (!data || error) return null;
 
-    const folderName = (data as Obra).name ?? "";
+    const folderName: string = typeof (data as Obra).name === "string" ? (data as Obra).name : "";
     const { data: files } = await supabase.storage
         .from("Obras")
         .list(folderName, { limit: 100 });
@@ -81,7 +81,7 @@ const ObraPage = () => {
         setIsLoading(false);
       };
   
-      loadObra();
+      void loadObra();
     }
   }, [params?.id]);
   
@@ -292,4 +292,3 @@ const ObraDetails = ({
 };
 
 export default ObraPage;
-

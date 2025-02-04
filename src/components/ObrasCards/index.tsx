@@ -16,12 +16,12 @@ export interface Obra {
   images: string[];
 }
 
-interface SupabaseFile {
-  name: string;
-  id: string;
-  bucket_id: string;
-  metadata: any; // Caso haja metadados que você precise
-}
+// interface SupabaseFile {
+//   name: string;
+//   id: string;
+//   bucket_id: string;
+//   metadata: any; // Caso haja metadados que você precise
+// }
 
 export async function obrasCards(): Promise<Obra[]> {
   try {
@@ -54,11 +54,11 @@ const imageUrls: string[] = files.map((file: { name: string }) =>
   supabase.storage.from('Obras').getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
 );
 
-return { ...obra, images: imageUrls || [] };
+return { ...obra, images: Array.isArray(imageUrls) ? imageUrls : [] };
         })
       );
 
-      return obrasWithImages ?? [];
+      return Array.isArray(obrasWithImages) ? obrasWithImages : [];
     }
 
     return [];

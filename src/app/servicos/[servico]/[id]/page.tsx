@@ -34,7 +34,7 @@ async function fetchObra(id: string): Promise<Obra | null> {
 
       if (!data || error) return null;
 
-      const folderName = (data as Obra).name ?? "";
+      const folderName: string = typeof (data as Obra).name === "string" ? (data as Obra).name : "";
       const { data: files, error: storageError } = await supabase.storage
       .from("Obras")
       .list(folderName, { limit: 100 });
@@ -67,6 +67,22 @@ const ObraPage = () => {
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
+    const loadObra = async () => {
+      if (!params?.id) {
+        notFound();
+        return;
+      }
+  
+      const fetchedObra = await fetchObra(params.id as string);
+      if (!fetchedObra) {
+        notFound();
+      } else {
+        setObra(fetchedObra);
+      }
+      setIsLoading(false);
+    };
+  
+    loadObra();
     if (typeof window !== "undefined") {
       const loadObra = async () => {
         if (!params?.id) {
@@ -83,7 +99,7 @@ const ObraPage = () => {
         setIsLoading(false);
       };
 
-      loadObra();
+      void loadObra();
     }
   }, [params?.id]);
 
@@ -123,9 +139,6 @@ const ObraPage = () => {
                       .from("Obras")
                       .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data?.publicUrl
                   : null;
-
-                
-
 
               return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
             })
