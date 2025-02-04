@@ -24,7 +24,8 @@ interface Obra {
 }
 
 interface ObraPageProps {
-  params: { id: string };
+  params: { id: string,
+     servico: string };
 }
 
 async function fetchObra(id: string): Promise<Obra | null> {
@@ -61,8 +62,8 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
-const ObraPage = async ({ params }: { params: Promise<{ id: string; servico: string }> }) => {
-  const { id } = await params;
+const ObraPage = ({ params }: ObraPageProps) => {
+  const { id } = params;
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);

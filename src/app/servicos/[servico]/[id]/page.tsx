@@ -25,7 +25,7 @@ interface Obra {
 }
 
 interface SevicoPageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 async function fetchObra(id: string): Promise<Obra | null> {
@@ -62,8 +62,8 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
-const ObraPage = async ({params}: SevicoPageProps) => {
-  const { id } = await params;
+const ObraPage = ({params}: SevicoPageProps) => {
+  const { id } = params;
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
