@@ -48,8 +48,9 @@ async function fetchObra(id: string): Promise<Obra | null> {
       ) ?? [];
     
 
-    return { ...data, images: imageUrls };
-  } catch (error) {
+      if (!data) return null;
+      const obra: Obra = { ...data, images: imageUrls };
+      return obra;  } catch (error) {
     console.error("Erro inesperado:", error);
     return null;
   }
@@ -64,13 +65,12 @@ const ObraPage = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const loadObra = async () => {
-        const obraId = Array.isArray(params?.id) ? params.id[0] : params?.id;
-        if (!obraId) {
-          notFound();
-          return;
-        }
-  
-        const fetchedObra = await fetchObra(obraId); // Passando uma string
+        const obraId = typeof params?.id === "string" ? params.id : undefined;
+if (!obraId) {
+  notFound();
+  return;
+}
+const fetchedObra = await fetchObra(obraId);
         if (!fetchedObra) {
           notFound();
         } else {
@@ -113,15 +113,13 @@ const ObraPage = () => {
               const { data: files } = await supabase.storage
                 .from("Obras")
                 .list(obraItem.name, { limit: 1 });
-
+          
               const imageUrl =
                 files && files.length > 0
-                  ? supabase.storage
-                      .from("Obras")
-                      .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data?.publicUrl
+                  ? (await supabase.storage.from("Obras").getPublicUrl(`${obraItem.name}/${files[0]?.name}`))
+                      .data?.publicUrl
                   : null;
-
-
+          
               return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
             })
           );

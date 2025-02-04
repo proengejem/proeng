@@ -75,7 +75,7 @@ export default function EditObra() {
       if (error) {
             toast({
                 title: "Error ao buscar obra",
-                description: error?.message ?? "Ocorreu um erro ao buscar obra.",
+                description: error?.message || "Ocorreu um erro ao buscar obra.",
             });
             return;
         }
@@ -85,7 +85,6 @@ export default function EditObra() {
         setDescription(obra?.description ?? '');
         setService(obra?.service ?? '');
   
-        await someAsyncFunction();
         const folderName = obra?.name;
         const { data: files, error: listError } = await supabase.storage
           .from('Obras')
@@ -137,7 +136,6 @@ export default function EditObra() {
         description: 'Ocorreu um erro ao buscar a obra.',
       });
     }
-    await someAsyncFunction();
   };
   
   
@@ -392,8 +390,4 @@ export default function EditObra() {
       )}
     </div>
   );
-}
-
-function someAsyncFunction() {
-  throw new Error('Function not implemented.');
 }

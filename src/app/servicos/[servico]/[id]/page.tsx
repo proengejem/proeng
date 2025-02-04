@@ -68,12 +68,12 @@ const ObraPage = () => {
 
   useEffect(() => {
     const loadObra = async () => {
-      const obraId = params?.id;
+      const obraId = Array.isArray(params?.id) ? params.id[0] : params?.id;
 
-      if (!obraId || typeof obraId !== "string") {
-        notFound();
-        return;
-      }
+if (!obraId || typeof obraId !== "string") {
+  notFound();
+  return;
+}
   
       try {
         const fetchedObra = await fetchObra(obraId);
