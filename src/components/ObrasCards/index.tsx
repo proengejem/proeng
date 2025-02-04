@@ -25,8 +25,10 @@ interface SupabaseFile {
 export async function obrasCards(): Promise<Obra[]> {
   try {
     // Buscar dados das obras
-    const { data, error } = await supabase.from<Obra>('obras').select('*');
-
+    const { data, error } = await supabase
+    .from<'obras', Obra>('obras')
+    .select('*');
+  
     if (error) {
       console.error('Erro ao buscar obras:', error.message);
       throw new Error('Erro ao buscar obras');
