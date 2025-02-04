@@ -25,7 +25,7 @@ interface Obra {
 }
 
 interface SevicoPageProps {
-  params: { id: string };
+  params: { id: string; servico: string };
 }
 
 async function fetchObra(id: string): Promise<Obra | null> {
