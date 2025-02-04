@@ -8,7 +8,7 @@ import { Footer1 } from "~/components/ui/footer";
 import BlurFade from "~/components/ui/blur-fade"; 
 import WhatsAppIcon from "~/components/whatsapp";
 import { createClient } from "@supabase/supabase-js";
-
+import PageProps from "next"
 
 // Configuração do Supabase
 const supabase = createClient(
@@ -62,8 +62,9 @@ async function fetchObra(id: string): Promise<Obra | null> {
   }
 }
 
-const ObraPage = ({ params }: SevicoPageProps) => {
-  const { servico, id } = params; 
+const ObraPage = ({ params }: { params: { servico: string; id: string } }) => {
+  const { servico, id } = params;
+
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
