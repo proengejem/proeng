@@ -195,7 +195,7 @@ const ObraDetails = ({
           
           <div className="relative">
             <Image
-              src={obra.images[currentImageIndex] || ""}
+              src={obra.images[currentImageIndex] ?? ""}
               alt={obra.name}
               className="w-full h-[85vh] object-cover"
               // className="w-full h-[85vh] object-contain"
