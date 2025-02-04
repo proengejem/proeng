@@ -37,3 +37,6 @@
 
 // // export default PortifolioPage;
 
+export default function portifoliopg() {
+  return null;
+}
