@@ -306,3 +306,6 @@
 // };
 
 // export default ObraPage;
+export default function portifolioid() {
+  return null;
+}
