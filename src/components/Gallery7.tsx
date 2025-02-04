@@ -62,7 +62,7 @@ export const Gallery7 = (props: Props) => {
               >
                 <Image
   src={image?.src ?? "/fallback-image.jpg"}
-  alt={image?.alt || "Imagem sem descrição"}
+  alt={image?.alt ?? "Imagem sem descrição"}
   fill
   className="absolute inset-0 object-cover transition-transform duration-300 group-hover:scale-110"
 />

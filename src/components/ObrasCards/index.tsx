@@ -7,6 +7,7 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8'
 );
 
+
 export interface Obra {
   id: number;
   name: string;
@@ -38,26 +39,28 @@ export async function obrasCards(): Promise<Obra[]> {
       // Para cada obra, buscar as imagens na storage do Supabase
       const obrasWithImages = await Promise.all(
         data.map(async (obra) => {
-          const folderName = obra.name;
+          const folderName = String(obra.name ?? ""); // Força o tipo para string
           const { data: files, error: listError } = await supabase.storage
-            .from('Obras')
-            .list(folderName, { limit: 100 });
+  .from('Obras')
+  .list(folderName, { limit: 100 });
 
-          if (listError) {
-            console.error(`Erro ao buscar imagens para a obra ${obra.name}:`, listError.message);
-            return { ...obra, images: [] };
-          }
+if (listError || !files) {
+  console.error(`Erro ao buscar imagens para a obra ${obra.name}:`, listError?.message);
+  return { ...obra, images: [] };
+}
 
-          // Gerar URLs públicas para as imagens
-          const imageUrls = files?.map((file: SupabaseFile) =>
-            supabase.storage.from('Obras').getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-          );
+// Ajustando o mapeamento para garantir que `files` é um array de `SupabaseFile`
+const imageUrls = files.map((file: { name: string }) =>
+  supabase.storage.from('Obras').getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
+);
+
+          
 
           return { ...obra, images: imageUrls || [] };
         })
       );
 
-      return obrasWithImages;
+      return obrasWithImages ?? [];
     }
 
     return [];

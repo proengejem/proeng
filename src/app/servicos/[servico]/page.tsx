@@ -99,7 +99,7 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
   <a href={`/servicos/${obrasDinamicasFiltradas[0].service}/${obrasDinamicasFiltradas[0].id}`} className="lg:col-span-2 relative group overflow-hidden rounded-lg shadow-lg">
 
     <Image
-      src={obrasDinamicasFiltradas[0].images[0] || "/placeholder.jpg"}
+      src={obrasDinamicasFiltradas[0].images[0] ?? "/placeholder.jpg"}
       alt={obrasDinamicasFiltradas[0].name}
       className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-300"
       width={700} // Defina uma largura para a imagem
@@ -122,7 +122,7 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
       className="relative group overflow-hidden rounded-lg shadow-lg h-[190px]"
     >
       <Image
-        src={obraDinamica.images[0] || "/placeholder.jpg"}
+        src={obraDinamica.images[0] ?? "/placeholder.jpg"}
         alt={obraDinamica.name}
         className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
         width={700} // Defina uma largura para a imagem

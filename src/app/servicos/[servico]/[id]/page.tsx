@@ -27,17 +27,18 @@ interface Obra {
 async function fetchObra(id: string): Promise<Obra | null> {
   try {
     const { data, error } = await supabase
-      .from("obras")
-      .select("*")
-      .eq("id", id)
-      .single();
+  .from("obras")
+  .select("*")
+  .eq("id", id)
+  .single();
 
-    if (error || !data) return null;
+      if (!data || error) return null;
 
-    const folderName = data.name;
-    const { data: files } = await supabase.storage
-      .from("Obras")
-      .list(folderName, { limit: 100 });
+      const folderName = (data as Obra).name ?? "";
+const { data: files } = await supabase.storage
+  .from("Obras")
+  .list(folderName, { limit: 100 });
+
 
     const imageUrls =
       files?.map(
@@ -45,10 +46,10 @@ async function fetchObra(id: string): Promise<Obra | null> {
           supabase.storage
             .from("Obras")
             .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-      ) || [];
+      ) ?? [];
 
-    return { ...data, images: imageUrls };
-  } catch (error) {
+      return { ...(data as Obra), images: imageUrls };
+    } catch (error) {
     console.error("Erro inesperado:", error);
     return null;
   }
@@ -193,7 +194,7 @@ const ObraDetails = ({
 
           <div className="relative">
             <Image
-              src={obra.images[currentImageIndex] || ""}
+              src={obra.images[currentImageIndex] ?? ""}
               alt={obra.name}
               className="w-full h-[85vh] object-cover"
               // className="w-full h-[85vh] object-contain"

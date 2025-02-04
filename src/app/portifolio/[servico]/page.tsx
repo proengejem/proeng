@@ -72,7 +72,7 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
       key={obraDinamica.id}     href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
       className="relative group overflow-hidden rounded-lg shadow-2xl border-2 transform transition-transform duration-300 hover:scale-105">
                   <Image
-                    src={obraDinamica.images[0] || "/placeholder.jpg"}
+                    src={obraDinamica.images[0] ?? "/placeholder.jpg"}
                     alt={obraDinamica.name}
                     width={300}
                     height={200}

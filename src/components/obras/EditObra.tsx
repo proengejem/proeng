@@ -169,7 +169,14 @@ export default function EditObra() {
         'Obras',
         images.map((img) => img.file),
         formData.name
-      );
+      ).catch((error) => {
+        console.error('Erro ao fazer upload das imagens:', error);
+        toast({
+          title: 'Erro no upload',
+          description: 'Ocorreu um erro ao enviar as imagens.',
+        });
+      });
+      
 
 
       toast({
