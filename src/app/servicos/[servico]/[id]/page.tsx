@@ -63,7 +63,6 @@ const ObraPage = () => {
       const loadObra = async () => {
         if (!params?.id) {
           notFound();
-          return;
         }
 
         const fetchedObra = await fetchObra(params.id as string);
@@ -113,11 +112,11 @@ const ObraPage = () => {
                 files && files.length > 0
                   ? supabase.storage
                       .from("Obras")
-                      .getPublicUrl(`${obraItem.name}/${files[0].name}`).data
+                      .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data
                       .publicUrl
                   : null;
 
-              return { ...obraItem, image: imageUrl };
+              return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
             })
           );
 
@@ -245,9 +244,9 @@ const ObraDetails = ({
         className="cursor-pointer bg-white shadow-2xl rounded-lg overflow-hidden border transform transition-transform duration-300 hover:scale-105"
         onClick={() => handleCardClick(obraItem.id)}
       >
-        {obraItem.image ? (
+        {obraItem.images ? (
           <img
-            src={obraItem.image}
+            src={obraItem?.images[0]}
             alt={obraItem.name}
             className="h-60 w-full object-cover"
           />

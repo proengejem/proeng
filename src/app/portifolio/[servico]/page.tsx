@@ -1,68 +1,97 @@
-import { Gallery7 } from "~/components/Gallery7";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
 import { obras } from "~/lib/obras";
-import { obrasCards } from "~/components/ObrasCards"; // Importando o novo array
-import Image from "next/image";
+import { Obra, obrasCards } from "~/components/ObrasCards"; 
+import Link from "next/link";
 import WhatsAppIcon from "~/components/whatsapp";
+import { notFound } from "next/navigation";
 
-
-interface ServicoPageProps {
-  params: { servico: string };
+// Define proper page props type
+type PageProps = {
+  params: {
+    servico: string
+  }
 }
 
-// Gera parâmetros estáticos
+// Generate static params at build time
 export async function generateStaticParams() {
   return obras.map((obra) => ({
     servico: obra.slug,
   }));
 }
 
-export default async function ServicoPage({ params }: ServicoPageProps) {
-  // Obtem o parâmetro "servico"
-  const { servico } = params;
+// Loading fallback component
+function LoadingFallback() {
+  return (
+    <div className="flex flex-col items-center justify-center py-10">
+      <div className="w-16 h-16 border-t-4 border-[#027A48] border-solid rounded-full animate-spin"></div>
+      <p className="mt-4 text-gray-600">Carregando conteúdo...</p>
+    </div>
+  );
+}
 
-  // Encontra a obra correspondente
-  const obra = obras.find((obra) => obra.slug === servico);
+// Component for when dynamic obras can't be loaded
+function DynamicObrasFallback() {
+  return (
+    <div className="bg-gray-50 rounded-lg p-6 mt-8">
+      <h2 className="text-2xl font-semibold mb-4 text-[#027A48]">Obras Relacionadas</h2>
+      <p className="text-gray-600 mb-4">Não foi possível carregar as obras relacionadas. Por favor, tente novamente mais tarde.</p>
+      <Link href="/portifolio" className="text-[#027A48] font-medium hover:underline">
+        Ver todas as obras →
+      </Link>
+    </div>
+  );
+}
 
+// Main page component
+export default async function Page({ params }: {params : Promise<{ servico : string}>}) {
+  // Get the slug from params in a typesafe way
+  const { servico: slug } = await params;
+  
+  // Find the obra in our static data
+  const obra = obras.find(o => o.slug === slug);
+  
+  // Return 404 if obra not found
   if (!obra) {
-    return <div>Serviço não encontrado.</div>;
+    return notFound();
+  }
+  
+  // Try to load dynamic obras data
+  let dynamicObras : any = [];
+  let hasError = false;
+  
+  try {
+    // Load all obras from database
+    const allObras = await obrasCards();
+    
+    // Filter to just this service
+    dynamicObras = allObras
+      .filter(o => o.service === slug)
+      .reverse();
+  } catch (error) {
+    console.error("Error loading obras:", error);
+    hasError = true;
   }
 
-  // Busca as obras dinamicamente utilizando obrasCards
-  const todasObrasDinamicas = await obrasCards();
-
-  // Filtra apenas as obras que correspondem ao serviço atual
-  const obrasDinamicasFiltradas = todasObrasDinamicas
-    .filter((obraDinamica) => obraDinamica.service === obra.slug)
-    // .slice(-3) // Pega apenas as 3 últimas obras adicionadas
-    .reverse(); // Coloca a obra mais recente como a primeira
-
   return (
-    <div className="flex flex-col min-h-screen ">
+    <div className="flex flex-col min-h-screen">
       <Navbar />
 
-      {/* Cabeçalho com Breadcrumb */}
-      {/* <header className="bg-white border-b">
-        <div className="container mx-auto px-4 py-6">
-          <p className="text-sm text-gray-500">
-            Serviços &gt;{" "}
-            <span className="font-semibold text-gray-700">{obra.title}</span>
-          </p>
-        </div>
-      </header> */}
-
-      {/* Conteúdo principal */}
       <main className="container mx-auto px-4 py-8">
         {/* Título */}
         <h1 className="text-4xl font-bold mb-10 text-center text-[#027A48]">{obra.title}</h1>
-        <section className="w-full mt-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {obrasDinamicasFiltradas.slice(0).map((obraDinamica) => (
-            
-            <a
-      key={obraDinamica.id}     href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
-      className="relative group overflow-hidden rounded-lg shadow-2xl rounded-lg border rounded p-4 overflow-hidden border transform transition-transform duration-300 hover:scale-105">
+        
+        {hasError ? (
+          <DynamicObrasFallback />
+        ) : dynamicObras.length > 0 ? (
+          <section className="w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {dynamicObras.map((obraDinamica : Obra) => (
+                <a
+                  key={obraDinamica.id}     
+                  href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
+                  className="relative group overflow-hidden rounded-lg shadow-2xl rounded-lg border rounded p-4 overflow-hidden border transform transition-transform duration-300 hover:scale-105"
+                >
                   <img
                     src={obraDinamica.images[0] || "/placeholder.jpg"}
                     alt={obraDinamica.name}
@@ -70,25 +99,21 @@ export default async function ServicoPage({ params }: ServicoPageProps) {
                     height={200}
                     className="w-full h-60 object-cover rounded"
                   />
-                {/* <div className="p-2"> */}
                   <h3 className="text-lg font-semibold mt-2">{obraDinamica.name}</h3>
-                  <a href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
-                    className="text-[#027A48] font-semibold hover:underline"
-                  > Ver obra →  </a>
-                  {/* </div> */}
-              </a>
+                  <span className="text-[#027A48] font-semibold hover:underline">
+                    Ver obra →
+                  </span>
+                </a>
               ))}
-          </div>
-        </section>
+            </div>
+          </section>
+        ) : (
+          <p className="text-center text-gray-500">Nenhuma obra encontrada para este serviço.</p>
+        )}
       </main>
+      
       <WhatsAppIcon />
-
       <Footer1 />
     </div>
   );
 }
-
-
-
-
-
