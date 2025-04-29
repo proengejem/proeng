@@ -24,10 +24,26 @@ export interface Obra {
   images: string[];
 }
 
+// Define proper types for fetchWithRetry function
+type FetchFnResult = {
+  data: any;
+  error?: Error | null;
+};
+
+type FetchFunction = () => Promise<FetchFnResult>;
+
+type FetchWithRetryResult = {
+  data: any | null;
+  error: Error | null;
+};
+
 // Function to fetch obras data with retries
-// Implementação da função fetchWithRetry
-const fetchWithRetry = async (fetchFn : any, maxRetries = 3, delay = 1000) => {
-  let lastError = null;
+const fetchWithRetry = async (
+  fetchFn: FetchFunction, 
+  maxRetries = 3, 
+  delay = 1000
+): Promise<FetchWithRetryResult> => {
+  let lastError: Error | null = null;
   
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
@@ -38,7 +54,7 @@ const fetchWithRetry = async (fetchFn : any, maxRetries = 3, delay = 1000) => {
       return { data: result.data, error: null };
     } catch (error) {
       console.warn(`Tentativa ${attempt + 1} falhou:`, (error as Error).message);
-      lastError = error;
+      lastError = error as Error;
       
       // Aguarda antes de tentar novamente (exceto na última tentativa)
       if (attempt < maxRetries - 1) {
@@ -88,7 +104,7 @@ export async function obrasCards(): Promise<Obra[]> {
       return fallbackObras;
     }
 
-    if (!data || data.length === 0) {
+    if (!data || !Array.isArray(data) || data.length === 0) {
       console.warn('Nenhuma obra encontrada na base de dados');
       return fallbackObras;
     }
@@ -96,7 +112,7 @@ export async function obrasCards(): Promise<Obra[]> {
     try {
       // For each obra, try to get images but handle failures gracefully
       const obrasWithImages = await Promise.all(
-        data.map(async (obra : Obra) => {
+        data.map(async (obra: any): Promise<Obra> => {
           try {
             const folderName = obra.name;
             // Try to list files but don't throw if it fails
@@ -105,27 +121,34 @@ export async function obrasCards(): Promise<Obra[]> {
               .list(folderName, { limit: 100 })
               .catch(() => ({ data: null, error: { message: 'Failed to list files' } }));
 
-            if (listError || !files) {
+            if (listError || !files || !Array.isArray(files)) {
               console.warn(`Erro ao buscar imagens para ${obra.name}:`, listError?.message || 'Unknown error');
-              return { ...obra, images: [] };
+              return { ...obra, images: [] } as Obra;
             }
 
             // Try to get public URLs
-            const imageUrls = files.map((file) => {
-              try {
-                return supabase.storage
-                  .from('Obras')
-                  .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl;
-              } catch (e) {
-                console.warn(`Failed to get URL for ${file.name}:`, e);
-                return '';
+            const imageUrls: string[] = [];
+            
+            for (const file of files) {
+              if (file && typeof file.name === 'string') {
+                try {
+                  const result = supabase.storage
+                    .from('Obras')
+                    .getPublicUrl(`${folderName}/${file.name}`);
+                    
+                  if (result && result.data && typeof result.data.publicUrl === 'string') {
+                    imageUrls.push(result.data.publicUrl);
+                  }
+                } catch (e) {
+                  console.warn(`Failed to get URL for ${file.name}:`, e);
+                }
               }
-            }).filter(url => url); // Remove empty URLs
+            }
 
-            return { ...obra, images: imageUrls };
+            return { ...obra, images: imageUrls } as Obra;
           } catch (err) {
             console.warn(`Erro ao processar imagens para ${obra.name}:`, err);
-            return { ...obra, images: [] };
+            return { ...obra, images: [] } as Obra;
           }
         })
       );
@@ -134,7 +157,13 @@ export async function obrasCards(): Promise<Obra[]> {
     } catch (err) {
       console.error('Erro ao processar imagens das obras:', err);
       // Return obras without images
-      return data.map((obra: Obra): Obra => ({ ...obra, images: [] }));
+      return data.map((obra: any): Obra => ({ 
+        id: obra.id,
+        name: obra.name || '',
+        description: obra.description || '',
+        service: obra.service || '',
+        images: [] 
+      }));
     }
   } catch (err) {
     console.error('Erro inesperado:', err);

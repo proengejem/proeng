@@ -22,6 +22,11 @@ interface Obra {
   images?: string[];
 }
 
+interface Params {
+  id: string;
+  servico: string;
+}
+
 async function fetchObra(id: string): Promise<Obra | null> {
   try {
     const { data, error } = await supabase
@@ -43,7 +48,7 @@ async function fetchObra(id: string): Promise<Obra | null> {
           supabase.storage
             .from("Obras")
             .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-      ) || [];
+      ) ?? []; // Usando ?? em vez de ||
 
     return { ...data, images: imageUrls };
   } catch (error) {
@@ -53,7 +58,7 @@ async function fetchObra(id: string): Promise<Obra | null> {
 }
 
 const ObraPage = () => {
-  const params = useParams();
+  const params = useParams() as unknown as Params;
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
@@ -65,7 +70,7 @@ const ObraPage = () => {
           notFound();
         }
 
-        const fetchedObra = await fetchObra(params.id as string);
+        const fetchedObra = await fetchObra(params.id);
         if (!fetchedObra) {
           notFound();
         } else {
@@ -74,7 +79,8 @@ const ObraPage = () => {
         setIsLoading(false);
       };
 
-      loadObra();
+      // Garantindo que a Promise seja aguardada com void
+      void loadObra();
     }
   }, [params?.id]);
 
@@ -127,7 +133,8 @@ const ObraPage = () => {
       }
     };
 
-    if (obra) fetchAllObras();
+    // Garantindo que a Promise seja aguardada com void
+    if (obra) void fetchAllObras();
   }, [obra]);
   
   
@@ -186,7 +193,7 @@ const ObraDetails = ({
         {(obra.images ?? []).length > 0 ? (
           <div className="relative">
             <Image
-              src={(obra.images ?? [])[currentImageIndex] || ""}
+              src={(obra.images ?? [])[currentImageIndex] ?? ""}
               alt={obra.name}
               className="w-full h-[85vh] object-cover"
               // className="w-full h-[85vh] object-contain"
@@ -242,12 +249,12 @@ const ObraDetails = ({
       <div
         key={obraItem.id}
         className="cursor-pointer bg-white shadow-2xl rounded-lg overflow-hidden border transform transition-transform duration-300 hover:scale-105"
-        onClick={() => handleCardClick(obraItem.id)}
+        onClick={() => { void handleCardClick(obraItem.id); }}
       >
         {obraItem.images ? (
           <img
-            src={obraItem?.images[0]}
-            alt={obraItem?.name}
+            src={obraItem?.images[0] ?? ""}
+            alt={obraItem?.name ?? ""}
             className="h-60 w-full object-cover"
           />
         ) : (
@@ -256,7 +263,7 @@ const ObraDetails = ({
           </div>
         )}
         <div className="p-4">
-          <h3 className="text-lg font-bold">{obraItem?.name}</h3>
+          <h3 className="text-lg font-bold">{obraItem?.name ?? "Sem título"}</h3>
         </div>
       </div>
     ))}

@@ -39,13 +39,17 @@ async function fetchObra(id: string): Promise<Obra | null> {
 
     const imageUrls =
       files?.map(
-        (file) =>
-          supabase.storage
-            .from("Obras")
-            .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-      ) || [];
+        (file) => {
+          if (file && typeof file.name === 'string') {
+            return supabase.storage
+              .from("Obras")
+              .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl;
+          }
+          return '';
+        }
+      ).filter(url => url !== '') ?? [];
 
-    return { ...data, images: imageUrls };
+    return { ...data, images: imageUrls } as Obra;
   } catch (error) {
     console.error("Erro inesperado:", error);
     return null;
@@ -74,7 +78,8 @@ const ObraPage = () => {
         setIsLoading(false);
       };
 
-      loadObra();
+      // Fix the floating promise
+      void loadObra();
     }
   }, [params?.id]);
 
@@ -127,7 +132,7 @@ const ObraPage = () => {
       }
     };
 
-    if (obra) fetchAllObras();
+    if (obra) void fetchAllObras();
   }, [obra]);
   
   
@@ -186,7 +191,7 @@ const ObraDetails = ({
         {obra.images.length > 0 ? (
           <div className="relative">
             <Image
-              src={obra.images[currentImageIndex] || ""}
+              src={obra.images[currentImageIndex] ?? ""}
               alt={obra.name}
               className="w-full h-[85vh] object-cover"
               // className="w-full h-[85vh] object-contain"
@@ -246,7 +251,7 @@ const ObraDetails = ({
       >
         {obraItem.images ? (
           <img
-            src={obraItem?.images[0]}
+            src={obraItem.images[0] ?? ""}
             alt={obraItem.name}
             className="h-60 w-full object-cover"
           />

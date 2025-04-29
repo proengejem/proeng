@@ -52,7 +52,7 @@ export default async function Page({ params }: {params : Promise<{ servico : str
   
   // Try to load dynamic obras data
   let dynamicObras: Obra[] | null = [];
-  let hasError : boolean = false;
+  let hasError = false;
   
   try {
     // Load all obras from database
@@ -87,7 +87,7 @@ export default async function Page({ params }: {params : Promise<{ servico : str
                   className="relative group overflow-hidden rounded-lg shadow-2xl rounded-lg border rounded p-4 overflow-hidden border transform transition-transform duration-300 hover:scale-105"
                 >
                   <img
-                    src={obraDinamica.images[0] || "/placeholder.jpg"}
+                    src={obraDinamica.images[0] ?? "/placeholder.jpg"}
                     alt={obraDinamica.name}
                     width={300}
                     height={200}

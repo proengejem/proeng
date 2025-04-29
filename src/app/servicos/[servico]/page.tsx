@@ -61,7 +61,7 @@ async function ServicoContent({ servicoSlug }: { servicoSlug: string }) {
   }
 
   // Tenta carregar as obras dinâmicas, mas com tratamento de erro
-  let obrasDinamicasFiltradas : any = [];
+  let obrasDinamicasFiltradas : Obra[] = [];
   let loadError = false;
   
   try {
@@ -112,9 +112,11 @@ async function ServicoContent({ servicoSlug }: { servicoSlug: string }) {
             {/* Obra mais recente (destaque principal) */}
             {obrasDinamicasFiltradas[0] && (
               <a href={`/servicos/${obrasDinamicasFiltradas[0].service}/${obrasDinamicasFiltradas[0].id}`} className="lg:col-span-2 relative group overflow-hidden rounded-lg shadow-lg">
-                <img
-                  src={obrasDinamicasFiltradas[0].images[0] || "/placeholder.jpg"}
+                <Image
+                  src={obrasDinamicasFiltradas[0].images[0] ?? "/placeholder.jpg"}
                   alt={obrasDinamicasFiltradas[0].name}
+                  width={800}
+                  height={400}
                   className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
@@ -132,9 +134,11 @@ async function ServicoContent({ servicoSlug }: { servicoSlug: string }) {
                   href={`/servicos/${obraDinamica.service}/${obraDinamica.id}`}
                   className="relative group overflow-hidden rounded-lg shadow-lg h-[190px]"
                 >
-                  <img
-                    src={obraDinamica.images[0] || "/placeholder.jpg"}
+                  <Image
+                    src={obraDinamica.images[0] ?? "/placeholder.jpg"}
                     alt={obraDinamica.name}
+                    width={400}
+                    height={190}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
@@ -159,9 +163,11 @@ async function ServicoContent({ servicoSlug }: { servicoSlug: string }) {
                 key={outraObra.slug}
                 className="border rounded-lg p-4 shadow-lg rounded-lg bg-white overflow-hidden border transform transition-transform duration-300 hover:scale-105"
               >
-                <img
-                  src={outraObra.image}
+                <Image
+                  src={outraObra.image ?? "/placeholder.jpg"}
                   alt={outraObra.title}
+                  width={400}
+                  height={300}
                   className="h-48 w-full object-cover rounded-md mb-4"
                 />
                 <h3 className="text-lg font-semibold text-[#027A48] mb-2">
