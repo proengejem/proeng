@@ -26,14 +26,14 @@ export interface Obra {
 
 // Define proper types for fetchWithRetry function
 type FetchFnResult = {
-  data: any;
+  data: unknown;
   error?: Error | null;
 };
 
 type FetchFunction = () => Promise<FetchFnResult>;
 
 type FetchWithRetryResult = {
-  data: any | null;
+  data: unknown;
   error: Error | null;
 };
 
@@ -99,7 +99,7 @@ export async function obrasCards(): Promise<Obra[]> {
       (async () => await supabase.from('obras').select('*'))(), 2);
 
     if (error) {
-      console.error('Erro ao buscar obras:', (error as Error).message);
+      console.error('Erro ao buscar obras:', error.message);
       // Return fallback data
       return fallbackObras;
     }
@@ -112,9 +112,21 @@ export async function obrasCards(): Promise<Obra[]> {
     try {
       // For each obra, try to get images but handle failures gracefully
       const obrasWithImages = await Promise.all(
-        data.map(async (obra: any): Promise<Obra> => {
+        data.map(async (obra): Promise<Obra> => {
           try {
-            const folderName = obra.name;
+            // Safely access obra properties with type guards
+            if (typeof obra !== 'object' || !obra) {
+              return {
+                id: 0,
+                name: "Obra inválida",
+                description: "Dados inválidos da API",
+                service: "default",
+                images: []
+              };
+            }
+            
+            const folderName = typeof obra.name === 'string' ? obra.name : 'unknown';
+            
             // Try to list files but don't throw if it fails
             const { data: files, error: listError } = await supabase.storage
               .from('Obras')
@@ -122,8 +134,14 @@ export async function obrasCards(): Promise<Obra[]> {
               .catch(() => ({ data: null, error: { message: 'Failed to list files' } }));
 
             if (listError || !files || !Array.isArray(files)) {
-              console.warn(`Erro ao buscar imagens para ${obra.name}:`, listError?.message || 'Unknown error');
-              return { ...obra, images: [] } as Obra;
+              console.warn(`Erro ao buscar imagens para ${folderName}:`, listError?.message ?? 'Unknown error');
+              return {
+                id: Number(obra.id) || 0,
+                name: String(obra.name) || '',
+                description: String(obra.description) || '',
+                service: String(obra.service) || '',
+                images: []
+              };
             }
 
             // Try to get public URLs
@@ -136,7 +154,7 @@ export async function obrasCards(): Promise<Obra[]> {
                     .from('Obras')
                     .getPublicUrl(`${folderName}/${file.name}`);
                     
-                  if (result && result.data && typeof result.data.publicUrl === 'string') {
+                  if (result?.data?.publicUrl) {
                     imageUrls.push(result.data.publicUrl);
                   }
                 } catch (e) {
@@ -145,10 +163,29 @@ export async function obrasCards(): Promise<Obra[]> {
               }
             }
 
-            return { ...obra, images: imageUrls } as Obra;
+            // Safely construct and return the Obra object
+            return {
+              id: Number(obra.id) || 0,
+              name: String(obra.name) || '',
+              description: String(obra.description) || '',
+              service: String(obra.service) || '',
+              images: imageUrls
+            };
           } catch (err) {
-            console.warn(`Erro ao processar imagens para ${obra.name}:`, err);
-            return { ...obra, images: [] } as Obra;
+            console.warn(`Erro ao processar imagens:`, err);
+            
+            // Return a valid Obra object even after error
+            if (typeof obra === 'object' && obra) {
+              return {
+                id: Number(obra.id) || 0,
+                name: String(obra.name) || '',
+                description: String(obra.description) || '',
+                service: String(obra.service) || '',
+                images: []
+              };
+            }
+            
+            return fallbackObras[0]!;
           }
         })
       );
@@ -156,14 +193,21 @@ export async function obrasCards(): Promise<Obra[]> {
       return obrasWithImages;
     } catch (err) {
       console.error('Erro ao processar imagens das obras:', err);
-      // Return obras without images
-      return data.map((obra: any): Obra => ({ 
-        id: obra.id,
-        name: obra.name || '',
-        description: obra.description || '',
-        service: obra.service || '',
-        images: [] 
-      }));
+      
+      // Return obras without images with proper type safety
+      return Array.isArray(data) ? data.map((obra): Obra => {
+        if (typeof obra !== 'object' || !obra) {
+          return fallbackObras[0]!;
+        }
+        
+        return {
+          id: Number(obra.id) || 0,
+          name: String(obra.name) || '',
+          description: String(obra.description) || '',
+          service: String(obra.service) || '',
+          images: []
+        };
+      }) : fallbackObras;
     }
   } catch (err) {
     console.error('Erro inesperado:', err);

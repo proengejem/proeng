@@ -190,7 +190,7 @@ async function ServicoContent({ servicoSlug }: { servicoSlug: string }) {
 
 // Breadcrumb component to avoid params access issues
 function ServicoBreadcrumb({ servicoSlug }: { servicoSlug: string }) {
-  const obraTitle = obras.find(o => o.slug === servicoSlug)?.title || "Carregando...";
+  const obraTitle = obras.find(o => o.slug === servicoSlug)?.title ?? "Carregando...";
   
   return (
     <header className="bg-white border-b">

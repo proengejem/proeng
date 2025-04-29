@@ -37,20 +37,47 @@ async function fetchObra(id: string): Promise<Obra | null> {
 
     if (error || !data) return null;
 
-    const folderName = data.name;
-    const { data: files } = await supabase.storage
+    // Add type safety for the data from Supabase by explicitly checking
+    if (typeof data !== 'object' || !data) return null;
+    
+    const folderName = typeof data.name === 'string' ? data.name : '';
+    
+    const { data: files, error: listError } = await supabase.storage
       .from("Obras")
       .list(folderName, { limit: 100 });
 
-    const imageUrls =
-      files?.map(
-        (file) =>
-          supabase.storage
-            .from("Obras")
-            .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-      ) ?? []; // Usando ?? em vez de ||
+    if (listError || !files) {
+      return {
+        id: Number(data.id) || 0,
+        name: String(data.name) || '',
+        description: typeof data.description === 'string' ? data.description : undefined,
+        service: typeof data.service === 'string' ? data.service : undefined,
+        images: []
+      };
+    }
 
-    return { ...data, images: imageUrls };
+    const imageUrls =
+      files.map(
+        (file) => {
+          if (file && typeof file.name === 'string') {
+            const result = supabase.storage
+              .from("Obras")
+              .getPublicUrl(`${folderName}/${file.name}`);
+            
+            return result?.data?.publicUrl || '';
+          }
+          return '';
+        }
+      ).filter(url => url !== '') ?? [];
+
+    // Ensure we're returning a properly typed Obra object
+    return {
+      id: Number(data.id) || 0,
+      name: String(data.name) || '',
+      description: typeof data.description === 'string' ? data.description : undefined,
+      service: typeof data.service === 'string' ? data.service : undefined,
+      images: imageUrls
+    };
   } catch (error) {
     console.error("Erro inesperado:", error);
     return null;
@@ -110,15 +137,18 @@ const ObraPage = () => {
 
           const obrasComImagens = await Promise.all(
             filteredObras.map(async (obraItem) => {
+              // Type safety: ensure obraItem.name is a string
+              const obraName = typeof obraItem.name === 'string' ? obraItem.name : '';
+              
               const { data: files } = await supabase.storage
                 .from("Obras")
-                .list(obraItem.name, { limit: 1 });
+                .list(obraName, { limit: 1 });
 
               const imageUrl =
                 files && files.length > 0
                   ? supabase.storage
                       .from("Obras")
-                      .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data
+                      .getPublicUrl(`${obraName}/${files[0]?.name}`).data
                       .publicUrl
                   : null;
 
