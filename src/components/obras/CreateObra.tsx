@@ -33,6 +33,8 @@ export default function CreateObra() {
         service: service,
       };
 
+      
+
     try {
       
       const { error } = await insertData('obras', formData)
@@ -58,8 +60,21 @@ export default function CreateObra() {
       setImages([])
     }
 
+
+    const sanitizeFilename = (filename: string) => {
+      return filename
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, "") // remove acentos
+        .replace(/[^a-zA-Z0-9.\-_]/g, '-') // substitui caracteres inválidos por hífen
+    }
+
+    const sanitizedFiles = images.map(image => {
+      const newFileName = sanitizeFilename(image.file.name)
+      return new File([image.file], newFileName, { type: image.file.type })
+    })
+
     // Upload images to storage
-    const imagePaths = await uploadFilesToStorage('Obras', images.map(img => img.file), formData.name)
+    const imagePaths = await uploadFilesToStorage('Obras', sanitizedFiles, formData.name)
     console.log('imagePaths:', imagePaths)
     // Create the obra
 

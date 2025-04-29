@@ -17,9 +17,9 @@ const supabase = createClient(
 interface Obra {
   id: number;
   name: string;
-  description: string;
-  service: string;
-  images: string[];
+  description?: string;
+  service?: string;
+  images?: string[];
 }
 
 async function fetchObra(id: string): Promise<Obra | null> {
@@ -156,13 +156,13 @@ const ObraDetails = ({
 
   const handlePrev = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? obra.images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? (obra.images ?? []).length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === obra.images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === (obra.images ?? []).length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -183,10 +183,10 @@ const ObraDetails = ({
       <Navbar />
 
       <main className="relative">
-        {obra.images.length > 0 ? (
+        {(obra.images ?? []).length > 0 ? (
           <div className="relative">
             <Image
-              src={obra.images[currentImageIndex] || ""}
+              src={(obra.images ?? [])[currentImageIndex] || ""}
               alt={obra.name}
               className="w-full h-[85vh] object-cover"
               // className="w-full h-[85vh] object-contain"
@@ -209,7 +209,7 @@ const ObraDetails = ({
 
             {/* Indicadores de navegação em forma de círculos */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              {obra.images.map((_, index) => (
+              {(obra.images ?? []).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => handleDotClick(index)}
@@ -222,8 +222,8 @@ const ObraDetails = ({
               ))}
             </div>
             <div className="absolute bottom-4 left-6 text-white z-10">
-              <h1 className="text-3xl font-bold">{obra.name}</h1>
-              <p className="text-lg mt-2">{obra.description}</p>
+              <h1 className="text-3xl font-bold">{obra?.name}</h1>
+              <p className="text-lg mt-2">{obra?.description}</p>
             </div>
           </div>
         ) : (

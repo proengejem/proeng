@@ -6,12 +6,6 @@ import Link from "next/link";
 import WhatsAppIcon from "~/components/whatsapp";
 import { notFound } from "next/navigation";
 
-// Define proper page props type
-type PageProps = {
-  params: {
-    servico: string
-  }
-}
 
 // Generate static params at build time
 export async function generateStaticParams() {
@@ -57,8 +51,8 @@ export default async function Page({ params }: {params : Promise<{ servico : str
   }
   
   // Try to load dynamic obras data
-  let dynamicObras : any = [];
-  let hasError = false;
+  let dynamicObras: Obra[] | null = [];
+  let hasError : boolean = false;
   
   try {
     // Load all obras from database
@@ -88,8 +82,8 @@ export default async function Page({ params }: {params : Promise<{ servico : str
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {dynamicObras.map((obraDinamica : Obra) => (
                 <a
-                  key={obraDinamica.id}     
-                  href={`/portifolio/${obraDinamica.service}/${obraDinamica.id}`}
+                  key={obraDinamica?.id}     
+                  href={`/portifolio/${obraDinamica?.service}/${obraDinamica?.id}`}
                   className="relative group overflow-hidden rounded-lg shadow-2xl rounded-lg border rounded p-4 overflow-hidden border transform transition-transform duration-300 hover:scale-105"
                 >
                   <img
@@ -99,7 +93,7 @@ export default async function Page({ params }: {params : Promise<{ servico : str
                     height={200}
                     className="w-full h-60 object-cover rounded"
                   />
-                  <h3 className="text-lg font-semibold mt-2">{obraDinamica.name}</h3>
+                  <h3 className="text-lg font-semibold mt-2">{obraDinamica?.name}</h3>
                   <span className="text-[#027A48] font-semibold hover:underline">
                     Ver obra →
                   </span>
