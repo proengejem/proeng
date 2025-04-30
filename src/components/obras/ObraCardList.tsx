@@ -17,7 +17,7 @@ function ObraCard({ obra }: { obra: Obra }) {
     if (hasValidImages) {
       // For debugging, log the first image URL
       console.log(`Image URL for obra ${obra.name}:`, obra.images[0]);
-      setImageUrl(obra.images[0] || null);
+      setImageUrl(obra.images[0] ?? null);
     }
   }, [obra, hasValidImages]);
 
