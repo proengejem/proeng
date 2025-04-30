@@ -6,7 +6,7 @@ import { Obra, obrasCards } from "~/components/ObrasCards";
 import Link from "next/link";
 import WhatsAppIcon from "~/components/whatsapp";
 import { notFound } from "next/navigation";
-import ObraCardList  from "~/components/obras/ObraCardList"; // Import the ObraCardList component
+import ObraCardList from "~/components/obras/ObraCardList";
 
 // Generate static params at build time
 export async function generateStaticParams() {
@@ -16,9 +16,9 @@ export async function generateStaticParams() {
 }
 
 // Main page component
-export default async function Page({ params }: {params: { servico: string }}) {
+export default async function Page({ params }: {params : Promise<{ servico : string}>}) {
   // Get the slug from params
-  const slug = params.servico;
+  const { servico: slug } = await params;
   
   // Find the obra in our static data
   const obra = obras.find(o => o.slug === slug);
@@ -29,7 +29,7 @@ export default async function Page({ params }: {params: { servico: string }}) {
   }
   
   // Try to load dynamic obras data
-  let dynamicObras: Obra[] = [];
+  let dynamicObras: Obra[] | null = [];
   let hasError = false;
   let errorMessage = "";
   

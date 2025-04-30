@@ -1,5 +1,3 @@
-'client'
-
 import { Gallery7 } from "~/components/Gallery7";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
@@ -209,7 +207,6 @@ function ServicoBreadcrumb({ servicoSlug }: { servicoSlug: string }) {
 }
 
 export default async function ServicoPage({ params }: {params : Promise<{ servico : string}>}) {
-  // Extract servico slug safely
   const { servico: servicoSlug } = await params;
   
   // Check if servicoSlug is valid
