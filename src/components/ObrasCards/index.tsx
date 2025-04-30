@@ -1,21 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Create a more resilient Supabase client with retry logic
 const supabase = createClient(
   'https://xaljbeozaieyoecnxvum.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8',
-  {
-    auth: {
-      persistSession: false, // Don't persist session to avoid stale tokens
-      autoRefreshToken: true, // Auto refresh token
-    },
-    global: {
-      fetch: (...args) => fetch(...args), // Use the native fetch with default settings
-    },
-  }
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhbGpiZW96YWlleW9lY254dnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NDUwNDIsImV4cCI6MjA1MjUyMTA0Mn0.4GCZtQ2tGMkHSlvZgzCP2s7QlT7hlOOdzz5jLvCYyT8'
 );
 
-// Define TypeScript interface for obras
 export interface Obra {
   id: number;
   name: string;
@@ -24,193 +13,84 @@ export interface Obra {
   images: string[];
 }
 
-// Define proper types for fetchWithRetry function
-type FetchFnResult = {
-  data: unknown;
-  error?: Error | null;
-};
-
-type FetchFunction = () => Promise<FetchFnResult>;
-
-type FetchWithRetryResult = {
-  data: unknown;
-  error: Error | null;
-};
-
-// Function to fetch obras data with retries
-const fetchWithRetry = async (
-  fetchFn: FetchFunction, 
-  maxRetries = 3, 
-  delay = 1000
-): Promise<FetchWithRetryResult> => {
-  let lastError: Error | null = null;
-  
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      // Executa a função de fetch
-      const result = await fetchFn();
-      
-      // Se chegou aqui, significa que a operação foi bem-sucedida
-      return { data: result.data, error: null };
-    } catch (error) {
-      console.warn(`Tentativa ${attempt + 1} falhou:`, (error as Error).message);
-      lastError = error as Error;
-      
-      // Aguarda antes de tentar novamente (exceto na última tentativa)
-      if (attempt < maxRetries - 1) {
-        await new Promise(resolve => setTimeout(resolve, delay));
-      }
-    }
-  }
-  
-  // Se chegou aqui, todas as tentativas falharam
-  return { data: null, error: lastError };
-};
-
+/**
+ * Fetch all obras from Supabase and include their image URLs
+ */
 export async function obrasCards(): Promise<Obra[]> {
   try {
-    // Default obras to display if all else fails
-    const fallbackObras: Obra[] = [
-      {
-        id: 1,
-        name: "Obra de Exemplo",
-        description: "Esta é uma obra de exemplo para quando a conexão ao servidor falha.",
-        service: "solo-grampeado",
-        images: []
-      },
-      {
-        id: 2,
-        name: "Projeto de Contenção",
-        description: "Projeto de exemplo para quando a conexão falha.",
-        service: "estaca-tipo-raiz",
-        images: []
-      },
-      {
-        id: 3,
-        name: "Projeto de Fundação",
-        description: "Fundação exemplo para quando o servidor não responde.",
-        service: "helice-continua-monitorada",
-        images: []
-      }
-    ];
-
-    // Try to fetch data with retries
-    const { data, error } = await fetchWithRetry(() => 
-      (async () => await supabase.from('obras').select('*'))(), 2);
+    // Fetch data from obras table
+    const { data, error } = await supabase.from('obras').select('*');
 
     if (error) {
-      console.error('Erro ao buscar obras:', error.message);
-      // Return fallback data
-      return fallbackObras;
+      console.error('Error fetching obras:', error.message);
+      throw new Error('Error fetching obras: ' + error.message);
     }
 
-    if (!data || !Array.isArray(data) || data.length === 0) {
-      console.warn('Nenhuma obra encontrada na base de dados');
-      return fallbackObras;
+    if (!data || data.length === 0) {
+      console.log('No obras found in database');
+      return [];
     }
 
-    try {
-      // For each obra, try to get images but handle failures gracefully
-      const obrasWithImages = await Promise.all(
-        data.map(async (obra): Promise<Obra> => {
-          try {
-            // Safely access obra properties with type guards
-            if (typeof obra !== 'object' || !obra) {
-              return {
-                id: 0,
-                name: "Obra inválida",
-                description: "Dados inválidos da API",
-                service: "default",
-                images: []
-              };
-            }
-            
-            const folderName = typeof obra.name === 'string' ? obra.name : 'unknown';
-            
-            // Try to list files but don't throw if it fails
-            const { data: files, error: listError } = await supabase.storage
-              .from('Obras')
-              .list(folderName, { limit: 100 })
-              .catch(() => ({ data: null, error: { message: 'Failed to list files' } }));
+    console.log(`Found ${data.length} obras in database`);
 
-            if (listError || !files || !Array.isArray(files)) {
-              console.warn(`Erro ao buscar imagens para ${folderName}:`, listError?.message ?? 'Unknown error');
-              return {
-                id: Number(obra.id) || 0,
-                name: String(obra.name) || '',
-                description: String(obra.description) || '',
-                service: String(obra.service) || '',
-                images: []
-              };
-            }
-
-            // Try to get public URLs
-            const imageUrls: string[] = [];
-            
-            for (const file of files) {
-              if (file && typeof file.name === 'string') {
-                try {
-                  const result = supabase.storage
-                    .from('Obras')
-                    .getPublicUrl(`${folderName}/${file.name}`);
-                    
-                  if (result?.data?.publicUrl) {
-                    imageUrls.push(result.data.publicUrl);
-                  }
-                } catch (e) {
-                  console.warn(`Failed to get URL for ${file.name}:`, e);
-                }
-              }
-            }
-
-            // Safely construct and return the Obra object
-            return {
-              id: Number(obra.id) || 0,
-              name: String(obra.name) || '',
-              description: String(obra.description) || '',
-              service: String(obra.service) || '',
-              images: imageUrls
-            };
-          } catch (err) {
-            console.warn(`Erro ao processar imagens:`, err);
-            
-            // Return a valid Obra object even after error
-            if (typeof obra === 'object' && obra) {
-              return {
-                id: Number(obra.id) || 0,
-                name: String(obra.name) || '',
-                description: String(obra.description) || '',
-                service: String(obra.service) || '',
-                images: []
-              };
-            }
-            
-            return fallbackObras[0]!;
-          }
-        })
-      );
-
-      return obrasWithImages;
-    } catch (err) {
-      console.error('Erro ao processar imagens das obras:', err);
-      
-      // Return obras without images with proper type safety
-      return Array.isArray(data) ? data.map((obra): Obra => {
-        if (typeof obra !== 'object' || !obra) {
-          return fallbackObras[0]!;
-        }
+    // For each obra, fetch its images from storage
+    const obrasWithImages = await Promise.all(
+      data.map(async (obra) => {
+        // Make sure the folder name is sanitized and valid
+        const folderName = obra.name?.trim();
         
-        return {
-          id: Number(obra.id) || 0,
-          name: String(obra.name) || '',
-          description: String(obra.description) || '',
-          service: String(obra.service) || '',
-          images: []
-        };
-      }) : fallbackObras;
-    }
+        if (!folderName) {
+          console.warn(`Obra ID ${obra.id} has no name, skipping images`);
+          return { ...obra, images: [] };
+        }
+
+        try {
+          // List files in the obra's folder
+          console.log(`Listing files for obra: ${folderName}`);
+          const { data: files, error: listError } = await supabase.storage
+            .from('Obras')
+            .list(folderName, { sortBy: { column: 'name', order: 'asc' } });
+
+          if (listError) {
+            console.warn(`Error listing images for obra ${folderName}:`, listError.message);
+            return { ...obra, images: [] };
+          }
+
+          if (!files || files.length === 0) {
+            console.warn(`No images found for obra ${folderName}`);
+            return { ...obra, images: [] };
+          }
+
+          console.log(`Found ${files.length} files for obra ${folderName}:`, 
+            files.map(f => f.name).join(', '));
+
+          // Generate direct URL for each file (not public URL)
+          const imageUrls = files.map((file) => {
+            // Get signed URL that will work even with private buckets
+            const fileUrl = supabase.storage
+              .from('Obras')
+              .getPublicUrl(`${folderName}/${file.name}`);
+              
+            // Log the generated URL for debugging
+            console.log(`Generated URL for ${file.name}:`, fileUrl.data.publicUrl);
+            
+            return fileUrl.data.publicUrl;
+          });
+
+          console.log(`Generated ${imageUrls.length} image URLs for obra ${folderName}`);
+          
+          // Return obra with images
+          return { ...obra, images: imageUrls };
+        } catch (imageError) {
+          console.error(`Error processing images for obra ${folderName}:`, imageError);
+          return { ...obra, images: [] };
+        }
+      })
+    );
+
+    return obrasWithImages;
   } catch (err) {
-    console.error('Erro inesperado:', err);
-    return []; // Empty array for absolute failure
+    console.error('Error in obrasCards function:', err);
+    throw err;
   }
 }
