@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 
 import React, { useState } from 'react';
 import { Button } from '~/components/ui/button';
@@ -122,23 +121,22 @@ export default function EditObra() {
           title: 'Obra encontrada',
           description: `A obra "${obra?.name}" foi carregada para edição.`,
         });
-      } 
-      else {
+      } else {
         setSearchResult(null);
         toast({
           title: 'Obra não encontrada',
           description: 'Nenhuma obra corresponde ao termo de busca.',
         });
-        
       }
     } catch (err) {
       console.error('Erro inesperado ao buscar obra:', err);
-      void toast({
+      toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao buscar a obra.',
       });
     }
-  };  
+  };
+  
   
  
   const handleUpdate = async (e: React.FormEvent) => {
@@ -214,10 +212,7 @@ export default function EditObra() {
 
 
   const removeExistingImage = async (index: number) => {
-    console.log("Botão de remover clicado!", index);
-
     const imageToRemove = existingImages[index];
-
     if (!imageToRemove) {
       toast({
         title: 'Erro inesperado',
@@ -225,57 +220,35 @@ export default function EditObra() {
       });
       return;
     }
+    const filePath = imageToRemove.split('/').slice(-2).join('/');
 
-    // Extraindo corretamente o nome da imagem e da pasta
-    const urlParts = imageToRemove.split('/');
-    let fileName = urlParts[urlParts.length - 1]; // Nome real do arquivo
-    let folderName = urlParts[urlParts.length - 2]; // Nome da obra (pasta)
-
-    // Decodifica espaços e caracteres especiais na pasta e no arquivo
-    folderName = folderName ? decodeURIComponent(folderName) : '';
-    fileName = fileName ? decodeURIComponent(fileName) : '';
-
-    const filePath = `${folderName}/${fileName}`;
-
-    console.log("Tentando remover a imagem do storage:", filePath);
-    console.log("Imagem para remover:", imageToRemove);
-    console.log("Caminho gerado para remoção:", filePath);
 
     try {
-      // Removendo a imagem do Supabase Storage
-      const { error: storageError } = await supabase.storage.from('Obras').remove([filePath]);
+      const { error } = await supabase.storage.from('Obras').remove([filePath]);
 
-      if (storageError) {
-        console.error('Erro ao remover imagem do storage:', storageError);
+
+      if (error) {
         toast({
           title: 'Erro ao remover imagem',
-          description: storageError.message,
+          description: error.message,
         });
         return;
       }
 
-      console.log("Imagem removida com sucesso do storage.");
 
-      // Atualizar UI removendo a imagem da lista
       setExistingImages((prevImages) => prevImages.filter((_, i) => i !== index));
-
       toast({
         title: 'Imagem removida',
-        description: 'A imagem foi removida com sucesso do storage.',
+        description: 'A imagem foi removida com sucesso.',
       });
     } catch (err) {
-      console.error('Erro inesperado ao remover imagem:', err);
       toast({
         title: 'Erro inesperado',
-        description: 'Ocorreu um erro ao remover a imagem do storage.',
+        description: 'Ocorreu um erro ao remover a imagem.',
       });
     }
-};
+  };
 
-
-    
-  
-  
 
 
 
@@ -304,13 +277,13 @@ export default function EditObra() {
 
       {searchResult && (
         <form onSubmit={handleUpdate} className="space-y-4">
-          {/* <Input
+          <Input
             type="text"
             placeholder="Nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-          /> */}
+          />
           <Textarea
             placeholder="Descrição"
             value={description}
@@ -343,15 +316,13 @@ export default function EditObra() {
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Imagens Existentes</label>
             <div className="grid grid-cols-3 gap-2">
-
               {existingImages.map((imageUrl, index) => (
                 <div key={index} className="relative">
 <Image src={imageUrl} alt={`Existing ${index}`} width={200} height={100} className="object-cover rounded" />
-<button type="button"
-                    onClick={() => {
-                      removeExistingImage(index);
-                    }}
-                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs pointer-events-auto"
+<button
+                    type="button"
+                    onClick={() => removeExistingImage(index)}
+                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs"
                   >
                     X
                   </button>
