@@ -5,10 +5,8 @@ import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import Navbar from "~/components/navbar";
 import { Footer1 } from "~/components/ui/footer";
-import BlurFade from "~/components/ui/blur-fade"; 
 import WhatsAppIcon from "~/components/whatsapp";
 import { createClient } from "@supabase/supabase-js";
-// import PageProps from "next"
 
 // Configuração do Supabase
 const supabase = createClient(
@@ -24,138 +22,118 @@ interface Obra {
   images: string[];
 }
 
-interface SevicoPageProps {
-  params: { servico: string; id: string };
-}
-
-  
 async function fetchObra(id: string): Promise<Obra | null> {
   try {
     const { data, error } = await supabase
-  .from("obras")
-  .select("*")
-  .eq("id", id)
-  .single();
+      .from("obras")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-      if (!data || error) return null;
+    if (error || !data) return null;
 
-      const folderName: string = typeof (data as Obra).name === "string" ? (data as Obra).name : "";
-      const { data: files, error: storageError } = await supabase.storage
+    const folderName = data.name;
+    const { data: files } = await supabase.storage
       .from("Obras")
       .list(folderName, { limit: 100 });
-    
-    if (storageError) {
-      console.error("Erro ao buscar imagens da obra:", storageError);
-    }
-    
+
     const imageUrls =
       files?.map(
-        (file) =>
-          supabase.storage
-            .from("Obras")
-            .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl
-      ) ?? [];
+        (file) => {
+          if (file && typeof file.name === 'string') {
+            return supabase.storage
+              .from("Obras")
+              .getPublicUrl(`${folderName}/${file.name}`).data.publicUrl;
+          }
+          return '';
+        }
+      ).filter(url => url !== '') ?? [];
 
-      return { ...(data as Obra), images: imageUrls };
-    } catch (error) {
+    return { ...data, images: imageUrls } as Obra;
+  } catch (error) {
     console.error("Erro inesperado:", error);
     return null;
   }
 }
 
-const ObraPage = ({ params }: SevicoPageProps) => {
-  const { servico, id } = params as { servico: string; id: string };
-
-
+const ObraPage = () => {
+  const params = useParams();
   const [obra, setObra] = useState<Obra | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [allObras, setAllObras] = useState<Obra[]>([]);
 
   useEffect(() => {
-    const loadObra = async () => {
-      const obraId = id;
+    if (typeof window !== "undefined") {
+      const loadObra = async () => {
+        if (!params?.id) {
+          notFound();
+        }
 
-if (!obraId || typeof obraId !== "string") {
-  notFound();
-  return;
-}
-  
-      try {
-        const fetchedObra = await fetchObra(obraId);
+        const fetchedObra = await fetchObra(params.id as string);
         if (!fetchedObra) {
           notFound();
         } else {
           setObra(fetchedObra);
         }
-      } catch (error) {
-        console.error("Erro ao carregar a obra:", error);
-      } finally {
         setIsLoading(false);
+      };
+
+      // Fix the floating promise
+      void loadObra();
+    }
+  }, [params?.id]);
+
+  useEffect(() => {
+    const fetchAllObras = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("obras")
+          .select("id, name, description, service, created_at")
+          .order("created_at", { ascending: false });
+
+        if (!error && data && obra) {
+          const obrasDoMesmoServico = data.filter(
+            (obraItem) => obraItem.service === obra.service
+          );
+
+          let filteredObras = obrasDoMesmoServico.slice(0, 3);
+
+          // Se a obra atual estiver entre as 3 mais recentes, incluir a 4ª mais recente
+          if (filteredObras.some((obraItem) => obraItem.id === obra.id)) {
+            filteredObras = obrasDoMesmoServico.slice(0, 4);
+          }
+
+          filteredObras = filteredObras.filter(
+            (obraItem) => obraItem.id !== obra.id
+          ).slice(0, 3); // Garantir que apenas 3 sejam exibidas
+
+          const obrasComImagens = await Promise.all(
+            filteredObras.map(async (obraItem) => {
+              const { data: files } = await supabase.storage
+                .from("Obras")
+                .list(obraItem.name, { limit: 1 });
+
+              const imageUrl =
+                files && files.length > 0
+                  ? supabase.storage
+                      .from("Obras")
+                      .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data
+                      .publicUrl
+                  : null;
+
+              return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
+            })
+          );
+
+          setAllObras(obrasComImagens);
+        }
+      } catch (err) {
+        console.error("Erro ao buscar todas as obras:", err);
       }
     };
-  
-    void loadObra(); // Uso do `void` para evitar o erro de floating promise
-  }, [id]);
-  
 
-    useEffect(() => {
-      const fetchAllObras = async () => {
-        try {
-          const { data, error } = await supabase
-            .from("obras")
-            .select("id, name, description, service, created_at")
-            .order("created_at", { ascending: false });
-    
-          if (error) throw error;
-    
-          if (data && obra) {
-            const obrasDoMesmoServico = data.filter(
-              (obraItem) => obraItem.service === obra.service
-            );
-    
-            let filteredObras = obrasDoMesmoServico.slice(0, 3);
-            if (filteredObras.some((obraItem) => obraItem.id === obra.id)) {
-              filteredObras = obrasDoMesmoServico.slice(0, 4);
-            }
-    
-            filteredObras = filteredObras
-              .filter((obraItem) => obraItem.id !== obra.id)
-              .slice(0, 3);
-    
-            const obrasComImagens = await Promise.all(
-              filteredObras.map(async (obraItem) => {
-                try {
-                  const { data: files, error: storageError } = await supabase.storage
-                    .from("Obras")
-                    .list(obraItem.name, { limit: 1 });
-    
-                  if (storageError) throw storageError;
-    
-                  const imageUrl =
-                    files && files.length > 0
-                      ? supabase.storage
-                          .from("Obras")
-                          .getPublicUrl(`${obraItem.name}/${files[0]?.name}`).data?.publicUrl
-                      : null;
-    
-                  return { ...obraItem, images: imageUrl ? [imageUrl] : [] };
-                } catch (err) {
-                  console.error("Erro ao buscar imagens para obra:", err);
-                  return { ...obraItem, images: [] };
-                }
-              })
-            );
-    
-            setAllObras(obrasComImagens);
-          }
-        } catch (err) {
-          console.error("Erro ao buscar todas as obras:", err);
-        }
-      };
-    
-      if (obra) void fetchAllObras(); // Uso do `void` para evitar o erro
-    }, [obra]);
-    
+    if (obra) void fetchAllObras();
+  }, [obra]);
   
   
 
@@ -211,8 +189,6 @@ const ObraDetails = ({
 
       <main className="relative">
         {obra.images.length > 0 ? (
-        <BlurFade delay={0.3}>        
-
           <div className="relative">
             <Image
               src={obra.images[currentImageIndex] ?? ""}
@@ -250,16 +226,11 @@ const ObraDetails = ({
                 />
               ))}
             </div>
-           <BlurFade delay={0.5}>        
             <div className="absolute bottom-4 left-6 text-white z-10">
               <h1 className="text-3xl font-bold">{obra.name}</h1>
               <p className="text-lg mt-2">{obra.description}</p>
             </div>
-              </BlurFade>
-
           </div>
-          </BlurFade>
-
         ) : (
           <div className="h-[70vh] bg-gray-200 flex items-center justify-center">
             <p className="text-gray-500">Imagem não disponível</p>
@@ -268,8 +239,6 @@ const ObraDetails = ({
       </main>
 
       <section className="p-10">
-                  <BlurFade delay={0.5}>        
-        
         <h2 className="text-2xl font-bold mb-4 text-green-700">Outras obras</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   {allObras
@@ -282,7 +251,7 @@ const ObraDetails = ({
       >
         {obraItem.images ? (
           <img
-            src={obraItem.images[0]}
+            src={obraItem.images[0] ?? ""}
             alt={obraItem.name}
             className="h-60 w-full object-cover"
           />
@@ -293,14 +262,10 @@ const ObraDetails = ({
         )}
         <div className="p-4">
           <h3 className="text-lg font-bold">{obraItem.name}</h3>
-          <p className="text-[#027A48] font-semibold hover:underline"
-                  >Ver obra →</p>
         </div>
       </div>
     ))}
 </div>
-</BlurFade>
-
       </section>
       <WhatsAppIcon />
       <Footer1 />
