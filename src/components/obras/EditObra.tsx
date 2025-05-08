@@ -133,7 +133,7 @@ export default function EditObra() {
       }
     } catch (err) {
       console.error('Erro inesperado ao buscar obra:', err);
-      toast({
+      void toast({
         title: 'Erro inesperado',
         description: 'Ocorreu um erro ao buscar a obra.',
       });
