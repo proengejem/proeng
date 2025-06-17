@@ -41,7 +41,7 @@ const HeroSectionWithVideo: React.FC = () => {
           </BlurFade>
           <BlurFade delay={0.3}>
             <p className="mt-2 text-base md:text-lg">
-              A PROENG possui uma trajetória sólida no mercado de engenharia,
+              A PROENG Geotecnia e Fundação possui uma trajetória sólida no mercado de engenharia,
               oferecemos soluções inovadoras e confiáveis. Nossa missão é
               garantir a satisfação em cada projeto.
             </p>
