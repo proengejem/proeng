@@ -268,7 +268,7 @@ export const Footer1Defaults: Props = {
         { title: "Instagram", url: "https://www.instagram.com/proeng_geotecnia/", icon: <BiLogoInstagram className="size-6" /> },
         { title: "LinkedIn", url: "https://www.linkedin.com/company/proeng-geotecnia/?originalSubdomain=br", icon: <BiLogoLinkedinSquare className="size-6" /> },
         { title: "Youtube", url: "https://www.youtube.com/channel/UCe4V9_T872AFbg4PVWtrJfw", icon: <BiLogoYoutube className="size-6" /> },
-        { title: "Whatsapp", url: "https://wa.me/551143197888?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços!", icon: <BiLogoWhatsapp className="size-6" /> },
+        { title: "Whatsapp", url: "https://wa.me/5511933161777?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços!", icon: <BiLogoWhatsapp className="size-6" /> },
       ],
     },
   ],

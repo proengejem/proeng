@@ -13,7 +13,7 @@ export default function Servicos() {
     <div>
       <div className="hero">
         <div className="green-detail"></div>
-        <Image src="/IntroServiços.png" alt="Hero" width={1520} height={500} />
+        <Image src="/IntroServiço.png" alt="Hero" width={1520} height={500} />
       </div>
       <div className="container">
       <h1 className="text-4xl font-bold mb-10 text-left text-[#027A48]"><TypingAnimation>Nossos Serviços</TypingAnimation></h1>

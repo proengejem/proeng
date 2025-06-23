@@ -36,57 +36,14 @@ const Valores: React.FC = () => {
     description:
     "Nossa equipe também conta com a expertise de profissionais capacitados e bem treinados, procurando sempre atualizar seus padrões de excelência, com qualidade e seriedade nos trabalhos executados, oferecendo atendimento personalizado, competitividade e transparência nos negociações, mantendo-nos tecnicamente e eticamente constantes fazem da Proeng uma empresa diferenciada no mercado."  };
 
-  const features = [
-    {
-      icon: <span> 🏆</span>,
-      title: "Excelência",
-      description:
-        "A Proeng Geotécnica é uma empresa de engenharia especializada em contenções, fundações, drenagem e tratamento de solos.",
-      linkText: "Saiba Mais",
-    },
-    {
-      icon: <span> 🛡️</span>,
-      title: "Seriedade",
-      description:
-        "Atualizações, treinamentos e investimentos constantes fazem da Proeng uma empresa diferenciada no mercado.",
-      linkText: "Saiba Mais",
-    },
-    {
-      icon: <span>  🤝</span>,
-      title: "Atendimento personalizado",
-      description:
-        "Atualizações, treinamentos e investimentos constantes fazem da Proeng uma empresa diferenciada no mercado.",
-      linkText: "Saiba Mais",
-    },
-    {
-      icon: <span>  🔍</span>,
-      title: "Transparência",
-      description:
-        "Atualizações, treinamentos e investimentos constantes fazem da Proeng uma empresa diferenciada no mercado.",
-      linkText: "Saiba Mais",
-    },
-  ];
-
   return (
     <section className="relative z-50 py-12 flex items-center overflow-hidden">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center space-y-6 md:space-x-12">
+      <div className="container mx-auto px-20 flex flex-col md:flex-row items-center space-y-6 md:space-x-12">
         <div className="w-full md:w-1/2">
-        <h2 className="mb-6 text-2xl font-bold">{texto.title}</h2>
-        <p className="mb-12 max-w-3xl text-gray-600">{texto.description}</p>
+        <h2 className="mb-6 text-3xl font-bold text-green-600">{texto.title}</h2>
+        <p className="mb-12 font-medium max-w-3xl text-gray-600">{texto.description}</p>
         </div>
-
-
-        <div className="w-full md:w-1/2 space-y-8">
-          {features.map((feature, index) => (
-            <Feature
-              key={index}
-              icon={feature.icon}
-              title={feature.title}
-              description={feature.description}
-              linkText={feature.linkText}
-            />
-          ))}
-        </div>
+        
       </div>
     </section>
   );

@@ -7,7 +7,7 @@ export default function WhatsAppIcon() {
   return (
     <div className="whatsapp-container">
       <a
-        href="https://wa.me/551143197888?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços!"
+        href="https://wa.me/5511933161777?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços!"
         target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-icon"

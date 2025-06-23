@@ -30,6 +30,9 @@ export default function Sobrenoscompo3() {
         </h2>
         <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-2">
           <div className="space-y-2">
+            <div className="text-xl uppercase text-white">
+              Mais de 
+            </div>
             <div className="text-6xl font-bold text-white">
               <Numero n={1500} />
             </div>
