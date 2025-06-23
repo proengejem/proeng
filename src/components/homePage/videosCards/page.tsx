@@ -117,9 +117,10 @@ const SolutionsSectionVideos: React.FC = () => {
             linkUrl: `https://www.youtube.com/watch?v=${video.idUrl}`,
           }));
 
+
         setVideos(formattedVideos);
       } catch (err) {
-        console.error("Erro ao buscar vídeos:", err);
+        console.error("Erro ao buscar vídeos:", JSON.stringify(err, null, 2));
       } finally {
         setLoading(false);
       }

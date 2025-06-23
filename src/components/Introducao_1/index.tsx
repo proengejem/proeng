@@ -30,7 +30,7 @@ const HeroSectionWithVideo: React.FC = () => {
               className="text-4xl md:text-6xl font-bold leading-tight"
               style={{ color: "#027A48" }}
             >
-              PROENG GEOTECNIA{" "}
+              PROENG GEOTECNIA E FUNDAÇÃO{" "}
             </h1>
           </BlurFade>
           <BlurFade delay={0.1}>

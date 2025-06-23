@@ -14,9 +14,7 @@ const services: Service[] = [
   { slug: "solo-grampeado", title: "Solo Grampeado", description: "O solo grampeado é uma técnica de reforço dos solos amplamente utilizada no Brasil...", image: "/SoloGrampeado.png", alt: "Solo Grampeado" },
   { slug: "helice-continua-monitorada", title: "Hélice Contínua Monitorada", description: "A estaca tipo hélice segmentada monitorada está presente no mercado brasileiro desde 2001...", image: "/HéliceContM.png", alt: "Hélice Contínua" },
   { slug: "estaca-tipo-raiz", title: "Estaca Tipo Raiz", description: "Considerada de pequeno diâmetro e de elevada capacidade de carga...", image: "/EstacasTpRaiz.png", alt: "Estaca Tipo Raiz" },
-  { slug: "micro-estacas-injetadas", title: "Micro Estacas Injetadas", description: "As micro estacas geralmente possuem diâmetros inferiores a 160 mm...", image: "/MicroEstacasInj.png", alt: "Micro Estacas" },
-  { slug: "injecoes-de-consolidacao", title: "Injeções de Consolidação", description: "Os principais objetivos da injeção de consolidação é promover a melhoria das condições de estabilidade...", image: "/InjeçõesConsolid.png", alt: "Injeções de Consolidação" },
-  { slug: "d-h-p", title: "Dreno Sub-Horizontal Profundo", description: "O dreno sub-horizontal profundo, mais conhecido por DHP, são elementos que captam as águas...", image: "/DHP.png", alt: "Dreno Sub-Horizontal Profundo" },
+  
 ];
 
 const ServiceCard: React.FC<Service> = ({ image, title, alt, description, slug }) => (

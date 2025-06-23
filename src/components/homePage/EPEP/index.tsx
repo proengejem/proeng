@@ -45,7 +45,7 @@ const AboutSection: React.FC = () => {
     },
     {
       icon: <span>🔧</span>,
-      title: "Equipamentos",
+      title: "MÁquinas/Equipamentos",
       description:
         "Equipamentos de pequeno e médio porte, que permitem execuções em áreas de trabalho de espaço limitado.",
       linkText: "Saiba Mais",
@@ -68,8 +68,8 @@ const AboutSection: React.FC = () => {
             <Image
               src="/image.png" // Substituir pelo caminho correto da imagem
               alt="Sobre a Proeng"
-              width={1000}
-              height={700}
+              width={10000}
+              height={10000}
               className="w-full h-auto object-cover"
             />
           </div>

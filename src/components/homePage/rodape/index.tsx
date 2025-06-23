@@ -45,7 +45,7 @@ const Rodape: React.FC = () => {
 
         {/* Imagem */}
         <Image
-          src="/IntroServiços.png" // Substitua pelo caminho correto da imagem
+          src="/RodapéHome.png" // Substitua pelo caminho correto da imagem
           alt="Projetos de Engenharia"
           width={1920}
           height={486}
@@ -59,12 +59,12 @@ const Rodape: React.FC = () => {
               <>
                 <h1 className="text-2xl md:text-4xl font-bold">
                   <TypingAnimation>
-                    Projetos de Engenharia
+                    Serviços de Engenharia
                   </TypingAnimation>
                 </h1>
                 <BlurFade delay={0.4}>
                   <p className="text-sm md:text-lg mt-2">
-                    Descubra como nossos projetos transformam ideias em soluções
+                    Descubra como nossos serviços transformam ideias em soluções
                     inovadoras e eficientes para o mercado.
                   </p>
                 </BlurFade>
