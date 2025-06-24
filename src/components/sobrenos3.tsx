@@ -25,7 +25,7 @@ export default function Sobrenoscompo3() {
 
       {/* Conteúdo principal */}
       <div className="relative z-10 container mx-auto px-4">
-        <h2 className="mb-16 text-center text-4xl font-bold text-white">
+        <h2 className="mb-16 text-center text-5xl font-bold text-white">
           NÚMEROS
         </h2>
         <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-2">

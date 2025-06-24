@@ -10,7 +10,7 @@ export default function Sobrenoscompo() {
           className="relative flex flex-1 items-center justify-end text-right"
           style={{
             backgroundImage:
-              "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.1)), url('/IntroSobreNós.png')",
+              "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.1)), url('/FundoSobreNós.jpeg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
