@@ -21,7 +21,7 @@ export default function Sobrenoscompo() {
               <BlurFade delay={0.4}><h1 className="text-4xl md:text-6xl font-bold leading-tight text-white">
 
                 Desde{" "}
-                <span className="text-5xl text-[#006241] md:text-6xl">
+                <span className="text-5xl text-green-500 md:text-6xl">
                   2006
                 </span>
               </h1></BlurFade>

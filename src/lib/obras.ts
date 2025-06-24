@@ -29,7 +29,7 @@ export const obras: Obra[] = [
     slug: "helice-continua-monitorada",
     title: "Hélice Contínua Monitorada",
     description:
-     "A estaca tipo hélice segmentada monitorada está presente no mercado brasileiro desde 2001. Trata-se de uma perfuratriz de dimensões e peso reduzidos (mini – hélice contínua) podendo executar estacas com diâmetros de 25, 30, 35, 40 e 50 cm e atingir profundidades de até 16 m. Sua principal característica é a possibilidade de execução em locais de espaço reduzido, com destaque ao afastamento de 40 cm do eixo da estaca até a divisa. As perfuratrizes da Proeng Geotecnia são dotadas de monitoramento eletrônico, igual aos das perfuratrizes hélice contínua convencionais.",
+     "A estaca tipo hélice contínua monitorada está presente no mercado brasileiro desde 2001. Trata-se de uma perfuratriz de dimensões e peso reduzidos (mini – hélice contínua) podendo executar estacas com diâmetros de 25, 30, 35, 40 e 50 cm e atingir profundidades de até 22 m. Sua principal característica é a possibilidade de execução em locais de espaço reduzido, com destaque ao afastamento de 40 cm do eixo da estaca até a divisa. As perfuratrizes da Proeng Geotecnia e Fundação são dotadas de monitoramento em tempo real, igual aos das perfuratrizes hélice contínua convencionais.",
     image: "/HéliceContM.png",
     gallery: [
       { title: "Obra 1", url: "#", src: "/SoloGrampeado.png", alt: "Imagem 4" },

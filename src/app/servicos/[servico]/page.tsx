@@ -88,16 +88,19 @@ async function ServicoContent({ servicoSlug }: { servicoSlug: string }) {
 
       {/* Imagem principal */}
       <div className="w-full mb-6 flex flex-col items-center">
-        <Image
-          src={obra.image}
-          alt={obra.title}
-          width={700} 
-          height={300} 
-          className="h-[60vh] object-cover rounded-lg shadow-lg"
-          priority
-        />
-        <p className="mt-2 text-sm text-gray-500">| Publicado por Proeng Geotécnia</p>
+        <div className="w-full max-w-[700px] flex flex-col items-start">
+          <Image
+            src={obra.image}
+            alt={obra.title}
+            width={700}
+            height={300}
+            className="h-[60vh] object-cover rounded-lg shadow-lg"
+            priority
+          />
+          <p className="mt-2 text-sm text-gray-500">| Publicado por Proeng Geotécnia</p>
+        </div>
       </div>
+
 
       {/* Renderização dinâmica das 3 últimas obras */}
       {loadError ? (
