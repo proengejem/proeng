@@ -60,17 +60,16 @@ export default function PortfolioPage() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-auto max-w-7xl px-4"
+        className="mx-auto max-w-7xl px-4 pt-40"
       >
+
         <div className="grid items-start gap-12 md:grid-cols-2">
           {/* Left Column */}
           <div className="space-y-8">
             <motion.div variants={itemVariants}>
               <h2 className="mb-4 text-3xl font-bold">Estaca Hélice</h2>
-              <p className="mb-6 text-gray-600">
-                Nossos serviços são projetados para atender às suas necessidades
-                específicas. Experimente a eficiência e a qualidade que
-                oferecemos.
+              <p className="mb-6 text-gray-600 text-justify">
+                A estaca tipo hélice contínua monitorada, usada no Brasil desde 2001, é executada com perfuratrizes compactas que permitem estacas de 25 a 50 cm de diâmetro e até 22 m de profundidade. É ideal para locais com espaço limitado, podendo ser feita a apenas 40 cm da divisa, e conta com monitoramento em tempo real, como nas perfuratrizes convencionais.
               </p>
             </motion.div>
 
@@ -84,10 +83,8 @@ export default function PortfolioPage() {
                 whileTap={{ scale: 0.98 }}
                 className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
               >
-                <h3 className="mb-2 font-bold">Qualidade Garantida</h3>
-                <p className="text-sm text-gray-600">
-                  Clique para saber mais sobre nossa qualidade excepcional.
-                </p>
+                <h3 className="mb-2 font-bold text-center">Qualidade Garantida</h3>
+      
               </motion.button>
               <motion.button
                 // onClick={() => setSelectedModal(modalContent.solutions)}
@@ -95,10 +92,8 @@ export default function PortfolioPage() {
                 whileTap={{ scale: 0.98 }}
                 className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
               >
-                <h3 className="mb-2 font-bold">Soluções Personalizadas</h3>
-                <p className="text-sm text-gray-600">
-                  Clique para descobrir como personalizamos nossas soluções.
-                </p>
+                <h3 className="mb-2 font-bold text-center">Soluções Personalizadas</h3>
+                
               </motion.button>
             </motion.div>
 
@@ -132,8 +127,8 @@ export default function PortfolioPage() {
                   className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl"
                 >
                   <Image
-                    src="/Estaca Raiz.jpeg"
-                    alt="Solo Grampeado Project Photo"
+                    src="/Estaca Helice.jpeg"
+                    alt="estaca Helice Project Photo"
                     fill
                     className="object-cover"
                   />

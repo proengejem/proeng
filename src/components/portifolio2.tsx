@@ -28,7 +28,7 @@ export default function Portfolio2() {
 
   return (
     <motion.div
-      className="min-h-screen bg-white p-4 md:p-8 lg:p-12"
+      className="mx-auto max-w-7xl px-4"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -44,7 +44,7 @@ export default function Portfolio2() {
                          transition={{ duration: 0.3 }}
                        >
                          <Image
-                           src="/Estaca Helice.jpeg"
+                           src="/Estaca raiz.jpeg"
                            alt="Estaca Raíz Project Photo"
                            fill
                            className="object-cover"
@@ -58,10 +58,8 @@ export default function Portfolio2() {
           <motion.div className="space-y-8" variants={itemVariants}>
             <motion.div variants={itemVariants}>
               <h1 className="mb-4 text-3xl font-bold">Estaca Raíz</h1>
-              <p className="text-gray-600">
-                Nossos serviços são projetados para atender às suas necessidades
-                específicas. Experimente a eficiência e a qualidade que
-                oferecemos.
+              <p className="text-gray-600 text-justify">
+                A estaca raiz é uma estaca moldada in loco, de pequeno diâmetro e alta capacidade de carga, ideal para locais com espaço reduzido e sem causar vibrações. Pode atingir grandes profundidades, atravessando obstáculos como rochas ou blocos de concreto, com o auxílio de revestimentos metálicos recuperáveis e martelo hidráulico.
               </p>
             </motion.div>
 
@@ -75,10 +73,8 @@ export default function Portfolio2() {
                 whileTap={{ scale: 0.98 }}
                 className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
               >
-                <h3 className="mb-2 font-bold">Qualidade Garantida</h3>
-                <p className="text-sm text-gray-600">
-                  Clique para saber mais sobre nossa qualidade excepcional.
-                </p>
+                <h3 className="mb-2 font-bold text-center">Qualidade Garantida</h3>
+                
               </motion.button>
               <motion.button
                 // onClick={() => setSelectedModal(modalContent.solutions)}
@@ -86,10 +82,8 @@ export default function Portfolio2() {
                 whileTap={{ scale: 0.98 }}
                 className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
               >
-                <h3 className="mb-2 font-bold">Soluções Personalizadas</h3>
-                <p className="text-sm text-gray-600">
-                  Clique para descobrir como personalizamos nossas soluções.
-                </p>
+                <h3 className="mb-2 font-bold text-center">Soluções Personalizadas</h3>
+                
               </motion.button>
             </motion.div>
 

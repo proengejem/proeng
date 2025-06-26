@@ -37,7 +37,7 @@ export default function Portfolio() {
       </motion.div>
 
       <motion.div
-        className="min-h-screen bg-white p-4 md:p-8 lg:p-12 mt-6 pb-0"
+        className="mx-auto max-w-7xl px-4 pt-20"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -48,8 +48,8 @@ export default function Portfolio() {
             <motion.div className="space-y-8" variants={itemVariants}>
               <motion.div variants={itemVariants}>
                 <h1 className="mb-4 text-3xl font-bold">Solo Grampeado</h1>
-                <p className="text-gray-600">
-                  Nossos serviços são projetados para atender às suas necessidades específicas. Experimente a eficiência e a qualidade que oferecemos.
+                <p className="text-gray-600 text-justify">
+                  O solo grampeado é uma técnica de reforço do solo que consiste na inserção de barras de aço em taludes, geralmente acompanhada de revestimento e drenagem. É amplamente usada no Brasil por ser prática, rápida, versátil e econômica em relação a outras soluções de estabilização.
                 </p>
               </motion.div>
 
@@ -62,20 +62,16 @@ export default function Portfolio() {
                   whileTap={{ scale: 0.98 }}
                   className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
                 >
-                  <h3 className="mb-2 font-bold">Qualidade Garantida</h3>
-                  <p className="text-sm text-gray-600">
-                    Clique para saber mais sobre nossa qualidade excepcional.
-                  </p>
+                  <h3 className="mb-2 font-bold text-center">Qualidade Garantida</h3>
+                  
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
                 >
-                  <h3 className="mb-2 font-bold">Soluções Personalizadas</h3>
-                  <p className="text-sm text-gray-600">
-                    Clique para descobrir como personalizamos nossas soluções.
-                  </p>
+                  <h3 className="mb-2 font-bold text-center">Soluções Personalizadas</h3>
+                  
                 </motion.button>
               </motion.div>
               <motion.div className="flex space-x-4" variants={itemVariants}>
@@ -104,8 +100,8 @@ export default function Portfolio() {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="/Estaca Helice.jpeg"
-                  alt="Estaca Raíz Project Photo"
+                  src="/Solo Grampeado.jpeg"
+                  alt="Solo Grampeado Project Photo"
                   fill
                   className="object-cover"
                   priority
