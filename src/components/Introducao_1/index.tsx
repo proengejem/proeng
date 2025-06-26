@@ -1,35 +1,28 @@
 import React from "react";
-import BlurFade from "../../components/ui/blur-fade"; 
+import BlurFade from "../../components/ui/blur-fade";
 import Link from "next/link";
-
 
 const HeroSectionWithVideo: React.FC = () => {
   return (
     <section className="relative h-screen z-10 overflow-hidden">
-      {/* Vídeo de Fundo */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-      >
-        <source src="/intro.mp4" type="video/mp4" />
-        Seu navegador não suporta o elemento de vídeo.
-      </video>
-
-      {/* Sobreposição para texto */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 pointer-events-none"></div>
+      {/* Vídeo de Fundo (YouTube embed) */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
+        <iframe
+          className="w-full h-full absolute top-0 left-0 object-cover"
+          src="https://www.youtube.com/embed/KTESI3SxVv0?autoplay=1&mute=1&loop=1&playlist=KTESI3SxVv0&controls=0&showinfo=0&modestbranding=1"
+          title="YouTube video background"
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        />
+        <div className="absolute inset-0 bg-black opacity-50" />
+      </div>
 
       {/* Conteúdo do texto */}
       <div className="relative z-20 flex flex-col items-center justify-center h-full text-center text-white px-4">
         <div className="max-w-2xl">
-          {/* Título */}
           <BlurFade delay={0.1}>
-            <h1
-              className="text-4xl md:text-6xl font-bold leading-tight"
-              style={{ color: "#027A48" }}
-            >
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight" style={{ color: "#027A48" }}>
               PROENG GEOTECNIA E FUNDAÇÃO{" "}
             </h1>
           </BlurFade>
@@ -66,9 +59,10 @@ const HeroSectionWithVideo: React.FC = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black"></div>
+      <div className="absolute bottom-0 w-full h-6 bg-gradient-to-b from-transparent to-black z-10"></div>
     </section>
   );
 };
 
 export default HeroSectionWithVideo;
+
