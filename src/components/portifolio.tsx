@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import HeadBar from "~/components/homePage/headerPortifolio";
-import { services } from "~/lib/servicos";
-import { useState } from "react";
+import BlurFade from "~/components/ui/blur-fade";
+import { useRef } from "react";
 
 export default function Portfolio() {
   const containerVariants = {
@@ -24,6 +24,10 @@ export default function Portfolio() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
+
+  // Referência para o BlurFade
+  const blurFadeRef = useRef(null);
+  const isInView = useInView(blurFadeRef, { once: false, margin: "0px 0px -50px 0px" });
 
   return (
     <div className="min-h-screen bg-white">
@@ -46,8 +50,14 @@ export default function Portfolio() {
           <div className="grid items-start gap-8 md:grid-cols-2 lg:gap-12">
             {/* Right Column - Content */}
             <motion.div className="space-y-8" variants={itemVariants}>
-              <motion.div variants={itemVariants}>
-                <h1 className="mb-4 text-3xl font-bold">Solo Grampeado</h1>
+              <motion.div variants={itemVariants} ref={blurFadeRef}>
+                {isInView ? (
+                  <BlurFade delay={0.14}>
+                    <h1 className="mb-4 text-3xl font-bold">Solo Grampeado</h1>
+                  </BlurFade>
+                ) : (
+                  <h1 className="mb-4 text-3xl font-bold opacity-0">Solo Grampeado</h1>
+                )}
                 <p className="text-gray-600 text-justify">
                   O solo grampeado é uma técnica de reforço do solo que consiste na inserção de barras de aço em taludes, geralmente acompanhada de revestimento e drenagem. É amplamente usada no Brasil por ser prática, rápida, versátil e econômica em relação a outras soluções de estabilização.
                 </p>
@@ -63,7 +73,6 @@ export default function Portfolio() {
                   className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
                 >
                   <h3 className="mb-2 font-bold text-center">Qualidade Garantida</h3>
-                  
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -71,15 +80,15 @@ export default function Portfolio() {
                   className="rounded-lg bg-gray-50 p-6 text-left transition-shadow hover:shadow-lg"
                 >
                   <h3 className="mb-2 font-bold text-center">Soluções Personalizadas</h3>
-                  
                 </motion.button>
               </motion.div>
+
               <motion.div className="flex space-x-4" variants={itemVariants}>
                 <Link href={`/portifolio/${encodeURIComponent("solo-grampeado")}`}>
-  <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
-    Fotos
-  </button>
-</Link>
+                  <button className="px-6 py-3 bg-[#027A48] text-white rounded-lg font-semibold hover:bg-green-500 transition">
+                    Fotos
+                  </button>
+                </Link>
                 <Link href="https://www.youtube.com/playlist?list=PLnLPCcEY60IAok3QEttHV3Mkxj87koWqk">
                   <button
                     className="rounded border px-6 py-3 bg-white text-green-500 rounded-lg font-semibold hover:bg-gray-200 transition"

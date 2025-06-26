@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import TypingAnimation from "~/components/ui/typing-animation";
 
 
 const HeadBar: React.FC = () => {
@@ -32,7 +33,7 @@ const HeadBar: React.FC = () => {
     <div className="relative bg-[#027A48] py-16 md:py-24">
       {/* Content Container */}
       <div className="container mx-auto px-4 text-center text-white relative z-10">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Portifólio</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4"><TypingAnimation>Obras Realizadas</TypingAnimation></h1>
         <p className="text-lg md:text-xl text-gray-100">Explore nossa variedade de projetos inovadores.</p>
       </div>
 
